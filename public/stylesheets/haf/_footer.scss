@@ -1,0 +1,38 @@
+footer{
+    width: 100%;
+    margin-top: auto;
+    background-color: $color_4;
+    color: $white;
+
+    .cc{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 0rem;
+        font-size: 0.8rem;
+
+        a{
+            font-weight: 700;
+        }
+    }
+
+    .social-links{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        a{
+            background-color: $color_2;
+            margin: 0rem 0.2rem;
+            padding: 0.15rem 0.3rem;
+            border-radius: 5rem;
+            transition: all 0.3s ease-in-out;
+            color: $color_4;
+
+            .ico{
+                width: 1rem;
+                height: 1rem;
+            }
+        }
+    }
+}

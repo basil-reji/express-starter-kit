@@ -1,0 +1,256 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+}
+
+html {
+  font-size: 16px;
+  width: 100%;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #DFF6FF;
+}
+
+::-webkit-scrollbar {
+  border-radius: 1rem;
+  width: 0.2rem;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #06283D;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  padding-top: 5rem;
+  background-color: #EFEFEF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+a {
+  color: #47B5FF;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #1363DF;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Open Sans", sans-serif;
+}
+
+.btn {
+  font-size: 1rem;
+  color: #DFF6FF;
+  background-color: #47B5FF;
+  border: none;
+  padding: 0.4rem 1.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  color: #DFF6FF;
+  background-color: #1363DF;
+}
+
+#header {
+  transition: all 0.5s ease-in-out;
+  background: transparent;
+  z-index: 997;
+  padding: 0.5rem 0;
+}
+#header.header-scrolled {
+  background-color: #fff;
+  box-shadow: 0px 2px 1rem rgba(18, 66, 101, 0.08);
+}
+#header .logo {
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  font-family: "Poppins", sans-serif;
+}
+#header .logo a {
+  color: #47B5FF;
+}
+#header .logo img {
+  max-height: 2rem;
+}
+@media (max-width: 992px) {
+  #header {
+    padding: 1rem 0rem;
+  }
+}
+
+.navbar {
+  padding: 0;
+}
+.navbar .btn {
+  margin: 0 1rem;
+}
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+.navbar ul li {
+  position: relative;
+}
+.navbar ul li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem;
+  font-size: 1rem;
+  color: #06283D;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+.navbar ul li a i {
+  font-size: 1rem;
+  line-height: 0;
+  margin-left: 5px;
+}
+.navbar ul li a:hover {
+  color: #47B5FF;
+}
+.navbar ul li a:hover > a {
+  color: #47B5FF;
+}
+.navbar ul li a.active {
+  color: #47B5FF;
+}
+.navbar ul li a.active:focus {
+  color: #47B5FF;
+}
+
+.harmburger {
+  cursor: pointer;
+  display: none;
+  margin: 0rem 0.5rem;
+}
+.harmburger .lin {
+  background-color: #252A34;
+  height: 0.15rem;
+  border-radius: 1rem;
+  width: 1.7rem;
+  margin: 0.4rem 0rem;
+  transition: all 0.5s ease-in-out;
+}
+.harmburger.active {
+  margin: 0rem;
+}
+.harmburger.active .lin {
+  background-color: #DFF6FF;
+}
+.harmburger.active .lin:nth-child(1) {
+  transform: translate(0, 350%) rotate(45deg);
+}
+.harmburger.active .lin:nth-child(2) {
+  opacity: 0;
+}
+.harmburger.active .lin:nth-child(3) {
+  transform: translate(0, -350%) rotate(-45deg);
+}
+
+@media (max-width: 992px) {
+  .harmburger {
+    display: block;
+  }
+
+  .navbar ul {
+    display: none;
+  }
+}
+.navbar-mobile {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(6, 40, 61, 0.8);
+  transition: 0.3s;
+  z-index: 999;
+}
+.navbar-mobile .btn {
+  display: none;
+}
+.navbar-mobile .harmburger {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+}
+.navbar-mobile ul {
+  display: block;
+  position: absolute;
+  top: 2.5rem;
+  right: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  padding: 1rem;
+  background-color: #fff;
+  overflow-y: auto;
+  transition: 0.3s;
+}
+.navbar-mobile ul li a {
+  margin: 0;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+}
+.navbar-mobile ul li a.active {
+  color: #DFF6FF;
+  background-color: #47B5FF;
+}
+
+footer {
+  width: 100%;
+  margin-top: auto;
+  background-color: #06283D;
+  color: #fff;
+}
+footer .cc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0rem;
+  font-size: 0.8rem;
+}
+footer .cc a {
+  font-weight: 700;
+}
+footer .social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer .social-links a {
+  background-color: #47B5FF;
+  margin: 0rem 0.2rem;
+  padding: 0.15rem 0.3rem;
+  border-radius: 5rem;
+  transition: all 0.3s ease-in-out;
+  color: #06283D;
+}
+footer .social-links a .ico {
+  width: 1rem;
+  height: 1rem;
+}
