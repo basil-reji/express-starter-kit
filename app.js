@@ -6,7 +6,8 @@ var logger = require('morgan');
 var engine = require("express-handlebars");
 var session = require("express-session");
 var flash = require("express-flash");
-var dotenv = require('dotenv')
+var dotenv = require('dotenv');
+var passport = require('passport')
 
 dotenv.config()
 
@@ -46,6 +47,8 @@ app.use(session({
     saveUninitialized: true
 }));
 
+app.use(passport.authenticate('session'));
+
 // express-flash setup
 app.use(flash())
 
@@ -73,9 +76,16 @@ app.use(function (err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+    let error = {
+        code: err.status || 500,
+        message: err.message,
+        stack: err.stack,
+    }
+    // console.log(error);
+    res.render('error', {
+        title: `${error.code} Error | ${process.env.APP_NAME}`,
+        error
+    });
 });
 
 module.exports = app;

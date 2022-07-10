@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: all 0.3s ease-in-out;
 }
 
 @import './theme';
@@ -28,22 +27,22 @@ html {
 
 body{
     font-family: $font_family_2;
-    padding-top: 5rem;
     background-color: $background_color_2;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    max-width: 100%;
     min-height: 100vh;
 }
 
 a {
     color: $color_2;
     text-decoration: none;
-}
+    transition: all 0.3s ease-in-out;
 
-a:hover {
-    color: $color_3;
-    text-decoration: none;
+    &:hover {
+        color: $color_4;
+        text-decoration: none;
+    }
 }
 
 h1,
@@ -70,5 +69,25 @@ h6 {
     }
 }
 
+main{
+    width: 100%;
+}
+
+.box-shadow{
+    box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
+}
+
+section{
+    width: 100%;
+    min-height: 10vh;
+    padding: 2rem;
+    // background-color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
 @import './haf/header';
 @import './haf/footer';
+@import './pages/auth';

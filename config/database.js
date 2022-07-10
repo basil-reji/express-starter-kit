@@ -18,3 +18,17 @@ module.exports.connect = function (done) {
 module.exports.get = function () {
     return state.db
 }
+
+module.exports.models = {
+    user : {
+        fname: '',
+        sname: '',
+        email: '',
+        phone: null,
+        password: null,
+        user_type: 'user',
+        primary_address:{},
+        other_address:[],
+        flags:{}
+    }
+}

@@ -1,0 +1,95 @@
+#log {
+    height: 100vh;
+
+    .forms {
+        background-color: $white;
+        padding: 2rem;
+
+        .error{
+            text-align: center;
+            color: $color_error;
+        }
+
+        .log_head{
+            text-align: center;
+            margin-bottom: 2.5rem;
+            h3{
+                color: $color_4;
+                // margin-bottom: rem;
+    
+                span{
+                    color: $color_2;
+                    font-weight: 700;
+                }
+            }
+
+            p{
+                color: rgba($color: $color_4, $alpha: 0.5);
+            }
+        }
+
+        form {
+            margin: 0.5rem 0rem;
+            .form-group {
+                margin: 1rem 0rem;
+                margin-top: 1.5rem;
+                color: rgba($color: $color_4, $alpha: 0.9);
+
+
+                input {
+                    height: 2.7rem;
+                    border-radius: 0.1rem;
+                    border: 1px solid rgba($color: $color_4, $alpha: 0.1);
+                    color: $color_4;
+                    font-family: $font_family_2;
+
+                    &:active,
+                    &:focus {
+                        box-shadow: none;
+                        border: 1px solid $color_2;
+                    }
+
+                    &::placeholder{
+                        color: rgba($color: $color_4, $alpha: 0.4);
+                    }
+                }
+
+            }
+
+            .forgot{
+                text-align: right;
+                margin-bottom: 1rem;
+                font-size: 0.8rem;
+                text-decoration: underline;
+                color: rgba($color: $color_4, $alpha: 0.8);
+
+                a{
+                    color: rgba($color: $color_4, $alpha: 0.5);;
+                }
+            }
+
+            button{
+                width: 100%;
+                background-color: $color_2;
+                border: none;
+                padding: 0.6rem 1.5rem;
+                margin: 1rem 0rem;
+                color: $color_1;
+                transition: all 0.3s ease-in-out;
+
+                &:hover{
+                    background-color: $color_4;
+                }
+            }
+        }
+
+        .log_footer{
+            text-align: center;
+            font-size: 0.8rem;
+
+            a{
+                font-weight: 600;
+            }
+        }
+    }
+}

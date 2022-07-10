@@ -1,0 +1,49 @@
+<section id="log">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="forms box-shadow">
+                    <div class="log_head">
+                        <h3>Signup Up <span>{{app_name}}</span></h3>
+                        {{!-- <p>To continue please Login to the {{app_name}}</p> --}}
+                    </div>
+                    {{#if message}}<p class="error">{{message}}</p>{{/if}}
+                    <form action="/signup" method="post" role="form" class="log-form">
+                        <div class="form-group">
+                            {{!-- Email: --}}
+                            <input type="text" class="form-control" name="fname" id="fname" placeholder="First Name"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            {{!-- Email: --}}
+                            <input type="text" class="form-control" name="sname" id="sname" placeholder="Surname">
+                        </div>
+                        <div class="form-group">
+                            {{!-- Email: --}}
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            {{!-- Password: --}}
+                            <input type="password" class="form-control" name="password" id="password"
+                                placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                            {{!-- Password: --}}
+                            <input type="password" class="form-control" name="cpassword" id="cpassword"
+                                placeholder="Confirm Password" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit">Signup</button>
+                        </div>
+                    </form>
+                    <div class="log_footer">
+                        Already have an account? <a href="/login">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

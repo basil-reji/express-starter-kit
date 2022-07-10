@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
 }
 
 html {
@@ -26,21 +25,20 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
-  padding-top: 5rem;
   background-color: #EFEFEF;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  max-width: 100%;
   min-height: 100vh;
 }
 
 a {
   color: #47B5FF;
   text-decoration: none;
+  transition: all 0.3s ease-in-out;
 }
-
 a:hover {
-  color: #1363DF;
+  color: #06283D;
   text-decoration: none;
 }
 
@@ -65,6 +63,24 @@ h6 {
 .btn:hover {
   color: #DFF6FF;
   background-color: #1363DF;
+}
+
+main {
+  width: 100%;
+}
+
+.box-shadow {
+  box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
+}
+
+section {
+  width: 100%;
+  min-height: 10vh;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 #header {
@@ -243,14 +259,95 @@ footer .social-links {
   align-items: center;
 }
 footer .social-links a {
-  background-color: #47B5FF;
+  background-color: rgba(71, 181, 255, 0.2);
   margin: 0rem 0.2rem;
   padding: 0.15rem 0.3rem;
   border-radius: 5rem;
-  transition: all 0.3s ease-in-out;
-  color: #06283D;
+  transition: all 0.3s ease;
+  color: #DFF6FF;
 }
 footer .social-links a .ico {
   width: 1rem;
   height: 1rem;
+}
+footer .social-links a:hover {
+  background-color: #47b5ff;
+  color: #06283D;
+}
+
+#log {
+  height: 100vh;
+}
+#log .forms {
+  background-color: #fff;
+  padding: 2rem;
+}
+#log .forms .error {
+  text-align: center;
+  color: #FC4F4F;
+}
+#log .forms .log_head {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+#log .forms .log_head h3 {
+  color: #06283D;
+}
+#log .forms .log_head h3 span {
+  color: #47B5FF;
+  font-weight: 700;
+}
+#log .forms .log_head p {
+  color: rgba(6, 40, 61, 0.5);
+}
+#log .forms form {
+  margin: 0.5rem 0rem;
+}
+#log .forms form .form-group {
+  margin: 1rem 0rem;
+  margin-top: 1.5rem;
+  color: rgba(6, 40, 61, 0.9);
+}
+#log .forms form .form-group input {
+  height: 2.7rem;
+  border-radius: 0.1rem;
+  border: 1px solid rgba(6, 40, 61, 0.1);
+  color: #06283D;
+  font-family: "Poppins", sans-serif;
+}
+#log .forms form .form-group input:active, #log .forms form .form-group input:focus {
+  box-shadow: none;
+  border: 1px solid #47B5FF;
+}
+#log .forms form .form-group input::placeholder {
+  color: rgba(6, 40, 61, 0.4);
+}
+#log .forms form .forgot {
+  text-align: right;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  color: rgba(6, 40, 61, 0.8);
+}
+#log .forms form .forgot a {
+  color: rgba(6, 40, 61, 0.5);
+}
+#log .forms form button {
+  width: 100%;
+  background-color: #47B5FF;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  margin: 1rem 0rem;
+  color: #DFF6FF;
+  transition: all 0.3s ease-in-out;
+}
+#log .forms form button:hover {
+  background-color: #06283D;
+}
+#log .forms .log_footer {
+  text-align: center;
+  font-size: 0.8rem;
+}
+#log .forms .log_footer a {
+  font-weight: 600;
 }
