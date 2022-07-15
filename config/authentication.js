@@ -2,14 +2,15 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 const db = require('./database');
 const bcrypt = require('bcrypt');
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongodb').ObjectId;
 
 passport.use(new LocalStrategy(
     {
         usernameField: 'email',
         passwordField: 'password',
+        passReqToCallback: true
     },
-    (email, password, done) => {
+    (req, email, password, done) => {
 
         db.get()
             .collection(process.env.DB_COLLECTION_USER)
@@ -25,7 +26,7 @@ passport.use(new LocalStrategy(
                 }
             )
             .then((user) => {
-                // console.log(user);
+                // console.log(user)
                 // console.log('From pasport checking')
                 if (user) {
                     bcrypt
@@ -34,13 +35,13 @@ passport.use(new LocalStrategy(
                             if (status) {
                                 return done(null, user);
                             } else {
-                                return done(null, false);
+                                return done(null, false, req.flash('message', 'Paasword is not correct'));
                             }
                         }).catch((error) => {
                             return done(error)
                         });
                 } else {
-                    return done(null, false);
+                    return done(null, false, req.flash('message','The user email entered is not with our records'));
                 }
             }).catch((error) => {
                 return done(error)
@@ -49,60 +50,35 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function (user, cb) {
+
     process.nextTick(function () {
-        cb(null, user);
+        cb(null, user._id);
+    });
+
+});
+
+passport.deserializeUser(function (id, cb) {
+    // console.log(email)
+    process.nextTick(function () {
+        db.get()
+            .collection(process.env.DB_COLLECTION_USER)
+            .findOne(
+                {
+                    _id: ObjectId(id)
+                },
+                {
+                    projection: {
+                        password: 0
+                    }
+                }
+            )
+            .then((user) => {
+                // console.log(user)
+                return cb(null, user)
+            }).catch((error) => {
+                return cb(error)
+            })
     });
 });
 
-passport.deserializeUser(function (user, cb) {
-    process.nextTick(function () {
-        return cb(null, user);
-    });
-});
-
-// passport.serializeUser(function (user, cb) {
-//     // console.log(user);
-//     // console.log("User was");
-//     // cb(null, user);
-
-//     // process.nextTick(function () {
-//     //     return cb(null, user);
-//     // });
-    
-//     return cb(null, user);
-// });
-
-// passport.deserializeUser(function (user, cb) {
-//     console.log("dESERI")
-//     console.log(user)
-//     process.nextTick(function () {
-//         return cb(null, user);
-//     });
-// });
-
-
-// passport.deserializeUser(function (id, cb) {
-//     // console.log(email)
-//     process.nextTick(function () {
-//         db.get()
-//             .collection(process.env.DB_COLLECTION_USER)
-//             .findOne(
-//                 {
-//                     _id: ObjectId(id)
-//                 },
-//                 {
-//                     projection: {
-//                         password: 0
-//                     }
-//                 }
-//             )
-//             .then((user) => {
-//                 console.log(user)
-//                 return cb(null, user)
-//             }).catch((error) => {
-//                 return cb(error)
-//             })
-//     });
-// });
-
-module.exports = passport
+module.exports = passport;

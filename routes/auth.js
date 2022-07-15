@@ -8,16 +8,18 @@ const app_name = process.env.APP_NAME
 
 /* GET home page. */
 router.get('/login', function (req, res, next) {
+    let message = req.flash('message');
     res.render('auth/login', {
         title: `Login | ${app_name}`,
         noHeader: true,
         noFooter: true,
         app_name,
+        message
     });
 });
 
 router.get('/signup', function (req, res, next) {
-    let message = req.flash('message')
+    let message = req.flash('message');
     res.render('auth/signup', {
         title: `Signup | ${app_name}`,
         noHeader: true,
@@ -51,7 +53,12 @@ router.post('/signup', function (req, res, next) {
 
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/login',
+    failureFlash: {
+        type: 'messge',
+        message: 'Invalid email or password'
+    },
+    failureMessage: true
 }));
 
 router.get('/logout', function (req, res, next) {

@@ -8,6 +8,7 @@
                         <h3>Login to <span>{{app_name}}</span></h3>
                         {{!-- <p>To continue please Login to the {{app_name}}</p> --}}
                     </div>
+                    {{#if message}}<p class="error">{{message}}</p>{{/if}}
                     <form action="/login" method="post" role="form" class="log-form">
                         <div class="form-group">
                             {{!-- Email: --}}
