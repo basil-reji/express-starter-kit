@@ -35,13 +35,13 @@ passport.use(new LocalStrategy(
                             if (status) {
                                 return done(null, user);
                             } else {
-                                return done(null, false, req.flash('message', 'Paasword is not correct'));
+                                return done(null, false, req.flash('message', 'Incorrect password'));
                             }
                         }).catch((error) => {
                             return done(error)
                         });
                 } else {
-                    return done(null, false, req.flash('message','The user email entered is not with our records'));
+                    return done(null, false, req.flash('message','Incorrect Email'));
                 }
             }).catch((error) => {
                 return done(error)

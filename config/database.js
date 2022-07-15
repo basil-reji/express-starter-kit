@@ -26,7 +26,8 @@ module.exports.models = {
         email: '',
         phone: null,
         password: null,
-        user_type: 'user',
+        type: 'user',
+        access: {},
         primary_address:{},
         other_address:[],
         flags:{}
