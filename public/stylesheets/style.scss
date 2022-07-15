@@ -25,7 +25,7 @@ html {
     background-color: $color_4;
 }
 
-body{
+body {
     font-family: $font_family_2;
     background-color: $background_color_2;
     display: flex;
@@ -54,30 +54,39 @@ h6 {
     font-family: $font_family_1;
 }
 
-.btn{
+.btn {
     font-size: 1rem;
     color: $color_1;
     background-color: $color_2;
     border: none;
-    padding: 0.4rem 1.5rem;
+    // padding: 0.4rem 1.5rem;
     border-radius: 0.25rem;
     transition: all 0.3s ease;
 
-    &:hover{
+    &:hover,
+    &:active,
+    &:focus {
+        box-shadow: none;
+        color: $color_1;
+        background-color: $color_2;
+    }
+
+    &:hover {
         color: $color_1;
         background-color: $color_3;
     }
+
 }
 
-main{
+main {
     width: 100%;
 }
 
-.box-shadow{
+.box-shadow {
     box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
 }
 
-section{
+section {
     width: 100%;
     min-height: 10vh;
     padding: 2rem;

@@ -40,14 +40,14 @@
         margin: 0 1rem;
     }
 
-    ul {
+    .nav-items {
         margin: 0;
         padding: 0;
         display: flex;
         list-style: none;
         align-items: center;
 
-        li {
+        .nav-item {
             position: relative;
 
             a {

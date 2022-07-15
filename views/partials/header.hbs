@@ -6,16 +6,38 @@
         <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
         <nav id="navbar" class="navbar">
-            <ul>
-                <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+            <ul class="nav-items">
+                <li class="nav-item">
+                    <a class="nav-link scrollto active" href="#hero">Home</a>
+                </li>
             </ul>
-            <a class="btn" href="/login">Login</a>
-            <div class="harmburger">
-                <div class="lin"></div>
-                <div class="lin"></div>
-                <div class="lin"></div>
+
+            {{#if user}}
+                <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    My Account
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
+                    <h6 class="dropdown-header">{{user.name}}</h6>
+                    <div class="dropdown-divider"></div>
+                    <li><a class="dropdown-item" href="#">My Account</a></li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                </ul>
             </div>
-        </nav><!-- .navbar -->
+            {{else}}
+                <a class="btn" href="/login">Login</a>
+            {{/if}}
+
+        </nav>
+    </div>
+
+    <div class="harmburger">
+        <div class="lin"></div>
+        <div class="lin"></div>
+        <div class="lin"></div>
+    </div>
+    </nav><!-- .navbar -->
 
     </div>
 </header><!-- End Header -->

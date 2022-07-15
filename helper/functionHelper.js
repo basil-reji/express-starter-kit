@@ -1,5 +1,5 @@
 module.exports = {
-    createUUID: () => {
+    generateUUID: () => {
         var dt = new Date().getTime();
         var uuid = "xxxxyyxxyyxxyyyy".replace(/[xy]/g, function (c) {
             var r = (dt + Math.random() * 16) % 16 | 0;
@@ -7,6 +7,10 @@ module.exports = {
             return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
         });
         return uuid;
+    },
+    generateOTP: () => {
+        var otp = Math.floor(100000 + Math.random() * 999999)
+        return otp;
     },
     changeDateType: (date) => {
         const yyyy = date.getFullYear();

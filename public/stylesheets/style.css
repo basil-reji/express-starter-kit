@@ -56,9 +56,13 @@ h6 {
   color: #DFF6FF;
   background-color: #47B5FF;
   border: none;
-  padding: 0.4rem 1.5rem;
   border-radius: 0.25rem;
   transition: all 0.3s ease;
+}
+.btn:hover, .btn:active, .btn:focus {
+  box-shadow: none;
+  color: #DFF6FF;
+  background-color: #47B5FF;
 }
 .btn:hover {
   color: #DFF6FF;
@@ -120,17 +124,17 @@ section {
 .navbar .btn {
   margin: 0 1rem;
 }
-.navbar ul {
+.navbar .nav-items {
   margin: 0;
   padding: 0;
   display: flex;
   list-style: none;
   align-items: center;
 }
-.navbar ul li {
+.navbar .nav-items .nav-item {
   position: relative;
 }
-.navbar ul li a {
+.navbar .nav-items .nav-item a {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -140,21 +144,21 @@ section {
   white-space: nowrap;
   transition: 0.3s;
 }
-.navbar ul li a i {
+.navbar .nav-items .nav-item a i {
   font-size: 1rem;
   line-height: 0;
   margin-left: 5px;
 }
-.navbar ul li a:hover {
+.navbar .nav-items .nav-item a:hover {
   color: #47B5FF;
 }
-.navbar ul li a:hover > a {
+.navbar .nav-items .nav-item a:hover > a {
   color: #47B5FF;
 }
-.navbar ul li a.active {
+.navbar .nav-items .nav-item a.active {
   color: #47B5FF;
 }
-.navbar ul li a.active:focus {
+.navbar .nav-items .nav-item a.active:focus {
   color: #47B5FF;
 }
 
@@ -191,7 +195,6 @@ section {
   .harmburger {
     display: block;
   }
-
   .navbar ul {
     display: none;
   }

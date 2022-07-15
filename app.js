@@ -41,7 +41,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // express-session setup
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: parseInt(process.env.SESSION_MAX_AGE) },
+    name: process.env.SESSION_NAME,
+    cookie: {
+        httpOnly: true,
+        secure: true,
+        sameSite: true,
+        maxAge: parseInt(process.env.SESSION_MAX_AGE)
+    },
     store: db.get(),
     resave: true,
     saveUninitialized: true
