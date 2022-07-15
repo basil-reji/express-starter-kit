@@ -1,0 +1,33 @@
+<aside id="sidebar">
+    <div id="shead">
+        <div id="slogo">
+            <i class="bi bi-circle"></i>
+        </div>
+        <!-- <h4>Admin</h4> -->
+    </div>
+    <div id="scont">
+        <ul>
+            <li>
+                <a href="/admin" {{#if dashboard_page}}class="active"{{/if}}>
+                    <i class="ri-dashboard-3-line sico"></i>
+                    <h5>Dashboard</h5>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/messages" {{#if messages_page}}class="active"{{/if}}>
+                    <i class="ri-message-3-line sico"></i>
+                    <h5>Messages</h5>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/admins" {{#if admin_page}}class="active"{{/if}}>
+                    <i class="ri-user-line sico"></i>
+                    <h5>Admins</h5>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="sfoot">
+        Made by &nbsp<a href="http://basilreji.me" target="_blank" rel="noopener noreferrer"><strong>BR</strong></a>
+    </div>
+</aside>

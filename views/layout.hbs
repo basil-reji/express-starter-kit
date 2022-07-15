@@ -15,27 +15,41 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
+    {{!-- remixicon --}}
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
     {{!-- Data Aos --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
         integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    
+
+    {{#if user.permission.admin}}
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    {{else}}
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    {{/if}}
 
 </head>
 
 <body>
     {{#if noHeader}}
+    {{else if user.permission.admin}}
+    {{>admin/sidebar}}
+    {{>admin/header}}
     {{else}}
     {{>header}}
     {{/if}}
 
-    <main id="main">
+    <main id="main" {{#if user.permission.admin}}class="shrink"{{/if}} >
         {{{body}}}
+        {{#if user.permission.admin}}
+        {{>admin/footer}}
+        {{/if}}
     </main>
 
     {{#if noFooter}}
+    {{else if user.permission.admin}}
     {{else}}
     {{>footer}}
     {{/if}}
@@ -68,8 +82,11 @@
         integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
-    {{!--
-    <script src="/javascripts/script.js"></script> --}}
+    {{#if user.permission.admin}}
+    <script src="/javascripts/admin.js"></script>
+    {{else}}
+    <script src="/javascripts/script.js"></script>
+    {{/if}}
 </body>
 
 </html>

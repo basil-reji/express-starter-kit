@@ -4,7 +4,7 @@ const db = require('./database');
 const bcrypt = require('bcrypt');
 const ObjectId = require('mongodb').ObjectId;
 
-passport.use(new LocalStrategy(
+passport.use('local-login', new LocalStrategy(
     {
         usernameField: 'email',
         passwordField: 'password',

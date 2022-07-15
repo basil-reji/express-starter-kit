@@ -1,0 +1,173 @@
+#sidebar {
+    width: 15%;
+    height: 100vh;
+    position: fixed;
+    padding: 0.5rem 0.9rem;
+    float: left;
+    z-index: 11;
+    color: $color_2;
+    background-color: $color_4;
+    box-shadow: 3.4px 0px 10px rgba(0, 0, 0, 0.05),
+        27px 0px 80px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    #shead {
+        height: 2rem;
+        margin: 1rem 0rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #slogo {
+            font-size: 1.5rem;
+            transform: translate(0%, -20%);
+            transition: all 0.3s ease-in-out;
+        }
+
+        transition: all 0.3s ease-in-out;
+    }
+
+    #scont {
+        margin: auto 0;
+        ul {
+            list-style: none;
+            text-decoration: none;
+            padding: 0;
+            li {
+                // background-color: $color3;
+                a {
+                    padding: 0rem 0.8rem;
+                    height: 2.7rem;
+                    margin: 0.5rem 0rem;
+                    font-family: $font_family_1;
+                    color: $color_2;
+                    border-radius: 0.5rem;
+                    text-decoration: none;
+                    display: flex;
+                    align-items: center;
+                    border: 2px solid rgba($color: $color_1, $alpha: 0);
+
+                    transition: 0.3s ease-in-out;
+                    transition-property: background-color,border, box-shadow;
+
+                    .sico {
+                        font-size: 1rem;
+                        transition: all 0.3s ease-in-out;
+                    }
+
+                    h5 {
+                        font-weight: 500;
+                        font-size: 1rem;
+                        margin: 0rem 1rem;
+                        transition: all 0.3s ease-in-out;
+                    }
+
+                    &:hover,
+                    &:active,
+                    &:focus {
+                        color: $color_1;
+                    }
+
+                    &:hover,
+                    &.active {
+                        .sico,
+                        h5 {
+                            color: $color_1;
+                        }
+
+                        background-color: rgba($color: $color_2, $alpha: 0.8);
+                        border: 2px solid rgba($color: $color_2, $alpha: 0.05);
+                        box-shadow: 0px 4.02px 34.17px 0px rgba(0, 0, 0, 0.05);
+                    }
+                }
+            }
+        }
+    }
+
+    #sfoot{
+        height: 2rem;
+        margin: 1rem 0rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+
+        color: $color_2;
+
+        a{
+            text-decoration: none;
+            color: $color_2;
+            transition: all 0.3s ease;
+
+            &:hover{
+                color: $color_2;
+            }
+
+            &:active, &:focus{
+                text-decoration: none;
+                color: $color_2;
+            }
+        }
+    }
+
+    &.close {
+        padding: 0.5rem 1rem;
+        width: 5rem;
+
+        #scont {
+            ul {
+                li {
+                    a {
+                        padding: 0rem 0.7rem;
+                        .sico {
+                            font-size: 1.5rem;
+                        }
+
+                        h5 {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        #sfoot{
+            color: transparent;
+            a{
+                display: none;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1080px) {
+    #sidebar {
+        width: 15rem;
+
+        #scont{
+            margin: 1rem 0rem;
+            margin-bottom: auto;
+        }
+        
+        &.close {
+            transform: translateX(-102%);
+            #scont {
+                ul {
+                    li {
+                        a {    
+                            h5 {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

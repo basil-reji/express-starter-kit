@@ -97,6 +97,6 @@ section {
     position: relative;
 }
 
-@import './haf/header';
-@import './haf/footer';
-@import './pages/auth';
+@import './user/haf/header';
+@import './user/haf/footer';
+@import './user/pages/auth';

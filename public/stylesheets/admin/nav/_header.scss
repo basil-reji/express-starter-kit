@@ -1,0 +1,83 @@
+#header {
+    padding: 0rem 1.5rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: calc(100% - 5rem);
+    height: 4rem;
+    background-color: $background_color_1;
+    box-shadow: 0px 12.5px 10px rgba(0, 0, 0, 0.025),
+        0px 100px 80px rgba(0, 0, 0, 0.04);
+
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    transition: all 0.3s ease-in-out;
+
+    #harmburger,
+    .harmburger {
+        width: 2rem;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease-in-out;
+        div {
+            margin: 0.2rem 0rem;
+            width: 2rem;
+            height: 0.2rem;
+            border-radius: 1rem;
+            background-color: $color_4;
+            transition: all 0.3s ease-in-out;
+        }
+        &.active {
+            div {
+                width: 2rem;
+
+                &:nth-child(1) {
+                    width: 1.8rem;
+                }
+                &:nth-child(2) {
+                    width: 1rem;
+                }
+                &:nth-child(3) {
+                    width: 1.5rem;
+                }
+            }
+        }
+    }
+
+    nav {
+        margin-left: auto;
+
+        .user{
+            cursor: pointer;
+            font-family: $font_family_2;
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: $color_3;
+        }
+    }
+
+    &.shrink {
+        width: 85%;
+    }
+}
+
+@media only screen and (max-width: 1080px) {
+    #header {
+        width: 100%;
+        .harmburger {
+            align-items: flex-end;
+        }
+
+        flex-direction: row-reverse;
+
+        nav {
+            margin-right: 1rem;
+        }
+
+        &.shrink {
+            width: 100%;
+        }        
+    }
+}

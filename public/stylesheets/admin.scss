@@ -1,0 +1,167 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+@import "./theme";
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: $background_color_3;
+    display: flex;
+    flex-direction: column;
+    font-family: $font_family_2;
+}
+
+@import "./admin/nav/sidebar";
+@import "./admin/nav/header";
+@import "./admin/nav/footer";
+
+:root {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    background: #f6f9ff;
+    color: #444444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font_family_1;
+}
+
+#main {
+    width: calc(100% - 5rem);
+    position: absolute;
+    min-height: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    padding-top: 4rem;
+    overflow-x: hidden;
+    transition: all 0.3s ease-in-out;
+
+    display: flex;
+    flex-direction: column;
+    &.shrink {
+        width: 85%;
+    }
+}
+
+@media only screen and (max-width: 1080px) {
+    #main {
+        width: 100%;
+
+        &.shrink {
+            width: 100%;
+        }
+    }
+}
+
+section{
+    width: 100%;
+    padding: 2rem
+}
+
+.forms {
+    background-color: $white;
+    padding: 2rem;
+    box-shadow: 3.4px 0px 10px rgba(0, 0, 0, 0.05),
+        27px 0px 80px rgba(0, 0, 0, 0.1);
+
+    .error{
+        text-align: center;
+        color: $color_error;
+    }
+
+    .log_head{
+        text-align: center;
+        margin-bottom: 2.5rem;
+        h3{
+            color: $color_4;
+            // margin-bottom: rem;
+
+            span{
+                color: $color_2;
+                font-weight: 700;
+            }
+        }
+
+        p{
+            color: rgba($color: $color_4, $alpha: 0.5);
+        }
+    }
+
+    form {
+        margin: 0.5rem 0rem;
+        .form-group {
+            margin: 1rem 0rem;
+            margin-top: 1.5rem;
+            color: rgba($color: $color_4, $alpha: 0.9);
+
+
+            input {
+                height: 2.7rem;
+                border-radius: 0.1rem;
+                border: 1px solid rgba($color: $color_4, $alpha: 0.1);
+                color: $color_4;
+                font-family: $font_family_2;
+
+                &:active,
+                &:focus {
+                    box-shadow: none;
+                    border: 1px solid $color_2;
+                }
+
+                &::placeholder{
+                    color: rgba($color: $color_4, $alpha: 0.4);
+                }
+            }
+
+        }
+
+        .forgot{
+            text-align: right;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            text-decoration: underline;
+            color: rgba($color: $color_4, $alpha: 0.8);
+
+            a{
+                color: rgba($color: $color_4, $alpha: 0.5);;
+            }
+        }
+
+        button{
+            width: 100%;
+            background-color: $color_2;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            margin: 1rem 0rem;
+            color: $color_1;
+            transition: all 0.3s ease-in-out;
+
+            &:hover{
+                background-color: $color_4;
+            }
+        }
+    }
+
+    .log_footer{
+        text-align: center;
+        font-size: 0.8rem;
+
+        a{
+            font-weight: 600;
+        }
+    }
+}
+
+@import "./admin/dashboard";
