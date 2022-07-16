@@ -1,27 +1,27 @@
-<aside id="sidebar">
+<aside id="sidebar" class="close">
     <div id="shead">
         <div id="slogo">
-            <i class="bi bi-circle"></i>
+            <a href="/"><i class="ri-sound-module-line"></i></a>
         </div>
-        <!-- <h4>Admin</h4> -->
+        <h4>Admin</h4>
     </div>
     <div id="scont">
         <ul>
             <li>
                 <a href="/admin" {{#if dashboard_page}}class="active"{{/if}}>
-                    <i class="ri-dashboard-3-line sico"></i>
+                    <i class="ri-dashboard-{{#if dashboard_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Dashboard</h5>
                 </a>
             </li>
             <li>
                 <a href="/admin/messages" {{#if messages_page}}class="active"{{/if}}>
-                    <i class="ri-message-3-line sico"></i>
+                    <i class="ri-message-3-{{#if message_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Messages</h5>
                 </a>
             </li>
             <li>
                 <a href="/admin/admins" {{#if admin_page}}class="active"{{/if}}>
-                    <i class="ri-user-line sico"></i>
+                    <i class="ri-user-3-{{#if admin_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Admins</h5>
                 </a>
             </li>

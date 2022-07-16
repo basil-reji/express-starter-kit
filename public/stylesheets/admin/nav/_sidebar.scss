@@ -12,6 +12,8 @@
     transition: all 0.3s ease-in-out;
 
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     overflow: hidden;
 
@@ -23,10 +25,26 @@
         justify-content: center;
         align-items: center;
 
+        a{
+            text-decoration: none;
+            color: $color_1;
+
+            &:hover, &:active, &:focus{
+                color: $color_2;
+            }
+        }
+
         #slogo {
+            color: $color_1;
             font-size: 1.5rem;
             transform: translate(0%, -20%);
             transition: all 0.3s ease-in-out;
+        }
+
+        h4{
+            margin: 0rem 0.5rem;
+            font-size: 1.3rem;
+            transform: translate(0%, -25%);
         }
 
         transition: all 0.3s ease-in-out;
@@ -34,6 +52,7 @@
 
     #scont {
         margin: auto 0;
+        width: 100%;
         ul {
             list-style: none;
             text-decoration: none;
@@ -54,16 +73,16 @@
 
                     transition: 0.3s ease-in-out;
                     transition-property: background-color,border, box-shadow;
-
+                    
                     .sico {
-                        font-size: 1rem;
+                        font-size: 1.3rem;
                         transition: all 0.3s ease-in-out;
                     }
 
                     h5 {
                         font-weight: 500;
                         font-size: 1rem;
-                        margin: 0rem 1rem;
+                        margin: 0rem 0.85rem;
                         transition: all 0.3s ease-in-out;
                     }
 
@@ -119,6 +138,12 @@
     &.close {
         padding: 0.5rem 1rem;
         width: 5rem;
+
+        #shead{
+            h4{
+                display: none;
+            }
+        }
 
         #scont {
             ul {

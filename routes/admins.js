@@ -5,7 +5,23 @@ const app_name = process.env.APP_NAME
 
 /* GET Admin listing. */
 router.get('/', function (req, res, next) {
-    res.send('respond with admin resource');
+    user = {
+        permission: {
+            admin: true
+        }
+    }
+    res.render('admin/dashboard', {
+        title: app_name,
+        page_title: 'Dashboard',
+        breadcrumbs: [
+            {
+                page_name: 'Dashboard',
+                active: true,
+            }
+        ],
+        dashboard_page: true,
+        user
+    });
 });
 
 router.get('/add-admin', function (req, res, next) {

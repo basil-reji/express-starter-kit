@@ -44,12 +44,14 @@ h6 {
     top: 0;
     right: 0;
     z-index: 1;
-    padding-top: 4rem;
+    padding: 0rem 2rem;
+    padding-top: 5rem;
     overflow-x: hidden;
     transition: all 0.3s ease-in-out;
 
     display: flex;
     flex-direction: column;
+
     &.shrink {
         width: 85%;
     }
@@ -58,6 +60,7 @@ h6 {
 @media only screen and (max-width: 1080px) {
     #main {
         width: 100%;
+        padding: 0rem 1rem;
 
         &.shrink {
             width: 100%;
@@ -65,103 +68,48 @@ h6 {
     }
 }
 
-section{
+section {
     width: 100%;
-    padding: 2rem
 }
 
-.forms {
-    background-color: $white;
-    padding: 2rem;
-    box-shadow: 3.4px 0px 10px rgba(0, 0, 0, 0.05),
-        27px 0px 80px rgba(0, 0, 0, 0.1);
+.pagetitle {
+    margin-bottom: 10px;
 
-    .error{
-        text-align: center;
-        color: $color_error;
+    h2 {
+        font-size: 24px;
+        margin-bottom: 0;
+        font-weight: 600;
+        color: rgba($color: $color_4, $alpha: 0.9);
     }
 
-    .log_head{
-        text-align: center;
-        margin-bottom: 2.5rem;
-        h3{
-            color: $color_4;
-            // margin-bottom: rem;
+    .breadcrumb {
+        font-size: 14px;
+        font-family: "Nunito", sans-serif;
+        color: rgba($color: $color_4, $alpha: 0.5);
+        font-weight: 600;
 
-            span{
-                color: $color_2;
-                font-weight: 700;
-            }
-        }
-
-        p{
+        a {
             color: rgba($color: $color_4, $alpha: 0.5);
-        }
-    }
+            transition: 0.3s;
+            text-decoration: none;
 
-    form {
-        margin: 0.5rem 0rem;
-        .form-group {
-            margin: 1rem 0rem;
-            margin-top: 1.5rem;
-            color: rgba($color: $color_4, $alpha: 0.9);
-
-
-            input {
-                height: 2.7rem;
-                border-radius: 0.1rem;
-                border: 1px solid rgba($color: $color_4, $alpha: 0.1);
-                color: $color_4;
-                font-family: $font_family_2;
-
-                &:active,
-                &:focus {
-                    box-shadow: none;
-                    border: 1px solid $color_2;
-                }
-
-                &::placeholder{
-                    color: rgba($color: $color_4, $alpha: 0.4);
-                }
-            }
-
-        }
-
-        .forgot{
-            text-align: right;
-            margin-bottom: 1rem;
-            font-size: 0.8rem;
-            text-decoration: underline;
-            color: rgba($color: $color_4, $alpha: 0.8);
-
-            a{
-                color: rgba($color: $color_4, $alpha: 0.5);;
+            &:hover {
+                color: rgba($color: $color_4, $alpha: 0.75);
             }
         }
 
-        button{
-            width: 100%;
-            background-color: $color_2;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            margin: 1rem 0rem;
-            color: $color_1;
-            transition: all 0.3s ease-in-out;
-
-            &:hover{
-                background-color: $color_4;
+        .breadcrumb-item {
+            &::before {
+                color: rgba($color: $color_4, $alpha: 0.5);
             }
         }
-    }
 
-    .log_footer{
-        text-align: center;
-        font-size: 0.8rem;
-
-        a{
+        .active {
+            color: rgba($color: $color_4, $alpha: 0.85);
             font-weight: 600;
         }
     }
 }
 
+@import './admin/defaults';
 @import "./admin/dashboard";

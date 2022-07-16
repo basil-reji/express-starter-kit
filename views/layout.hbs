@@ -41,8 +41,31 @@
     {{>header}}
     {{/if}}
 
-    <main id="main" {{#if user.permission.admin}}class="shrink"{{/if}} >
+    <main id="main">
+        {{#if user.permission.admin}}
+        <div class="pagetitle">
+            <h2>{{page_title}}</h2>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="admin/">Admin</a>
+                    </li>
+                    {{#each breadcrumbs}}
+                    <li class="breadcrumb-item {{#if this.active}}active{{/if}}">
+                        {{#if this.page_link}}
+                        <a href="/admin{{this.page_link}}">{{this.page_name}}</a>
+                        {{else}}
+                        {{this.page_name}}
+                        {{/if}}
+                    </li>
+                    {{/each}}
+                </ol>
+            </nav>
+        </div>
+        {{/if}}
+
         {{{body}}}
+
         {{#if user.permission.admin}}
         {{>admin/footer}}
         {{/if}}

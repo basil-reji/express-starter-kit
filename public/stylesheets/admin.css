@@ -24,6 +24,8 @@ body {
   box-shadow: 3.4px 0px 10px rgba(0, 0, 0, 0.05), 27px 0px 80px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   overflow: hidden;
 }
@@ -36,13 +38,27 @@ body {
   align-items: center;
   transition: all 0.3s ease-in-out;
 }
+#sidebar #shead a {
+  text-decoration: none;
+  color: #DFF6FF;
+}
+#sidebar #shead a:hover, #sidebar #shead a:active, #sidebar #shead a:focus {
+  color: #47B5FF;
+}
 #sidebar #shead #slogo {
+  color: #DFF6FF;
   font-size: 1.5rem;
   transform: translate(0%, -20%);
   transition: all 0.3s ease-in-out;
 }
+#sidebar #shead h4 {
+  margin: 0rem 0.5rem;
+  font-size: 1.3rem;
+  transform: translate(0%, -25%);
+}
 #sidebar #scont {
   margin: auto 0;
+  width: 100%;
 }
 #sidebar #scont ul {
   list-style: none;
@@ -64,13 +80,13 @@ body {
   transition-property: background-color, border, box-shadow;
 }
 #sidebar #scont ul li a .sico {
-  font-size: 1rem;
+  font-size: 1.3rem;
   transition: all 0.3s ease-in-out;
 }
 #sidebar #scont ul li a h5 {
   font-weight: 500;
   font-size: 1rem;
-  margin: 0rem 1rem;
+  margin: 0rem 0.85rem;
   transition: all 0.3s ease-in-out;
 }
 #sidebar #scont ul li a:hover, #sidebar #scont ul li a:active, #sidebar #scont ul li a:focus {
@@ -111,6 +127,9 @@ body {
 #sidebar.close {
   padding: 0.5rem 1rem;
   width: 5rem;
+}
+#sidebar.close #shead h4 {
+  display: none;
 }
 #sidebar.close #scont ul li a {
   padding: 0rem 0.7rem;
@@ -190,15 +209,33 @@ body {
 #header .harmburger.active div:nth-child(3) {
   width: 1.5rem;
 }
-#header nav {
-  margin-left: auto;
+#header .header-nav ul {
+  list-style: none;
 }
-#header nav .user {
-  cursor: pointer;
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 0.8rem;
-  color: #1363DF;
+#header .header-nav > ul {
+  margin: 0;
+  padding: 0;
+}
+#header .header-nav .nav-icon {
+  font-size: 1.2rem;
+  color: #DFF6FF;
+}
+#header .header-nav .nav-profile {
+  color: rgba(6, 40, 61, 0.5);
+}
+#header .header-nav .nav-profile img {
+  max-height: 1.5rem;
+}
+#header .header-nav .nav-profile span {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+#header .header-nav .badge-number {
+  position: absolute;
+  inset: 4px 6px auto auto;
+  font-weight: normal;
+  font-size: 11px;
+  padding: 3px 6px;
 }
 #header.shrink {
   width: 85%;
@@ -211,9 +248,6 @@ body {
   }
   #header .harmburger {
     align-items: flex-end;
-  }
-  #header nav {
-    margin-right: 1rem;
   }
   #header.shrink {
     width: 100%;
@@ -250,7 +284,8 @@ h6 {
   top: 0;
   right: 0;
   z-index: 1;
-  padding-top: 4rem;
+  padding: 0rem 2rem;
+  padding-top: 5rem;
   overflow-x: hidden;
   transition: all 0.3s ease-in-out;
   display: flex;
@@ -263,6 +298,7 @@ h6 {
 @media only screen and (max-width: 1080px) {
   #main {
     width: 100%;
+    padding: 0rem 1rem;
   }
   #main.shrink {
     width: 100%;
@@ -270,13 +306,43 @@ h6 {
 }
 section {
   width: 100%;
-  padding: 2rem;
+}
+
+.pagetitle {
+  margin-bottom: 10px;
+}
+.pagetitle h2 {
+  font-size: 24px;
+  margin-bottom: 0;
+  font-weight: 600;
+  color: rgba(6, 40, 61, 0.9);
+}
+.pagetitle .breadcrumb {
+  font-size: 14px;
+  font-family: "Nunito", sans-serif;
+  color: rgba(6, 40, 61, 0.5);
+  font-weight: 600;
+}
+.pagetitle .breadcrumb a {
+  color: rgba(6, 40, 61, 0.5);
+  transition: 0.3s;
+  text-decoration: none;
+}
+.pagetitle .breadcrumb a:hover {
+  color: rgba(6, 40, 61, 0.75);
+}
+.pagetitle .breadcrumb .breadcrumb-item::before {
+  color: rgba(6, 40, 61, 0.5);
+}
+.pagetitle .breadcrumb .active {
+  color: rgba(6, 40, 61, 0.85);
+  font-weight: 600;
 }
 
 .forms {
   background-color: #fff;
   padding: 2rem;
-  box-shadow: 3.4px 0px 10px rgba(0, 0, 0, 0.05), 27px 0px 80px rgba(0, 0, 0, 0.1);
+  box-shadow: 3.4px 0px 0.8rem rgba(0, 0, 0, 0.05), 27px 0px 80px rgba(0, 0, 0, 0.1);
 }
 .forms .error {
   text-align: center;
@@ -348,6 +414,116 @@ section {
   font-weight: 600;
 }
 
+.card {
+  border: none;
+  border-radius: 0.1rem;
+  box-shadow: 0px 0 30px rgba(6, 40, 61, 0.05);
+}
+.card .card-header,
+.card .card-footer {
+  border-color: #DFF6FF;
+  background-color: #fff;
+  color: rgba(71, 181, 255, 0.5);
+  padding: 1rem;
+}
+.card .card-title {
+  padding: 1.2rem 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgba(6, 40, 61, 0.85);
+  font-family: "Poppins", sans-serif;
+}
+.card .card-title span {
+  color: rgba(6, 40, 61, 0.5);
+  font-size: 1rem;
+  font-weight: 400;
+}
+.card .card-body {
+  padding: 0 1.2rem 1.2rem 1.2rem;
+}
+.card .card-img-overlay {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.dropdown-menu {
+  border-radius: 0.1rem;
+  padding: 0.8rem 0;
+  animation-name: dropdown-animate;
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  border: 0;
+  box-shadow: 0 0.2rem 1.8rem 0 rgba(6, 40, 61, 0.1);
+}
+.dropdown-menu .dropdown-footer a {
+  color: #252A34;
+  text-decoration: underline;
+}
+.dropdown-menu .dropdown-footer a:hover {
+  text-decoration: none;
+}
+.dropdown-menu .dropdown-divider {
+  color: rgba(71, 181, 255, 0.2);
+  margin: 0;
+}
+.dropdown-menu .dropdown-item {
+  font-size: 14px;
+  padding: 0.5rem 1rem;
+  transition: 0.3s;
+}
+.dropdown-menu .dropdown-item i {
+  margin-right: 0.8rem;
+  font-size: 18px;
+  line-height: 0;
+}
+.dropdown-menu .dropdown-item:hover {
+  background-color: #DFF6FF;
+}
+
+.dropdown-menu .dropdown-header,
+.dropdown-menu .dropdown-footer {
+  text-align: center;
+  font-size: 1rem;
+  padding: 0.1rem 1.3rem;
+}
+.dropdown-menu .dropdown-header h6,
+.dropdown-menu .dropdown-footer h6 {
+  margin: 0rem;
+  font-family: "Open Sans", sans-serif;
+  color: rgba(71, 181, 255, 0.85);
+}
+.dropdown-menu .dropdown-header p,
+.dropdown-menu .dropdown-footer p {
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  color: rgba(6, 40, 61, 0.25);
+}
+
+@media (min-width: 768px) {
+  .dropdown-menu-arrow::before {
+    content: "";
+    width: 13px;
+    height: 13px;
+    background: #fff;
+    position: absolute;
+    top: -7px;
+    right: 20px;
+    transform: rotate(45deg);
+    border-top: 1px solid #fafafa;
+    border-left: 1px solid #fafafa;
+  }
+}
+@keyframes dropdown-animate {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+  0% {
+    opacity: 0;
+  }
+}
 /*--------------------------------------------------------------
   # Dashboard
   --------------------------------------------------------------*/

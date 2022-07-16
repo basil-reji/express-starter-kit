@@ -21,6 +21,7 @@
         display: flex;
         flex-direction: column;
         transition: all 0.3s ease-in-out;
+
         div {
             margin: 0.2rem 0rem;
             width: 2rem;
@@ -29,6 +30,7 @@
             background-color: $color_4;
             transition: all 0.3s ease-in-out;
         }
+
         &.active {
             div {
                 width: 2rem;
@@ -36,9 +38,11 @@
                 &:nth-child(1) {
                     width: 1.8rem;
                 }
+
                 &:nth-child(2) {
                     width: 1rem;
                 }
+
                 &:nth-child(3) {
                     width: 1.5rem;
                 }
@@ -46,17 +50,44 @@
         }
     }
 
-    nav {
-        margin-left: auto;
-
-        .user{
-            cursor: pointer;
-            font-family: $font_family_2;
-            font-weight: 500;
-            font-size: 0.8rem;
-            color: $color_3;
+    .header-nav {
+        ul {
+            list-style: none;
         }
+
+        &>ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            color: $color_1;
+        }
+
+        .nav-profile {
+            color: rgba($color: $color_4, $alpha: 0.5);
+
+            img {
+                max-height: 1.5rem;
+            }
+
+            span {
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+        }
+
+        .badge-number {
+            position: absolute;
+            inset: 4px 6px auto auto;
+            font-weight: normal;
+            font-size: 11px;
+            padding: 3px 6px;
+        }
+
     }
+
 
     &.shrink {
         width: 85%;
@@ -66,18 +97,19 @@
 @media only screen and (max-width: 1080px) {
     #header {
         width: 100%;
+
         .harmburger {
             align-items: flex-end;
         }
 
         flex-direction: row-reverse;
 
-        nav {
-            margin-right: 1rem;
-        }
+        // nav {
+        //     margin-right: 1rem;
+        // }
 
         &.shrink {
             width: 100%;
-        }        
+        }
     }
 }
