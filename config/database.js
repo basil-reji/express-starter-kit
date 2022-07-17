@@ -27,14 +27,16 @@ module.exports.models = {
         email: '',
         phone: null,
         password: null,
-        type: 'user',
+        role: 'user',
+        profile:{
+            profile_image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
+            primary_address: {}
+        },
         permission: {
             user: true,
             restricted: true,
             full_control: false
         },
-        primary_address: {},
-        other_address: [],
         events: {
             careted: '',
             general: [],
@@ -51,7 +53,11 @@ module.exports.models = {
         email: '',
         phone: null,
         password: null,
-        type: 'admin',
+        role: 'admin',
+        profile:{
+            profile_image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
+            primary_address: {}
+        },
         permission: {
             admin: true,
             control: {
@@ -62,8 +68,6 @@ module.exports.models = {
             },
             full_control: false
         },
-        primary_address: {},
-        other_address: [],
         events: {
             careted: '',
             general: [],
@@ -80,7 +84,11 @@ module.exports.models = {
         email: '',
         phone: null,
         password: null,
-        type: 'super_admin',
+        role: 'super_admin',
+        profile:{
+            profile_image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
+            primary_address: {}
+        },
         permission: {
             admin: true,
             control: {
@@ -93,8 +101,6 @@ module.exports.models = {
             },
             full_control: true
         },
-        primary_address: {},
-        other_address: [],
         events: {
             careted: '',
             general: [],

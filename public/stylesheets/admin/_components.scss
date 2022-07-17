@@ -1,0 +1,53 @@
+.card {
+    border: none;
+    border-radius: 0.1rem;
+    box-shadow: 0px 0 30px rgba($color: $color_4, $alpha: 0.05);
+
+    .card-header,
+    .card-footer {
+        border-color: $color_1;
+        background-color: $white;
+        color: rgba($color: $color_2, $alpha: 0.5);
+        padding: 1rem;
+    }
+
+    .card-title {
+        padding: 1.2rem 0 1rem 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: rgba($color: $color_4, $alpha: 0.85);
+        font-family: "Poppins", sans-serif;
+
+        span {
+            color: rgba($color: $color_4, $alpha: 0.5);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+    }
+
+    .card-body {
+        padding: 0 1.2rem 1.2rem 1.2rem;
+    }
+
+    .card-img-overlay {
+        background-color: rgba(255, 255, 255, 0.6);
+    }
+
+}
+
+.nav-tabs-bordered {
+	border-bottom: 2px solid #ebeef4;
+	.nav-link {
+		margin-bottom: -2px;
+		border: none;
+		color: #2c384e;
+		&.active {
+			background-color: #fff;
+			color: $color_2;
+			border-bottom: 2px solid $color_2;
+		}
+	}
+}
+.nav-tabs-bordered .nav-link:hover, .nav-tabs-bordered .nav-link:focus {
+	color: $color_2;
+}

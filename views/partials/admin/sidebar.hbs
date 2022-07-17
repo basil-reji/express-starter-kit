@@ -8,21 +8,27 @@
     <div id="scont">
         <ul>
             <li>
-                <a href="/admin" {{#if dashboard_page}}class="active"{{/if}}>
+                <a href="/admin/" {{#if dashboard_page}}class="active"{{/if}}>
                     <i class="ri-dashboard-{{#if dashboard_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Dashboard</h5>
                 </a>
             </li>
             <li>
-                <a href="/admin/messages" {{#if messages_page}}class="active"{{/if}}>
+                <a href="/admin/messages/" {{#if messages_page}}class="active"{{/if}}>
                     <i class="ri-message-3-{{#if message_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Messages</h5>
                 </a>
             </li>
             <li>
-                <a href="/admin/admins" {{#if admin_page}}class="active"{{/if}}>
-                    <i class="ri-user-3-{{#if admin_page}}fill{{else}}line{{/if}} sico"></i>
+                <a href="/admin/admins/" {{#if admins_page}}class="active"{{/if}}>
+                    <i class="ri-shield-user-{{#if admins_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Admins</h5>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/account/" {{#if admin_page}}class="active"{{/if}}>
+                    <i class="ri-user-3-{{#if admin_page}}fill{{else}}line{{/if}} sico"></i>
+                    <h5>My Account</h5>
                 </a>
             </li>
         </ul>

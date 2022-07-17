@@ -11,4 +11,7 @@ module.exports = {
     divide: (val1, val2) => {
         return parseInt(val1) / parseInt(val2);
     },
+    capsFirst:(str) =>{
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 };

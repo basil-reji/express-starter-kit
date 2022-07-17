@@ -170,7 +170,7 @@ body {
   width: calc(100% - 5rem);
   height: 4rem;
   background-color: #fafafa;
-  box-shadow: 0px 12.5px 10px rgba(0, 0, 0, 0.025), 0px 100px 80px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 1.9px 2.2px rgba(0, 0, 0, 0.001), 0px 4.6px 5.3px rgba(0, 0, 0, 0.002), 0px 8.6px 10px rgba(0, 0, 0, 0.005), 0px 15.4px 17.9px rgba(0, 0, 0, 0.011), 0px 28.8px 33.4px rgba(0, 0, 0, 0.02), 0px 69px 80px rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   z-index: 10;
@@ -299,6 +299,7 @@ h6 {
   #main {
     width: 100%;
     padding: 0rem 1rem;
+    padding-top: 5rem;
   }
   #main.shrink {
     width: 100%;
@@ -309,7 +310,8 @@ section {
 }
 
 .pagetitle {
-  margin-bottom: 10px;
+  margin: 0rem;
+  margin-bottom: 1rem;
 }
 .pagetitle h2 {
   font-size: 24px;
@@ -337,6 +339,28 @@ section {
 .pagetitle .breadcrumb .active {
   color: rgba(6, 40, 61, 0.85);
   font-weight: 600;
+}
+
+form input, form .form-control {
+  box-shadow: none;
+  border-radius: 0.1rem;
+  margin: 0.25rem;
+  height: 2.5rem;
+}
+form input:active, form input:focus, form .form-control:active, form .form-control:focus {
+  border: 1px solid #47B5FF;
+  box-shadow: none;
+}
+form .btn {
+  background-color: #47B5FF;
+  color: #DFF6FF;
+  border-radius: 0.1rem;
+  transition: all 0.3s ease-in-out;
+}
+form .btn:active, form .btn:hover, form .btn:focus {
+  border: 1px solid #DFF6FF;
+  color: #DFF6FF;
+  background-color: #1363DF;
 }
 
 .forms {
@@ -414,37 +438,6 @@ section {
   font-weight: 600;
 }
 
-.card {
-  border: none;
-  border-radius: 0.1rem;
-  box-shadow: 0px 0 30px rgba(6, 40, 61, 0.05);
-}
-.card .card-header,
-.card .card-footer {
-  border-color: #DFF6FF;
-  background-color: #fff;
-  color: rgba(71, 181, 255, 0.5);
-  padding: 1rem;
-}
-.card .card-title {
-  padding: 1.2rem 0 1rem 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: rgba(6, 40, 61, 0.85);
-  font-family: "Poppins", sans-serif;
-}
-.card .card-title span {
-  color: rgba(6, 40, 61, 0.5);
-  font-size: 1rem;
-  font-weight: 400;
-}
-.card .card-body {
-  padding: 0 1.2rem 1.2rem 1.2rem;
-}
-.card .card-img-overlay {
-  background-color: rgba(255, 255, 255, 0.6);
-}
-
 .dropdown-menu {
   border-radius: 0.1rem;
   padding: 0.8rem 0;
@@ -483,7 +476,7 @@ section {
 .dropdown-menu .dropdown-footer {
   text-align: center;
   font-size: 1rem;
-  padding: 0.1rem 1.3rem;
+  padding: 0.25rem 1.5rem;
 }
 .dropdown-menu .dropdown-header h6,
 .dropdown-menu .dropdown-footer h6 {
@@ -493,6 +486,7 @@ section {
 }
 .dropdown-menu .dropdown-header p,
 .dropdown-menu .dropdown-footer p {
+  margin: 0;
   font-size: 0.85rem;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
@@ -524,6 +518,55 @@ section {
     opacity: 0;
   }
 }
+.card {
+  border: none;
+  border-radius: 0.1rem;
+  box-shadow: 0px 0 30px rgba(6, 40, 61, 0.05);
+}
+.card .card-header,
+.card .card-footer {
+  border-color: #DFF6FF;
+  background-color: #fff;
+  color: rgba(71, 181, 255, 0.5);
+  padding: 1rem;
+}
+.card .card-title {
+  padding: 1.2rem 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgba(6, 40, 61, 0.85);
+  font-family: "Poppins", sans-serif;
+}
+.card .card-title span {
+  color: rgba(6, 40, 61, 0.5);
+  font-size: 1rem;
+  font-weight: 400;
+}
+.card .card-body {
+  padding: 0 1.2rem 1.2rem 1.2rem;
+}
+.card .card-img-overlay {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.nav-tabs-bordered {
+  border-bottom: 2px solid #ebeef4;
+}
+.nav-tabs-bordered .nav-link {
+  margin-bottom: -2px;
+  border: none;
+  color: #2c384e;
+}
+.nav-tabs-bordered .nav-link.active {
+  background-color: #fff;
+  color: #47B5FF;
+  border-bottom: 2px solid #47B5FF;
+}
+
+.nav-tabs-bordered .nav-link:hover, .nav-tabs-bordered .nav-link:focus {
+  color: #47B5FF;
+}
+
 /*--------------------------------------------------------------
   # Dashboard
   --------------------------------------------------------------*/

@@ -61,6 +61,7 @@ h6 {
     #main {
         width: 100%;
         padding: 0rem 1rem;
+        padding-top: 5rem;
 
         &.shrink {
             width: 100%;
@@ -73,7 +74,8 @@ section {
 }
 
 .pagetitle {
-    margin-bottom: 10px;
+    margin: 0rem;
+    margin-bottom: 1rem;
 
     h2 {
         font-size: 24px;
@@ -112,4 +114,5 @@ section {
 }
 
 @import './admin/defaults';
+@import './admin/components';
 @import "./admin/dashboard";
