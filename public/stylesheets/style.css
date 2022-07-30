@@ -195,7 +195,7 @@ section {
   .harmburger {
     display: block;
   }
-  .navbar ul {
+  .navbar .nav-ul {
     display: none;
   }
 }
@@ -218,7 +218,7 @@ section {
   top: 0.5rem;
   right: 1rem;
 }
-.navbar-mobile ul {
+.navbar-mobile .nav-ul {
   display: block;
   position: absolute;
   top: 2.5rem;
@@ -230,12 +230,12 @@ section {
   overflow-y: auto;
   transition: 0.3s;
 }
-.navbar-mobile ul li a {
+.navbar-mobile .nav-ul .nav-li a {
   margin: 0;
   font-size: 1.1rem;
   padding: 0.5rem 1rem;
 }
-.navbar-mobile ul li a.active {
+.navbar-mobile .nav-ul .nav-li a.active {
   color: #DFF6FF;
   background-color: #47B5FF;
 }

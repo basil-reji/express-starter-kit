@@ -124,7 +124,7 @@
         display: block;
     }
 
-    .navbar ul {
+    .navbar .nav-ul {
         display: none;
     }
 }
@@ -150,7 +150,7 @@
         right: 1rem;
     }
 
-    ul {
+    .nav-ul {
         display: block;
         position: absolute;
         top: 2.5rem;
@@ -162,7 +162,7 @@
         overflow-y: auto;
         transition: 0.3s;
 
-        li{
+        .nav-li{
             a{  
                 margin: 0;
                 font-size: 1.1rem;

@@ -6,16 +6,16 @@
         <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
         <nav id="navbar" class="navbar">
-            <ul class="nav-items">
-                <li class="nav-item">
+            <ul class="nav-items nav-ul">
+                <li class="nav-item nav-li">
                     <a class="nav-link scrollto active" href="#hero">Home</a>
                 </li>
             </ul>
 
             {{#if user}}
-                <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     My Account
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
@@ -26,16 +26,16 @@
                 </ul>
             </div>
             {{else}}
-                <a class="btn" href="/login">Login</a>
+            <a class="btn" href="/login">Login</a>
             {{/if}}
 
-        </nav>
-    </div>
+            <div class="harmburger">
+                <div class="lin"></div>
+                <div class="lin"></div>
+                <div class="lin"></div>
+            </div>
 
-    <div class="harmburger">
-        <div class="lin"></div>
-        <div class="lin"></div>
-        <div class="lin"></div>
+        </nav>
     </div>
     </nav><!-- .navbar -->
 
