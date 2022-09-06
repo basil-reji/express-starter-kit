@@ -370,7 +370,7 @@ form .btn:active, form .btn:hover, form .btn:focus {
   background-color: transparent;
   color: #06283D;
   border: 2px solid #06283D;
-  border-radius: 0.5rem;
+  border-radius: 0.1rem;
   transition: all 0.3s ease-in-out;
 }
 .btn:active, .btn:hover, .btn:focus {
@@ -382,7 +382,6 @@ form .btn:active, form .btn:hover, form .btn:focus {
 .forms {
   background-color: #fff;
   padding: 2rem;
-  box-shadow: 3.4px 0px 0.8rem rgba(0, 0, 0, 0.05), 27px 0px 80px rgba(0, 0, 0, 0.1);
 }
 .forms .error {
   text-align: center;
@@ -579,7 +578,8 @@ form .btn:active, form .btn:hover, form .btn:focus {
   border-bottom: 2px solid #47B5FF;
 }
 
-.nav-tabs-bordered .nav-link:hover, .nav-tabs-bordered .nav-link:focus {
+.nav-tabs-bordered .nav-link:hover,
+.nav-tabs-bordered .nav-link:focus {
   color: #47B5FF;
 }
 
@@ -594,6 +594,79 @@ form .btn:active, form .btn:hover, form .btn:focus {
 }
 .btn-ico.blue {
   color: #1363DF;
+}
+
+.forms {
+  background-color: #fff;
+  padding: 2rem;
+  box-shadow: 0px 0 30px rgba(6, 40, 61, 0.1);
+}
+.forms .error {
+  text-align: center;
+  color: #FC4F4F;
+}
+.forms .log_head {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.forms .log_head h3 {
+  color: #06283D;
+}
+.forms .log_head h3 span {
+  color: #47B5FF;
+  font-weight: 700;
+}
+.forms .log_head p {
+  color: rgba(6, 40, 61, 0.5);
+}
+.forms form {
+  margin: 0.5rem 0rem;
+}
+.forms form .form-group {
+  margin: 1rem 0rem;
+  margin-top: 1.5rem;
+  color: rgba(6, 40, 61, 0.9);
+}
+.forms form .form-group .form-control {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  height: 2.5rem;
+  border-radius: 0.1rem;
+  border: 1px solid rgba(6, 40, 61, 0.1);
+  color: #06283D;
+  font-family: "Poppins", sans-serif;
+}
+.forms form .form-group .form-control:active, .forms form .form-group .form-control:focus {
+  box-shadow: none;
+  border: 1px solid #47B5FF;
+}
+.forms form .form-group .form-control::placeholder {
+  color: rgba(6, 40, 61, 0.4);
+}
+.forms form .form-group:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.forms form .btn {
+  width: 100%;
+  border: 2px solid #06283D;
+  background-color: transparent;
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+  margin-top: 1rem;
+  color: #06283D;
+  transition: all 0.3s ease-in-out;
+}
+.forms form .btn:hover {
+  color: #fff;
+  background-color: #06283D;
+}
+.forms .log_footer {
+  text-align: center;
+  font-size: 0.8rem;
+}
+.forms .log_footer a {
+  font-weight: 600;
 }
 
 .dashboard .filter {

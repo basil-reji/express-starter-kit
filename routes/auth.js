@@ -6,8 +6,16 @@ var passport = require('../config/authentication');
 
 const app_name = process.env.APP_NAME
 
+const isUser = (req, res, next) =>{
+    if (req.user) {
+        res.redirect('/');
+    } else {
+        next();
+    }
+}
+
 /* GET home page. */
-router.get('/login', function (req, res, next) {
+router.get('/login', isUser, function (req, res, next) {
     let message = req.flash('message');
     res.render('auth/login', {
         title: `Login | ${app_name}`,
@@ -18,7 +26,7 @@ router.get('/login', function (req, res, next) {
     });
 });
 
-router.get('/signup', function (req, res, next) {
+router.get('/signup', isUser, function (req, res, next) {
     let message = req.flash('message');
     res.render('auth/signup', {
         title: `Signup | ${app_name}`,
@@ -29,7 +37,7 @@ router.get('/signup', function (req, res, next) {
     });
 });
 
-router.post('/signup', function (req, res, next) {
+router.post('/signup', isUser, function (req, res, next) {
     // console.log(req.body);
     let user = req.body
 
@@ -51,7 +59,29 @@ router.post('/signup', function (req, res, next) {
 
 });
 
-router.post('/login', passport.authenticate('local-login', {
+router.post('/admin/add-admin', function (req, res, next) {
+    console.log(req.body);
+    let user = req.body
+
+    authHelper.check_user_exist(user.email).then((response) => {
+        if (user.password == user.cpassword) {
+            authHelper.add_admin(user).then((response) => {
+                // console.log(user);
+                // console.log(response);
+                res.redirect('/admin/admins')
+            })
+        } else {
+            req.flash('message', `Password not match`);
+            res.redirect('/admin/add-admin');
+        }
+    }).catch((error) => {
+        req.flash('message', `${error}`);
+        res.redirect('/admin/add-admin');
+    })
+
+});
+
+router.post('/login', isUser, passport.authenticate('local-login', {
     successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: {

@@ -59,6 +59,7 @@ passport.serializeUser(function (user, cb) {
 
 passport.deserializeUser(function (id, cb) {
     // console.log(email)
+    // console.log(user);
     process.nextTick(function () {
         db.get()
             .collection(process.env.DB_COLLECTION_USER)

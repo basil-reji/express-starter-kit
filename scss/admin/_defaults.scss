@@ -34,7 +34,7 @@ form {
     background-color: transparent;
     color: $color_4;
     border: 2px solid $color_4;
-    border-radius: 0.5rem;
+    border-radius: 0.1rem;
     transition: all 0.3s ease-in-out;
 
     &:active,
@@ -49,8 +49,7 @@ form {
 .forms {
     background-color: $white;
     padding: 2rem;
-    box-shadow: 3.4px 0px 0.8rem rgba(0, 0, 0, 0.05),
-        27px 0px 80px rgba(0, 0, 0, 0.1);
+    
 
     .error {
         text-align: center;
