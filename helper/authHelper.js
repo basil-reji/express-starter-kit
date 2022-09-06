@@ -46,26 +46,26 @@ module.exports = {
         })
     },
 
-    test: (email) => {
-        return new Promise((resolve, reject) => {
-            db.get()
-                .collection(process.env.DB_COLLECTION_USER)
-                .findOne(
-                    {
-                        _id: ObjectId(email)
-                    },
-                    {
-                        projection: {
-                            password: 0
-                        }
-                    }
-                )
-                .then((response) => {
-                    // console.log(response)
-                    resolve(response);
-                }).catch((error) => {
-                    reject(error);
-                })
-        })
-    },
+    // test: (email) => {
+    //     return new Promise((resolve, reject) => {
+    //         db.get()
+    //             .collection(process.env.DB_COLLECTION_USER)
+    //             .findOne(
+    //                 {
+    //                     _id: ObjectId(email)
+    //                 },
+    //                 {
+    //                     projection: {
+    //                         password: 0
+    //                     }
+    //                 }~
+    //             )
+    //             .then((response) => {
+    //                 // console.log(response)
+    //                 resolve(response);
+    //             }).catch((error) => {
+    //                 reject(error);
+    //             })
+    //     })
+    // },
 }

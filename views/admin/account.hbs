@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 <section id="account" class="section">
     <div class="row">
         <div class="card">
@@ -94,21 +95,13 @@
                                 </div>
                             </div>
 
-                            {{!-- <div class="row mb-3">
-                                <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="phone" type="tel" class="form-control" id="phone" value="{{phone}}">
-                                </div>
-                            </div> --}}
-
-
                             {{#each profile.primary_address}}
                             <div class="row mb-3">
                                 <label for="{{capsFirst @key}}" class="col-md-4 col-lg-3 col-form-label">{{capsFirst
                                     @key}}</label>
                                 <div class="col-md-8 col-lg-9">
-                                    <input name="{{@key}}" type="text" class="form-control" id="{{@key}}"
-                                        placeholder="" value="{{this}}">
+                                    <input name="{{@key}}" type="text" class="form-control" id="{{@key}}" placeholder=""
+                                        value="{{this}}">
                                 </div>
                             </div>
                             {{/each}}
@@ -162,3 +155,54 @@
         </div>
     </div>
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+    var input = document.querySelector("#phone");
+    window.intlTelInput(input, ({
+        preferredCountries: ["in"],
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    }));
+
+    $(document).ready(function () {
+
+        $('.iti__flag-container').click(function () {
+            var countryCode = $('.iti__selected-flag').attr('title');
+            var countryCode = countryCode.replace(/[^0-9]/g, '')
+            $('#phone').val("");
+            $('#phone').val("+" + countryCode + " " + $('#phone').val());
+        });
+
+        $("#account_update").submit(function (e) {
+            e.preventDefault();
+
+            var $inputs = $('#account_update :input');
+
+            var values = {};
+            $inputs.each(function () {
+                values[this.name] = $(this).val();
+            });
+
+            var countryCode = $('.iti__selected-flag').attr('title');
+            var countryCode = countryCode.replace(/[^0-9]/g, '')
+
+            if (!(values.phone.includes(countryCode))) {
+                values.phone = `+${countryCode} ${values.phone.replace(" ", "").replace("0", "")}`
+            }
+
+            $.ajax({
+                url: `/admin/account/update`,
+                method: 'post',
+                data: values,
+                success: (response) => {
+                    if (response.status == true) {
+                        console.log('Success');
+                    } else {
+                        console.log('Error');
+                        console.log(response.message);
+                    }
+                }
+            })
+        })
+    });
+</script>

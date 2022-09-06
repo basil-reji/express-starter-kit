@@ -1,7 +1,7 @@
 .card {
     border: none;
     border-radius: 0.1rem;
-    box-shadow: 0px 0 30px rgba($color: $color_4, $alpha: 0.05);
+    box-shadow: 0px 0 30px rgba($color: $color_4, $alpha: 0.1);
 
     .card-header,
     .card-footer {
@@ -40,9 +40,9 @@
 	.nav-link {
 		margin-bottom: -2px;
 		border: none;
-		color: #2c384e;
+		color: rgba($color: $color_4, $alpha: 0.5);
 		&.active {
-			background-color: #fff;
+			background-color: $white;
 			color: $color_2;
 			border-bottom: 2px solid $color_2;
 		}
@@ -50,4 +50,19 @@
 }
 .nav-tabs-bordered .nav-link:hover, .nav-tabs-bordered .nav-link:focus {
 	color: $color_2;
+}
+
+.btn-ico{
+    padding: 0.1rem 0.25rem;
+    font-size: 1rem;
+    background-color: transparent;
+    border: none;
+
+    &.red{
+        color: $color_danger;
+    }
+
+    &.blue{
+        color: $color_3;
+    }
 }

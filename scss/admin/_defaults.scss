@@ -1,27 +1,48 @@
-form{
-    input, .form-control{
+form {
+
+    input,
+    .form-control {
         box-shadow: none;
         border-radius: 0.1rem;
         margin: 0.25rem;
         height: 2.5rem;
 
-        &:active, &:focus{
+        &:active,
+        &:focus {
             border: 1px solid $color_2;
             box-shadow: none;
         }
     }
 
-    .btn{
+    .btn {
         background-color: $color_2;
         color: $color_1;
         border-radius: 0.1rem;
         transition: all 0.3s ease-in-out;
 
-        &:active, &:hover, &:focus{
+        &:active,
+        &:hover,
+        &:focus {
             border: 1px solid $color_1;
             color: $color_1;
             background-color: $color_3;
         }
+    }
+}
+
+.btn {
+    background-color: transparent;
+    color: $color_4;
+    border: 2px solid $color_4;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease-in-out;
+
+    &:active,
+    &:hover,
+    &:focus {
+        border: 2px solid $color_4;
+        color: $white;
+        background-color: $color_4;
     }
 }
 
@@ -170,13 +191,13 @@ form{
     font-size: 1rem;
     padding: 0.25rem 1.5rem;
 
-    h6{
+    h6 {
         margin: 0rem;
         font-family: $font_family_1;
         color: rgba($color: $color_2, $alpha: 0.85)
     }
 
-    p{
+    p {
         margin: 0;
         font-size: 0.85rem;
         font-weight: 600;

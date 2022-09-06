@@ -6,18 +6,18 @@ const user_template = {
     fname: 'First Name',
     sname: 'Surname',
     email: 'example@gmail.com',
-    phone: '+91 00000000',
+    phone: '',
     password: null,
     role: 'super_admin',
     profile: {
         image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
         primary_address: {
-            address: "Line 1",
-            city: "City",
-            district: "District",
+            address: "",
+            city: "",
+            district: "",
             state: "Kerala",
             country: 'India',
-            pincode: "000000",
+            pincode: "",
         }
     },
     permission: {
@@ -59,12 +59,45 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/add-admin', function (req, res, next) {
+router.get('/messages', function (req, res, next) {
+    user = user_template
+    res.render('admin/messages', {
+        title: app_name,
+        page_title: 'Contacts',
+        breadcrumbs: [
+            {
+                page_name: 'Messages',
+                active: true,
+            }
+        ],
+        messages_page: true,
+        user
+    });
+});
+
+router.get('/admins', function (req, res, next) {
+    // let user = req.user;
+    user = user_template
+    res.render('admin/admins', {
+        title: app_name,
+        page_title: 'Admins',
+        breadcrumbs: [
+            {
+                page_name: 'Admins',
+                active: true,
+            }
+        ],
+        admins_page: true,
+        user
+    });
+});
+
+router.get('/admins/add-admin', function (req, res, next) {
     // let user = req.user;
     user = user_template
     res.render('admin/admins/add_admin', {
         title: app_name,
-        admin_page: true,
+        admins_page: true,
         user
     });
 });

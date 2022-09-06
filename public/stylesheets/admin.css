@@ -341,13 +341,16 @@ section {
   font-weight: 600;
 }
 
-form input, form .form-control {
+form input,
+form .form-control {
   box-shadow: none;
   border-radius: 0.1rem;
   margin: 0.25rem;
   height: 2.5rem;
 }
-form input:active, form input:focus, form .form-control:active, form .form-control:focus {
+form input:active, form input:focus,
+form .form-control:active,
+form .form-control:focus {
   border: 1px solid #47B5FF;
   box-shadow: none;
 }
@@ -361,6 +364,19 @@ form .btn:active, form .btn:hover, form .btn:focus {
   border: 1px solid #DFF6FF;
   color: #DFF6FF;
   background-color: #1363DF;
+}
+
+.btn {
+  background-color: transparent;
+  color: #06283D;
+  border: 2px solid #06283D;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+.btn:active, .btn:hover, .btn:focus {
+  border: 2px solid #06283D;
+  color: #fff;
+  background-color: #06283D;
 }
 
 .forms {
@@ -521,7 +537,7 @@ form .btn:active, form .btn:hover, form .btn:focus {
 .card {
   border: none;
   border-radius: 0.1rem;
-  box-shadow: 0px 0 30px rgba(6, 40, 61, 0.05);
+  box-shadow: 0px 0 30px rgba(6, 40, 61, 0.1);
 }
 .card .card-header,
 .card .card-footer {
@@ -555,7 +571,7 @@ form .btn:active, form .btn:hover, form .btn:focus {
 .nav-tabs-bordered .nav-link {
   margin-bottom: -2px;
   border: none;
-  color: #2c384e;
+  color: rgba(6, 40, 61, 0.5);
 }
 .nav-tabs-bordered .nav-link.active {
   background-color: #fff;
@@ -567,10 +583,19 @@ form .btn:active, form .btn:hover, form .btn:focus {
   color: #47B5FF;
 }
 
-/*--------------------------------------------------------------
-  # Dashboard
-  --------------------------------------------------------------*/
-/* Filter dropdown */
+.btn-ico {
+  padding: 0.1rem 0.25rem;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+}
+.btn-ico.red {
+  color: #e52c2c;
+}
+.btn-ico.blue {
+  color: #1363DF;
+}
+
 .dashboard .filter {
   position: absolute;
   right: 0px;
