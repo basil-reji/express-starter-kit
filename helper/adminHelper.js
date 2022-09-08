@@ -5,6 +5,33 @@ const { ObjectId } = require('mongodb');
 
 module.exports = {
 
+    updateAccount: (id, data) => {
+        let user = {};
+        user.fname = data.fname;
+        user.sname = data.sname;
+        if(data.phone.length > 5){
+            user.phone = data.phone;
+        }
+        return new Promise((resolve, reject) => {
+            db.get()
+                .collection(process.env.DB_COLLECTION_USER)
+                .updateOne(
+                    {
+                        '_id': ObjectId(id)
+                    },
+                    {
+                        $set: user,
+                    }
+                )
+                .then((response) => {
+                    // console.log(response)
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                })
+        })
+    },
+
     getAdmins: () => {
         return new Promise((resolve, reject) => {
             db.get()

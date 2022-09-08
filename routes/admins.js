@@ -179,10 +179,13 @@ router.get('/account', isAdmin, function (req, res, next) {
 
 router.post('/account/update', isAdmin, function (req, res, next) {
     let user = req.user
-    console.log(req.body)
-    res.send({
-        status: true,
-        message: 'ok'
+    // console.log(req.body)
+    admin.updateAccount(user._id, req.body)
+    .then((response) => {
+        res.send({
+            status: true,
+            message: 'ok'
+        })
     })
 });
 
