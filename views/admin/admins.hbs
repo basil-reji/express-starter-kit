@@ -19,12 +19,12 @@
                             <tbody>
                                 {{#each admins}}
                                 <tr id="row-{{this._id}}">
-                                    <th>{{add @index 1}}</th>
+                                    <th scope="row">{{add @index 1}}</th>
                                     <td>{{this.fname}} {{this.sname}}</td>
                                     <td>{{this.email}}</td>
                                     <td>{{this.role}}</td>
                                     <td>
-                                        <button class="btn-ico red">
+                                        <button class="btn-ico red" onclick="removeAdmin(`{{this._id}}`)">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
                                         <a href="/admin/admins/{{this._id}}" class="btn-ico blue">

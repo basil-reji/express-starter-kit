@@ -60,7 +60,7 @@ module.exports.models = {
         },
         permission: {
             admin: true,
-            control: {
+            access: {
                 view: true,
                 read: true,
                 add: true,
@@ -91,7 +91,7 @@ module.exports.models = {
         },
         permission: {
             admin: true,
-            control: {
+            access: {
                 view: true,
                 read: true,
                 add: true,

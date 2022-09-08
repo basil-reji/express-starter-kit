@@ -156,4 +156,38 @@
         })
     });
 
-})()
+})();
+
+$("#contact-form").submit(function (e) {
+    e.preventDefault();
+    $("loading").css("display", "block");
+    $("#error-message").css("display", "none");
+    $("#sent-message").css("display", "none");
+    var $inputs = $('#contact-form :input');
+    var data = {};
+    $inputs.each(function () {
+        data[this.name] = $(this).val();
+    });
+
+    setTimeout(() => {
+        $.ajax({
+            url: `/contact`,
+            data: data,
+            method: "post",
+            success: (response) => {
+                if (response.status) {
+                    $("#loading").css("display", "none");
+                    $("#sent-message").css("display", "block");
+                    document.getElementsByName("contact-form")[0].reset();
+                } else {
+                    $("#loading").css("display", "none");
+                    $("#error-message").css("display", "block");
+                }
+            },
+            error: (jqXHR, exception) => {
+                $("#loading").css("display", "none");
+                $("#error-message").css("display", "block");
+            },
+        });
+    }, 1000);
+})

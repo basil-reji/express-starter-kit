@@ -9,6 +9,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Date</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Suject</th>
@@ -17,18 +18,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Brandon Jacob</td>
-                                <td>example@example.com</td>
-                                <td>Sujects</td>
-                                <td>Message</td>
-                                <td>
-                                    <button class="btn-ico red">
-                                        <i class="fa-regular fa-trash-can"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            {{#each data}}
+                                <tr id="row-{{this._id}}">
+                                    <th scope="row">{{add @index 1}}</th>
+                                    <td>{{formatDate this.date}}</td>
+                                    <td>{{this.name}}</td>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.subject}}</td>
+                                    <td>{{this.message}}</td>
+                                    <td>
+                                        <button class="btn-ico red" onclick="deleteMessage(`{{this._id}}`)">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {{/each}}
                         </tbody>
                     </table>
                 </div>

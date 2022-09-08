@@ -60,21 +60,21 @@ module.exports = {
         })
     },
 
-    updateAdmin: (id,data) => {
+    updateAdmin: (id, data) => {
         let user = {};
-        if (data.role == 'admin'){
+        if (data.role == 'admin') {
             let model = db.models.admin;
             user.permission = model.permission;
             user.fname = data.fname;
             user.sname = data.sname;
             user.role = model.role
-        }else if(data.role == 'super_admin'){
+        } else if (data.role == 'super_admin') {
             let model = db.models.super_admin;
             user.permission = model.permission;
             user.fname = data.fname;
             user.sname = data.sname;
             user.role = model.role
-        }else{
+        } else {
             user = {}
         }
         return new Promise((resolve, reject) => {
@@ -97,26 +97,53 @@ module.exports = {
         })
     },
 
-    // test: (email) => {
-    //     return new Promise((resolve, reject) => {
-    //         db.get()
-    //             .collection(process.env.DB_COLLECTION_USER)
-    //             .findOne(
-    //                 {
-    //                     _id: ObjectId(email)
-    //                 },
-    //                 {
-    //                     projection: {
-    //                         password: 0
-    //                     }
-    //                 }~
-    //             )
-    //             .then((response) => {
-    //                 // console.log(response)
-    //                 resolve(response);
-    //             }).catch((error) => {
-    //                 reject(error);
-    //             })
-    //     })
-    // },
+    removeAdmin: (id) => {
+        return new Promise((resolve, reject) => {
+            db.get()
+                .collection(process.env.DB_COLLECTION_USER)
+                .remove(
+                    {
+                        _id: ObjectId(id)
+                    }
+                )
+                .then((response) => {
+                    // console.log(response)
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                })
+        })
+    },
+
+    getMessages: () => {
+        return new Promise((resolve, reject) => {
+            db.get()
+                .collection(process.env.DB_COLLECTION_MESSAGE)
+                .find()
+                .toArray()
+                .then((response) => {
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                })
+        })
+    },
+
+    deleteMessage: (id) => {
+        return new Promise((resolve, reject) => {
+            db.get()
+                .collection(process.env.DB_COLLECTION_MESSAGE)
+                .remove(
+                    {
+                        _id: ObjectId(id)
+                    }
+                )
+                .then((response) => {
+                    // console.log(response)
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                })
+        })
+    },
 }

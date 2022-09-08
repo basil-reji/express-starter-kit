@@ -42,19 +42,35 @@ router.get('/', isAdmin, function (req, res, next) {
 });
 
 router.get('/messages', isAdmin, function (req, res, next) {
+    let user = req.user;
+    admin.getMessages().then((data) => {
+        // console.log(data)
+        res.render('admin/messages', {
+            title: app_name,
+            page_title: 'Contacts',
+            breadcrumbs: [
+                {
+                    page_name: 'Messages',
+                    active: true,
+                }
+            ],
+            messages_page: true,
+            user,
+            data
+        });
+    })
+});
+
+router.post('/messages/delete', isAdmin, function (req, res, next) {
     let user = req.user
-    res.render('admin/messages', {
-        title: app_name,
-        page_title: 'Contacts',
-        breadcrumbs: [
+    admin.deleteMessage(req.body.id).then((response) => {
+        res.send(
             {
-                page_name: 'Messages',
-                active: true,
+                response: "acknowledged",
+                status: true
             }
-        ],
-        messages_page: true,
-        user
-    });
+        );
+    })
 });
 
 router.get('/admins', isAdmin, haveFullControll, function (req, res, next) {
@@ -111,6 +127,18 @@ router.post('/admins/update/:id', isAdmin, haveFullControll, function (req, res,
             // console.log(response);
             res.redirect('/admin/admins/')
         })
+});
+
+router.post('/admins/remove/', isAdmin, haveFullControll, function (req, res, next) {
+    let user = req.user
+    admin.removeAdmin(req.body.id).then((response) => {
+        res.send(
+            {
+                response: "ok",
+                status: true
+            }
+        );
+    })
 });
 
 router.get('/add-admin', isAdmin, haveFullControll, function (req, res, next) {

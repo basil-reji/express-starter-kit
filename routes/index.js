@@ -8,7 +8,7 @@ const app_name = process.env.APP_NAME
 router.get('/', async function (req, res, next) {
     let user = req.user
     // console.log(req.user);
-    if(user && user.permission.admin){
+    if (user && user.permission.admin) {
         res.redirect('/admin/')
     } else {
         res.render('index', {
@@ -16,6 +16,23 @@ router.get('/', async function (req, res, next) {
             user
         });
     }
+});
+
+router.post('/contact', function (req, res, next) {
+    let user = req.user;
+    if(user){
+        req.body.user = user.id;
+    }else{
+        req.body.user = null;
+    }
+    userHelper.contact(req.body).then((response) => {
+        res.send(
+            {
+                response: "acknowledged",
+                status: true
+            }
+        );
+    })
 });
 
 module.exports = router;
