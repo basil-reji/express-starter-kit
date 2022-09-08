@@ -1,23 +1,32 @@
+const { response } = require('express');
 var express = require('express');
 var router = express.Router();
+var admin = require('../helper/adminHelper');
 
 const app_name = process.env.APP_NAME
 
 const isAdmin = (req, res, next) => {
-    try{
+    try {
         if (req.user.permission.admin) {
             next();
-        }else{
+        } else {
             res.redirect('/login');
         }
-    }catch{
+    } catch {
         res.redirect('/login');
     }
 }
 
-/* GET Admin listing. */
+const haveFullControll = (req, res, next) => {
+    if (req.user.permission.full_control) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
 router.get('/', isAdmin, function (req, res, next) {
-    user = req.user
+    let user = req.user
     res.render('admin/dashboard', {
         title: app_name,
         page_title: 'Dashboard',
@@ -32,8 +41,8 @@ router.get('/', isAdmin, function (req, res, next) {
     });
 });
 
-router.get('/messages', function (req, res, next) {
-    user = req.user
+router.get('/messages', isAdmin, function (req, res, next) {
+    let user = req.user
     res.render('admin/messages', {
         title: app_name,
         page_title: 'Contacts',
@@ -48,26 +57,64 @@ router.get('/messages', function (req, res, next) {
     });
 });
 
-router.get('/admins', function (req, res, next) {
-    // let user = req.user;
-    user = req.user
-    res.render('admin/admins', {
-        title: app_name,
-        page_title: 'Admins',
-        breadcrumbs: [
-            {
-                page_name: 'Admins',
-                active: true,
-            }
-        ],
-        admins_page: true,
-        user
-    });
+router.get('/admins', isAdmin, haveFullControll, function (req, res, next) {
+    let user = req.user
+    admin.getAdmins().then((admins) => {
+        // console.log(response);
+        res.render('admin/admins', {
+            title: app_name,
+            page_title: 'Admins',
+            breadcrumbs: [
+                {
+                    page_name: 'Admins',
+                    active: true,
+                }
+            ],
+            admins_page: true,
+            user,
+            admins
+        });
+    })
 });
 
-router.get('/add-admin', function (req, res, next) {
-    // let user = req.user;
-    user = req.user
+router.get('/admins/:id', isAdmin, haveFullControll, function (req, res, next) {
+    let user = req.user
+    admin.getAdmin(req.params.id)
+        .then((admin) => {
+            // console.log(response);
+            res.render('admin/admins/edit_admin', {
+                title: app_name,
+                page_title: 'Admins',
+                breadcrumbs: [
+                    {
+                        page_name: 'Admins',
+                        page_link: '/admins'
+                    },
+                    {
+                        page_name: 'Edit Admin',
+                        active: true,
+                    }
+                ],
+                admins_page: true,
+                user,
+                admin
+            });
+        })
+});
+
+router.post('/admins/update/:id', isAdmin, haveFullControll, function (req, res, next) {
+    // console.log(req.params.id);
+    // console.log(req.body)
+    let user = req.user
+    admin.updateAdmin(req.params.id, req.body)
+        .then((response) => {
+            // console.log(response);
+            res.redirect('/admin/admins/')
+        })
+});
+
+router.get('/add-admin', isAdmin, haveFullControll, function (req, res, next) {
+    let user = req.user
     res.render('admin/admins/add_admin', {
         title: app_name,
         page_title: 'Admins',
@@ -86,9 +133,8 @@ router.get('/add-admin', function (req, res, next) {
     });
 });
 
-router.get('/account', function (req, res, next) {
-    // let user = req.user;
-    user = req.user
+router.get('/account', isAdmin, function (req, res, next) {
+    let user = req.user
     res.render('admin/account', {
         title: app_name,
         page_title: 'My Account',
@@ -103,27 +149,13 @@ router.get('/account', function (req, res, next) {
     });
 });
 
-router.post('/account/update', function (req, res, next) {
-    // let user = req.user;
-    user = req.user
+router.post('/account/update', isAdmin, function (req, res, next) {
+    let user = req.user
     console.log(req.body)
     res.send({
         status: true,
         message: 'ok'
     })
-
-    // res.render('admin/account', {
-    //     title: app_name,
-    //     page_title: 'My Account',
-    //     breadcrumbs: [
-    //         {
-    //             page_name: 'account',
-    //             active: true,
-    //         }
-    //     ],
-    //     admin_page: true,
-    //     user
-    // });
 });
 
 module.exports = router;

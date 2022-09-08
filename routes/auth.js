@@ -1,7 +1,7 @@
 const { response } = require('express');
 var express = require('express');
 var router = express.Router();
-var authHelper = require('../helper/authHelper');
+var authenticate = require('../helper/authHelper');
 var passport = require('../config/authentication');
 
 const app_name = process.env.APP_NAME
@@ -39,11 +39,11 @@ router.get('/signup', isUser, function (req, res, next) {
 
 router.post('/signup', isUser, function (req, res, next) {
     // console.log(req.body);
-    let user = req.body
+    // let user = req.body
 
-    authHelper.check_user_exist(user.email).then((response) => {
+    authenticate.check_user_exist(user.email).then((response) => {
         if (user.password == user.cpassword) {
-            authHelper.do_signup(user).then((response) => {
+            authenticate.do_signup(user).then((response) => {
                 // console.log(user);
                 // console.log(response);
                 res.redirect('/login')
@@ -60,12 +60,12 @@ router.post('/signup', isUser, function (req, res, next) {
 });
 
 router.post('/admin/add-admin', function (req, res, next) {
-    console.log(req.body);
+    // console.log(req.body);
     let user = req.body
 
-    authHelper.check_user_exist(user.email).then((response) => {
+    authenticate.check_user_exist(user.email).then((response) => {
         if (user.password == user.cpassword) {
-            authHelper.add_admin(user).then((response) => {
+            authenticate.add_admin(user).then((response) => {
                 // console.log(user);
                 // console.log(response);
                 res.redirect('/admin/admins')
@@ -100,7 +100,7 @@ router.get('/logout', function (req, res, next) {
 });
 
 // router.get('/test', function (req, res, next) {
-//     authHelper.test('62c99565949dd148c779750a').then((user)=>{
+//     authenticate.test('62c99565949dd148c779750a').then((user)=>{
 //         res.send(user)
 //     })
 // });

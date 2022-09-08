@@ -1,0 +1,37 @@
+<section class="admins dashboard">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+            <div class="forms">
+                <div class="log_head">
+                    <h3>Edit Admin</h3>
+                </div>
+                {{#if message}}<p class="error">{{message}}</p>{{/if}}
+                <form action="/admin/admins/update/{{admin._id}}" method="post" role="form" class="log-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="fname" id="fname" placeholder="First Name"
+                            value="{{admin.fname}}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="sname" id="sname" placeholder="Surname"
+                            value="{{admin.sname}}">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" required
+                            value="{{admin.email}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <select name="role" id="role" class="form-control form-select" id="role" required>
+                            <option value="admin" {{#if (compare admin.role "admin" )}}selected{{/if}}>Admin</option>
+                            <option value="super_admin" {{#if (compare admin.role "super_admin" )}}selected{{/if}}>Super
+                                Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn-primary">Update Admin</button>
+                        <a href="/admin/admins" class="btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

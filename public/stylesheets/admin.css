@@ -341,28 +341,41 @@ section {
   font-weight: 600;
 }
 
-form input,
 form .form-control {
+  width: 100%;
   box-shadow: none;
   border-radius: 0.1rem;
   margin: 0.25rem;
   height: 2.5rem;
 }
-form input:active, form input:focus,
-form .form-control:active,
-form .form-control:focus {
+form .form-control:active, form .form-control:focus {
   border: 1px solid #47B5FF;
   box-shadow: none;
 }
 form .btn {
-  background-color: #47B5FF;
-  color: #DFF6FF;
-  border-radius: 0.1rem;
+  border: 2px solid #06283D;
+  background-color: transparent;
+  padding: 0.25rem 1rem;
+  margin: 0;
+  color: #06283D;
   transition: all 0.3s ease-in-out;
 }
-form .btn:active, form .btn:hover, form .btn:focus {
-  border: 1px solid #DFF6FF;
-  color: #DFF6FF;
+form .btn:hover {
+  color: #fff;
+  background-color: #06283D;
+}
+form .btn-primary {
+  border: 2px solid #47b5ff;
+  background-color: transparent;
+  padding: 0.25rem 1rem;
+  margin: 0;
+  background-color: #47b5ff;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+form .btn-primary:hover {
+  border-color: #1363DF;
+  color: #fff;
   background-color: #1363DF;
 }
 
@@ -377,80 +390,6 @@ form .btn:active, form .btn:hover, form .btn:focus {
   border: 2px solid #06283D;
   color: #fff;
   background-color: #06283D;
-}
-
-.forms {
-  background-color: #fff;
-  padding: 2rem;
-}
-.forms .error {
-  text-align: center;
-  color: #FC4F4F;
-}
-.forms .log_head {
-  text-align: center;
-  margin-bottom: 2.5rem;
-}
-.forms .log_head h3 {
-  color: #06283D;
-}
-.forms .log_head h3 span {
-  color: #47B5FF;
-  font-weight: 700;
-}
-.forms .log_head p {
-  color: rgba(6, 40, 61, 0.5);
-}
-.forms form {
-  margin: 0.5rem 0rem;
-}
-.forms form .form-group {
-  margin: 1rem 0rem;
-  margin-top: 1.5rem;
-  color: rgba(6, 40, 61, 0.9);
-}
-.forms form .form-group input {
-  height: 2.7rem;
-  border-radius: 0.1rem;
-  border: 1px solid rgba(6, 40, 61, 0.1);
-  color: #06283D;
-  font-family: "Poppins", sans-serif;
-}
-.forms form .form-group input:active, .forms form .form-group input:focus {
-  box-shadow: none;
-  border: 1px solid #47B5FF;
-}
-.forms form .form-group input::placeholder {
-  color: rgba(6, 40, 61, 0.4);
-}
-.forms form .forgot {
-  text-align: right;
-  margin-bottom: 1rem;
-  font-size: 0.8rem;
-  text-decoration: underline;
-  color: rgba(6, 40, 61, 0.8);
-}
-.forms form .forgot a {
-  color: rgba(6, 40, 61, 0.5);
-}
-.forms form button {
-  width: 100%;
-  background-color: #47B5FF;
-  border: none;
-  padding: 0.6rem 1.5rem;
-  margin: 1rem 0rem;
-  color: #DFF6FF;
-  transition: all 0.3s ease-in-out;
-}
-.forms form button:hover {
-  background-color: #06283D;
-}
-.forms .log_footer {
-  text-align: center;
-  font-size: 0.8rem;
-}
-.forms .log_footer a {
-  font-weight: 600;
 }
 
 .dropdown-menu {
@@ -660,6 +599,22 @@ form .btn:active, form .btn:hover, form .btn:focus {
 .forms form .btn:hover {
   color: #fff;
   background-color: #06283D;
+}
+.forms form .btn-primary {
+  width: 100%;
+  border: 2px solid #47b5ff;
+  background-color: transparent;
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+  margin-top: 1rem;
+  background-color: #47b5ff;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+.forms form .btn-primary:hover {
+  border-color: #1363DF;
+  color: #fff;
+  background-color: #1363DF;
 }
 .forms .log_footer {
   text-align: center;

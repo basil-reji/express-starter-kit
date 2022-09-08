@@ -29,7 +29,7 @@ module.exports.models = {
         password: null,
         role: 'user',
         profile:{
-            profile_image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
+            image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
             primary_address: {}
         },
         permission: {
@@ -55,7 +55,7 @@ module.exports.models = {
         password: null,
         role: 'admin',
         profile:{
-            profile_image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
+            image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
             primary_address: {}
         },
         permission: {
@@ -86,7 +86,7 @@ module.exports.models = {
         password: null,
         role: 'super_admin',
         profile:{
-            profile_image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
+            image: 'https://i.pinimg.com/564x/57/e4/7f/57e47fa25cab8a9b49aca903bfa049a8.jpg',
             primary_address: {}
         },
         permission: {

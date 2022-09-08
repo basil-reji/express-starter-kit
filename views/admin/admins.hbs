@@ -11,24 +11,28 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
                                     <th scope="col">Role</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Admin</td>
-                                    <td>super_admin</td>
+                                {{#each admins}}
+                                <tr id="row-{{this._id}}">
+                                    <th>{{add @index 1}}</th>
+                                    <td>{{this.fname}} {{this.sname}}</td>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.role}}</td>
                                     <td>
                                         <button class="btn-ico red">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
-                                        <button class="btn-ico blue">
+                                        <a href="/admin/admins/{{this._id}}" class="btn-ico blue">
                                             <i class="fa-regular fa-pen-to-square"></i>
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
+                                {{/each}}
                             </tbody>
                         </table>
                     </div>

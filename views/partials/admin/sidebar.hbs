@@ -19,12 +19,14 @@
                     <h5>Messages</h5>
                 </a>
             </li>
+            {{#if user.permission.full_control}}
             <li>
                 <a href="/admin/admins/" {{#if admins_page}}class="active"{{/if}}>
                     <i class="ri-shield-user-{{#if admins_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Admins</h5>
                 </a>
             </li>
+            {{/if}}
             <li>
                 <a href="/admin/account/" {{#if admin_page}}class="active"{{/if}}>
                     <i class="ri-user-3-{{#if admin_page}}fill{{else}}line{{/if}} sico"></i>
