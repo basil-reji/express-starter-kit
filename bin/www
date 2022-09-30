@@ -15,6 +15,11 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+console.log("\n----------------------\n");
+console.log(`Express app sucessfully started\n`);
+console.log(`App Address: localhost:${port}`);
+console.log("\n----------------------\n");
+
 /**
  * Create HTTP server.
  */

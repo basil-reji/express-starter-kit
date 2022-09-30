@@ -1,0 +1,90 @@
+#!/usr/bin/env node
+
+const child_process = require("child_process");
+const readline = require("readline-sync");
+const db = require('../config/database');
+var helper = require('../helper/authHelper');
+var dotenv = require('dotenv');
+
+dotenv.config()
+
+const execute = (command) => {
+    child_process.exec(command,
+        function (error, stdout, stderr) {
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);
+            if (error !== null) {
+                console.log('exec error: ' + error);
+                process.abort();
+            }
+        });
+}
+
+const setName = (name) => {
+    name = name.trim()
+    name = name.replace(/\s/g, '_')
+    console.log(`The app name is set to : ${name}`)
+}
+
+console.log(`Welcome to ${process.env.APP_NAME}\n`);
+console.log("\n----------------------\n");
+
+console.log("First lets update the application to its latest");
+execute(`npm update`);
+console.log("The packages updates successfully");
+
+console.log("\n----------------------\n");
+
+console.log("Now lets start with configuring the Application");
+
+console.log("\n----------------------\n");
+
+var app_name = readline.question("Enter your application name: ");
+setName(app_name);
+
+console.log("\n----------------------\n");
+
+console.log("Now lets check the database connection.");
+
+db.connect((err) => {
+    if (err) {
+        console.log("\nPlease install mongo DB atlas to continue...\n");
+        console.log(err);
+        process.abort();
+    }
+});
+
+console.log("Data Base Connected sucessfully");
+
+console.log("\n----------------------\n");
+
+console.log("lets add an admin to manage\n");
+
+const admin = {
+    role: "super_admin",
+    fname: "Super",
+    sname: "Admin",
+    email: "",
+    password: ""
+};
+
+admin.email = readline.question("Enter admin email: ");
+
+admin.password = readline.questionNewPassword(
+    'Enter a password: ',
+    {
+        confirmMessage: 'Confirm password: ',
+        min: 6
+    }
+)
+
+helper.add_admin(admin)
+    .then((response) => {
+        console.log("YOU are ready. Follow the following commands to start\n");
+        console.log("npm start");
+        process.abort();
+    })
+    .catch((error) => {
+        console.log(error);
+        process.abort();
+    })
