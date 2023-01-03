@@ -20,9 +20,9 @@ router.get('/', async function (req, res, next) {
 
 router.post('/contact', function (req, res, next) {
     let user = req.user;
-    if(user){
+    if (user) {
         req.body.user = user.id;
-    }else{
+    } else {
         req.body.user = null;
     }
     userHelper.contact(req.body).then((response) => {
@@ -33,6 +33,17 @@ router.post('/contact', function (req, res, next) {
             }
         );
     })
+});
+
+router.post('/test', function (req, res, next) {
+    let user = req.user;
+    console.log(req.body)
+    res.send(
+        {
+            response: "acknowledged",
+            status: true
+        }
+    );
 });
 
 module.exports = router;

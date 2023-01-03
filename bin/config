@@ -6,7 +6,7 @@ const db = require('../config/database');
 var helper = require('../helper/authHelper');
 var dotenv = require('dotenv');
 
-dotenv.config()
+dotenv.config();
 
 const execute = (command) => {
     child_process.exec(command,
@@ -34,16 +34,13 @@ execute(`npm update`);
 console.log("The packages updates successfully");
 
 console.log("\n----------------------\n");
-
 console.log("Now lets start with configuring the Application");
-
 console.log("\n----------------------\n");
 
 var app_name = readline.question("Enter your application name: ");
 setName(app_name);
 
 console.log("\n----------------------\n");
-
 console.log("Now lets check the database connection.");
 
 db.connect((err) => {
@@ -55,9 +52,7 @@ db.connect((err) => {
 });
 
 console.log("Data Base Connected sucessfully");
-
 console.log("\n----------------------\n");
-
 console.log("lets add an admin to manage\n");
 
 const admin = {
