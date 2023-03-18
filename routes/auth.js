@@ -14,6 +14,14 @@ const isUser = (req, res, next) =>{
     }
 }
 
+const haveFullControll = (req, res, next) => {
+    if (req.user.permission.full_control) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
 /* GET home page. */
 router.get('/login', isUser, function (req, res, next) {
     let message = req.flash('message');
@@ -59,7 +67,7 @@ router.post('/signup', isUser, function (req, res, next) {
 
 });
 
-router.post('/admin/add-admin', function (req, res, next) {
+router.post('/admin/add-admin', haveFullControll, function (req, res, next) {
     // console.log(req.body);
     let user = req.body
 
