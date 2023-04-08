@@ -2,8 +2,9 @@
 
 const child_process = require("child_process");
 const readline = require("readline-sync");
-const db = require('../config/database');
-var helper = require('../helper/authHelper');
+const db = require('../database/connection');
+const { models } = require('../database/models');
+const { admins } = require('../controller/admin');
 var dotenv = require('dotenv');
 
 dotenv.config();
@@ -55,17 +56,11 @@ console.log("Data Base Connected sucessfully");
 console.log("\n----------------------\n");
 console.log("lets add an admin to manage\n");
 
-const admin = {
-    role: "super_admin",
-    fname: "Super",
-    sname: "Admin",
-    email: "",
-    password: ""
-};
+let user = models.user.super_admin;
 
-admin.email = readline.question("Enter admin email: ");
+user.email = readline.question("Enter admin email: ");
 
-admin.password = readline.questionNewPassword(
+user.password = readline.questionNewPassword(
     'Enter a password: ',
     {
         confirmMessage: 'Confirm password: ',
@@ -73,7 +68,7 @@ admin.password = readline.questionNewPassword(
     }
 )
 
-helper.add_admin(admin)
+admins.add(user)
     .then((response) => {
         console.log("YOU are ready. Follow the following commands to start\n");
         console.log("npm start");

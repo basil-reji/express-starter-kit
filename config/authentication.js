@@ -1,6 +1,7 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
-const db = require('./database');
+const db = require('../database/connection');
+const collections = require('../database/collections');
 const bcrypt = require('bcrypt');
 const ObjectId = require('mongodb').ObjectId;
 
@@ -13,7 +14,7 @@ passport.use('local-login', new LocalStrategy(
     (req, email, password, done) => {
 
         db.get()
-            .collection(process.env.DB_COLLECTION_USER)
+            .collection(collections.USER)
             .findOne(
                 {
                     email: email
@@ -62,7 +63,7 @@ passport.deserializeUser(function (id, cb) {
     // console.log(user);
     process.nextTick(function () {
         db.get()
-            .collection(process.env.DB_COLLECTION_USER)
+            .collection(collections.USER)
             .findOne(
                 {
                     _id: ObjectId(id)

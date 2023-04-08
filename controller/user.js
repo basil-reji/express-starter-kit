@@ -2,7 +2,7 @@ const db = require('../config/database');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
 
-module.exports = {
+const contact = {
     contact: (data) => {
         return new Promise(async (resolve, reject) => {
             // console.log(data)
@@ -19,4 +19,8 @@ module.exports = {
                 })
         })
     },
+}
+
+module.exports = {
+    contact
 }

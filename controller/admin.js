@@ -1,20 +1,21 @@
 const db = require('../config/database');
+const { models } = require('../database/models');
+const collections = require('../database/collections');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
 
-
-module.exports = {
-
-    updateAccount: (id, data) => {
+const account = {
+    
+    update: (id, data) => {
         let user = {};
         user.fname = data.fname;
         user.sname = data.sname;
-        if(data.phone.length > 5){
+        if (data.phone.length > 5) {
             user.phone = data.phone;
         }
         return new Promise((resolve, reject) => {
             db.get()
-                .collection(process.env.DB_COLLECTION_USER)
+                .collection(collections.USER)
                 .updateOne(
                     {
                         '_id': ObjectId(id)
@@ -31,11 +32,14 @@ module.exports = {
                 })
         })
     },
+}
 
-    getAdmins: () => {
+const admins = {
+
+    getAll: () => {
         return new Promise((resolve, reject) => {
             db.get()
-                .collection(process.env.DB_COLLECTION_USER)
+                .collection(collections.USER)
                 .find(
                     {
                         'role': {
@@ -61,10 +65,10 @@ module.exports = {
         })
     },
 
-    getAdmin: (id) => {
+    get: (id) => {
         return new Promise((resolve, reject) => {
             db.get()
-                .collection(process.env.DB_COLLECTION_USER)
+                .collection(collections.USER)
                 .findOne(
                     {
                         '_id': ObjectId(id)
@@ -87,16 +91,39 @@ module.exports = {
         })
     },
 
-    updateAdmin: (id, data) => {
+    add: (inf) => {
+        return new Promise(async (resolve, reject) => {
+            let user = models.user.user;
+            if (inf.role == 'super_admin') {
+                user = models.user.super_admin;
+            } else {
+                user = models.user.admin;
+            }
+            user.fname = inf.fname;
+            user.sname = inf.sname;
+            user.email = inf.email;
+            user.password = await bcrypt.hash(inf.password, 10);
+            db.get()
+                .collection(collections.USER)
+                .insertOne(user)
+                .then((response) => {
+                    resolve(response)
+                }).catch((error) => {
+                    reject(error)
+                })
+        })
+    },
+
+    update: (id, data) => {
         let user = {};
         if (data.role == 'admin') {
-            let model = db.models.admin;
+            let model = models.user.admin;
             user.permission = model.permission;
             user.fname = data.fname;
             user.sname = data.sname;
             user.role = model.role
         } else if (data.role == 'super_admin') {
-            let model = db.models.super_admin;
+            let model = models.user.super_admin;
             user.permission = model.permission;
             user.fname = data.fname;
             user.sname = data.sname;
@@ -106,7 +133,7 @@ module.exports = {
         }
         return new Promise((resolve, reject) => {
             db.get()
-                .collection(process.env.DB_COLLECTION_USER)
+                .collection(collections.USER)
                 .updateOne(
                     {
                         '_id': ObjectId(id)
@@ -124,10 +151,10 @@ module.exports = {
         })
     },
 
-    removeAdmin: (id) => {
+    remove: (id) => {
         return new Promise((resolve, reject) => {
             db.get()
-                .collection(process.env.DB_COLLECTION_USER)
+                .collection(collections.USER)
                 .remove(
                     {
                         _id: ObjectId(id)
@@ -141,36 +168,48 @@ module.exports = {
                 })
         })
     },
+}
 
-    getMessages: () => {
-        return new Promise((resolve, reject) => {
-            db.get()
-                .collection(process.env.DB_COLLECTION_MESSAGE)
-                .find()
-                .toArray()
-                .then((response) => {
-                    resolve(response);
-                }).catch((error) => {
-                    reject(error);
-                })
-        })
-    },
+const message = {
 
-    deleteMessage: (id) => {
-        return new Promise((resolve, reject) => {
-            db.get()
-                .collection(process.env.DB_COLLECTION_MESSAGE)
-                .remove(
-                    {
-                        _id: ObjectId(id)
-                    }
-                )
-                .then((response) => {
-                    // console.log(response)
-                    resolve(response);
-                }).catch((error) => {
-                    reject(error);
-                })
-        })
-    },
+    message: {
+
+        getAll: () => {
+            return new Promise((resolve, reject) => {
+                db.get()
+                    .collection(process.env.DB_COLLECTION_MESSAGE)
+                    .find()
+                    .toArray()
+                    .then((response) => {
+                        resolve(response);
+                    }).catch((error) => {
+                        reject(error);
+                    })
+            })
+        },
+
+        delete: (id) => {
+            return new Promise((resolve, reject) => {
+                db.get()
+                    .collection(process.env.DB_COLLECTION_MESSAGE)
+                    .remove(
+                        {
+                            _id: ObjectId(id)
+                        }
+                    )
+                    .then((response) => {
+                        // console.log(response)
+                        resolve(response);
+                    }).catch((error) => {
+                        reject(error);
+                    })
+            })
+        },
+    }
+}
+
+module.exports = {
+    account,
+    admins,
+    message
 }

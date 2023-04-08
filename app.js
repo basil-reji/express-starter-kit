@@ -11,8 +11,8 @@ var passport = require('passport')
 
 dotenv.config()
 
-var db = require('./config/database')
-var engineHelper = require("./helper/hbsHelper");
+var db = require('./database/connection')
+var engineHelper = require("./helper/hbs");
 
 var authRouter = require('./routes/auth');
 var indexRouter = require('./routes/index');
@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // express-session setup
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: parseInt(process.env.SESSION_MAX_AGE) },
+    cookie: { maxAge: 6000000 },
     store: db.get(),
     resave: true,
     saveUninitialized: true

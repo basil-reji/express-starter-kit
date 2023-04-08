@@ -4,32 +4,10 @@ const { ObjectId } = require('mongodb');
 
 
 module.exports = {
-    do_signup: (inf) => {
-        return new Promise(async (resolve, reject) => {
-            let user = db.models.user;
-            user.fname = inf.fname;
-            user.sname = inf.sname;
-            user.email = inf.email;
-            user.password = await bcrypt.hash(inf.password, 10);
-            db.get()
-                .collection(process.env.DB_COLLECTION_USER)
-                .insertOne(user)
-                .then((response) => {
-                    resolve(response)
-                }).catch((error) => {
-                    reject(error)
-                })
-        })
-    },
 
-    add_admin: (inf) => {
+    signup: (inf) => {
         return new Promise(async (resolve, reject) => {
-            let user = db.models.user;
-            if(inf.role == 'super_admin'){
-                user = db.models.super_admin;
-            }else{
-                user = db.models.admin;
-            }
+            let user = db.models.user.user;
             user.fname = inf.fname;
             user.sname = inf.sname;
             user.email = inf.email;

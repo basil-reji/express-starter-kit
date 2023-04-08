@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var userHelper = require('../helper/userHelper');
+var userController = require('../controller/user');
 
 const app_name = process.env.APP_NAME
 
@@ -25,7 +25,7 @@ router.post('/contact', function (req, res, next) {
     } else {
         req.body.user = null;
     }
-    userHelper.contact(req.body).then((response) => {
+    userController.contact(req.body).then((response) => {
         res.send(
             {
                 response: "acknowledged",
@@ -33,6 +33,14 @@ router.post('/contact', function (req, res, next) {
             }
         );
     })
+});
+
+router.get('/test', function (req, res, next) {
+    let user = req.user;
+    res.render('test', {
+        title: `Test Page | ${app_name}`,
+        user
+    });
 });
 
 router.post('/test', function (req, res, next) {

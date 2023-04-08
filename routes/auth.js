@@ -1,7 +1,6 @@
-const { response } = require('express');
 var express = require('express');
 var router = express.Router();
-var authenticate = require('../helper/authHelper');
+var authenticate = require('../controller/authentication');
 var passport = require('../config/authentication');
 
 const app_name = process.env.APP_NAME
@@ -63,28 +62,6 @@ router.post('/signup', isUser, function (req, res, next) {
     }).catch((error) => {
         req.flash('message', `${error}`);
         res.redirect('/signup');
-    })
-
-});
-
-router.post('/admin/add-admin', haveFullControll, function (req, res, next) {
-    // console.log(req.body);
-    let user = req.body
-
-    authenticate.check_user_exist(user.email).then((response) => {
-        if (user.password == user.cpassword) {
-            authenticate.add_admin(user).then((response) => {
-                // console.log(user);
-                // console.log(response);
-                res.redirect('/admin/admins')
-            })
-        } else {
-            req.flash('message', `Password not match`);
-            res.redirect('/admin/add-admin');
-        }
-    }).catch((error) => {
-        req.flash('message', `${error}`);
-        res.redirect('/admin/add-admin');
     })
 
 });

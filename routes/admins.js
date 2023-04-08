@@ -1,7 +1,6 @@
-const { response } = require('express');
 var express = require('express');
 var router = express.Router();
-var admin = require('../helper/adminHelper');
+var admin = require('../controller/admin');
 
 const app_name = process.env.APP_NAME
 
@@ -91,6 +90,28 @@ router.get('/admins', isAdmin, haveFullControll, function (req, res, next) {
             admins
         });
     })
+});
+
+router.post('/add-admin', haveFullControll, function (req, res, next) {
+    // console.log(req.body);
+    let user = req.body
+
+    authenticate.check_user_exist(user.email).then((response) => {
+        if (user.password == user.cpassword) {
+            admin.add_admin(user).then((response) => {
+                // console.log(user);
+                // console.log(response);
+                res.redirect('/admin/admins')
+            })
+        } else {
+            req.flash('message', `Password not match`);
+            res.redirect('/admin/add-admin');
+        }
+    }).catch((error) => {
+        req.flash('message', `${error}`);
+        res.redirect('/admin/add-admin');
+    })
+
 });
 
 router.get('/admins/:id', isAdmin, haveFullControll, function (req, res, next) {
