@@ -1,7 +1,7 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 const db = require('../database/connection');
-const collections = require('../database/collections');
+const collections = require('../database/collections.json');
 const bcrypt = require('bcrypt');
 const ObjectId = require('mongodb').ObjectId;
 
@@ -12,7 +12,6 @@ passport.use('local-login', new LocalStrategy(
         passReqToCallback: true
     },
     (req, email, password, done) => {
-
         db.get()
             .collection(collections.USER)
             .findOne(
@@ -27,8 +26,6 @@ passport.use('local-login', new LocalStrategy(
                 }
             )
             .then((user) => {
-                // console.log(user)
-                // console.log('From pasport checking')
                 if (user) {
                     bcrypt
                         .compare(password, user.password)
@@ -51,16 +48,12 @@ passport.use('local-login', new LocalStrategy(
 ));
 
 passport.serializeUser(function (user, cb) {
-
     process.nextTick(function () {
         cb(null, user._id);
     });
-
 });
 
 passport.deserializeUser(function (id, cb) {
-    // console.log(email)
-    // console.log(user);
     process.nextTick(function () {
         db.get()
             .collection(collections.USER)
@@ -75,7 +68,6 @@ passport.deserializeUser(function (id, cb) {
                 }
             )
             .then((user) => {
-                // console.log(user)
                 return cb(null, user)
             }).catch((error) => {
                 return cb(error)

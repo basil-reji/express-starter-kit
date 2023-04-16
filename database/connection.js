@@ -15,7 +15,7 @@ const connect = (done) => {
     })
 }
 
-const get = () => {
+const get = () => {        
     return state.db
 }
 

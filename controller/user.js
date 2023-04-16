@@ -1,16 +1,15 @@
-const db = require('../config/database');
+const db = require('../database/connection');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
+const collections = require('../database/collections.json');
 
 const contact = {
-    contact: (data) => {
+    message: (data) => {
         return new Promise(async (resolve, reject) => {
-            // console.log(data)
-            delete data['']
-            data.date = new Date()
-            // resolve('')
+            delete data[''];
+            data.date = new Date();
             db.get()
-                .collection(process.env.DB_COLLECTION_MESSAGE)
+                .collection(collections.MESSAGE)
                 .insertOne(data)
                 .then((response) => {
                     resolve(response)

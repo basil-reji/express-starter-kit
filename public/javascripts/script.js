@@ -180,6 +180,7 @@ $("#contact-form").submit(function (e) {
                     $("#sent-message").css("display", "block");
                     document.getElementsByName("contact-form")[0].reset();
                 } else {
+                    console.log(response);
                     $("#loading").css("display", "none");
                     $("#error-message").css("display", "block");
                 }

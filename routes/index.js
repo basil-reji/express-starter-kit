@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var userController = require('../controller/user');
+var userControl = require('../controller/user');
 
 const app_name = process.env.APP_NAME
 
@@ -18,6 +18,14 @@ router.get('/', async function (req, res, next) {
     }
 });
 
+router.get('/contact', function (req, res, next) {
+    let user = req.user;
+    res.render('pages/contact', {
+        title: `Test Page | ${app_name}`,
+        user
+    });
+});
+
 router.post('/contact', function (req, res, next) {
     let user = req.user;
     if (user) {
@@ -25,11 +33,21 @@ router.post('/contact', function (req, res, next) {
     } else {
         req.body.user = null;
     }
-    userController.contact(req.body).then((response) => {
+    console.log(req.body)
+    userControl.contact.message(req.body)
+    .then((response) => {
         res.send(
             {
                 response: "acknowledged",
                 status: true
+            }
+        );
+    })
+    .catch((error) => {
+        res.send(
+            {
+                error,
+                status: false
             }
         );
     })

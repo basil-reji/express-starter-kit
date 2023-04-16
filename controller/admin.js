@@ -1,6 +1,6 @@
-const db = require('../config/database');
+const db = require('../database/connection');
 const { models } = require('../database/models');
-const collections = require('../database/collections');
+const collections = require('../database/collections.json');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
 
@@ -172,40 +172,38 @@ const admins = {
 
 const message = {
 
-    message: {
+    getAll: () => {
+        return new Promise((resolve, reject) => {
+            db.get()
+                .collection(collections.MESSAGE)
+                .find()
+                .toArray()
+                .then((response) => {
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                })
+        })
+    },
 
-        getAll: () => {
-            return new Promise((resolve, reject) => {
-                db.get()
-                    .collection(process.env.DB_COLLECTION_MESSAGE)
-                    .find()
-                    .toArray()
-                    .then((response) => {
-                        resolve(response);
-                    }).catch((error) => {
-                        reject(error);
-                    })
-            })
-        },
+    delete: (id) => {
+        return new Promise((resolve, reject) => {
+            db.get()
+                .collection(collections.MESSAGE)
+                .remove(
+                    {
+                        _id: ObjectId(id)
+                    }
+                )
+                .then((response) => {
+                    // console.log(response)
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                })
+        })
+    },
 
-        delete: (id) => {
-            return new Promise((resolve, reject) => {
-                db.get()
-                    .collection(process.env.DB_COLLECTION_MESSAGE)
-                    .remove(
-                        {
-                            _id: ObjectId(id)
-                        }
-                    )
-                    .then((response) => {
-                        // console.log(response)
-                        resolve(response);
-                    }).catch((error) => {
-                        reject(error);
-                    })
-            })
-        },
-    }
 }
 
 module.exports = {

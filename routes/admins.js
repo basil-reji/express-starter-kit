@@ -42,22 +42,23 @@ router.get('/', isAdmin, function (req, res, next) {
 
 router.get('/messages', isAdmin, function (req, res, next) {
     let user = req.user;
-    admin.getMessages().then((data) => {
-        // console.log(data)
-        res.render('admin/messages', {
-            title: app_name,
-            page_title: 'Contacts',
-            breadcrumbs: [
-                {
-                    page_name: 'Messages',
-                    active: true,
-                }
-            ],
-            messages_page: true,
-            user,
-            data
-        });
-    })
+    admin.message.getAll()
+        .then((data) => {
+            // console.log(data)
+            res.render('admin/messages', {
+                title: app_name,
+                page_title: 'Contacts',
+                breadcrumbs: [
+                    {
+                        page_name: 'Messages',
+                        active: true,
+                    }
+                ],
+                messages_page: true,
+                user,
+                data
+            });
+        })
 });
 
 router.post('/messages/delete', isAdmin, function (req, res, next) {
@@ -74,22 +75,23 @@ router.post('/messages/delete', isAdmin, function (req, res, next) {
 
 router.get('/admins', isAdmin, haveFullControll, function (req, res, next) {
     let user = req.user
-    admin.getAdmins().then((admins) => {
-        // console.log(response);
-        res.render('admin/admins', {
-            title: app_name,
-            page_title: 'Admins',
-            breadcrumbs: [
-                {
-                    page_name: 'Admins',
-                    active: true,
-                }
-            ],
-            admins_page: true,
-            user,
-            admins
-        });
-    })
+    admin.admins.getAll()
+        .then((admins) => {
+            // console.log(response);
+            res.render('admin/admins', {
+                title: app_name,
+                page_title: 'Admins',
+                breadcrumbs: [
+                    {
+                        page_name: 'Admins',
+                        active: true,
+                    }
+                ],
+                admins_page: true,
+                user,
+                admins
+            });
+        })
 });
 
 router.post('/add-admin', haveFullControll, function (req, res, next) {
@@ -116,7 +118,7 @@ router.post('/add-admin', haveFullControll, function (req, res, next) {
 
 router.get('/admins/:id', isAdmin, haveFullControll, function (req, res, next) {
     let user = req.user
-    admin.getAdmin(req.params.id)
+    admin.admins.get(req.params.id)
         .then((admin) => {
             // console.log(response);
             res.render('admin/admins/edit_admin', {
@@ -143,7 +145,7 @@ router.post('/admins/update/:id', isAdmin, haveFullControll, function (req, res,
     // console.log(req.params.id);
     // console.log(req.body)
     let user = req.user
-    admin.updateAdmin(req.params.id, req.body)
+    admin.admins.update(req.params.id, req.body)
         .then((response) => {
             // console.log(response);
             res.redirect('/admin/admins/')
@@ -152,7 +154,7 @@ router.post('/admins/update/:id', isAdmin, haveFullControll, function (req, res,
 
 router.post('/admins/remove/', isAdmin, haveFullControll, function (req, res, next) {
     let user = req.user
-    admin.removeAdmin(req.body.id).then((response) => {
+    admin.admins.remove(req.body.id).then((response) => {
         res.send(
             {
                 response: "ok",
@@ -202,12 +204,12 @@ router.post('/account/update', isAdmin, function (req, res, next) {
     let user = req.user
     // console.log(req.body)
     admin.updateAccount(user._id, req.body)
-    .then((response) => {
-        res.send({
-            status: true,
-            message: 'ok'
+        .then((response) => {
+            res.send({
+                status: true,
+                message: 'ok'
+            })
         })
-    })
 });
 
 module.exports = router;
