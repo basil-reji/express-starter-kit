@@ -24,5 +24,18 @@ module.exports = {
             + date.getHours() + ":"
             + date.getMinutes() + ":"
             + date.getSeconds();
+    },
+    viewControll: (user, asset='user', access='view') => {
+        if (user) {
+            if (user.permission[asset].includes('all')) {
+                return true
+            } else if (user.permission[asset].includes(access)) {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
     }
 };

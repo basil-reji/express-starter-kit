@@ -33,7 +33,7 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 
-    {{#if user.permission.admin}}
+    {{#if user.permissions.admin}}
     <link rel='stylesheet' href='/stylesheets/admin.css' />
     {{else}}
     <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -43,7 +43,7 @@
 
 <body>
     {{#if noHeader}}
-    {{else if user.permission.admin}}
+    {{else if user.permissions.admin}}
     {{>admin/sidebar}}
     {{>admin/header}}
     {{else}}
@@ -51,7 +51,7 @@
     {{/if}}
 
     <main id="main">
-        {{#if user.permission.admin}}
+        {{#if user.permissions.admin}}
         <div class="pagetitle">
             <h2>{{page_title}}</h2>
             <nav>
@@ -75,13 +75,13 @@
 
         {{{body}}}
 
-        {{#if user.permission.admin}}
+        {{#if user.permissions.admin}}
         {{>admin/footer}}
         {{/if}}
     </main>
 
     {{#if noFooter}}
-    {{else if user.permission.admin}}
+    {{else if user.permissions.admin}}
     {{else}}
     {{>footer}}
     {{/if}}
@@ -109,7 +109,7 @@
         integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    {{#if user.permission.admin}}
+    {{#if user.permissions.admin}}
     <script src="/javascripts/admin.js"></script>
     {{else}}
     <script src="/javascripts/script.js"></script>

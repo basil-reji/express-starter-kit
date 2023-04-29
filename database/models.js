@@ -10,14 +10,13 @@ const user = {
             image: '/assets/images/user/user.png',
             primary_address: {}
         },
-        permission: {
-            user: true,
-            access: ['restricted', 'user']
+        permissions: {
+            restricted: true,
+            self: ['view', 'update', 'delete']
         },
         events: {
-            careted: '',
-            general: [],
-            deleted: '',
+            joined: '',
+            general: []
         },
         flags: {
             profile_completion: false
@@ -35,15 +34,17 @@ const user = {
             image: '/assets/images/user/user.png',
             primary_address: {}
         },
-        permission: {
+        access: ['admin', 'restricted'],
+        permissions: {
+            restricted: false,
             admin: true,
-            access: ['read', 'add', 'edit', 'delete', 'aprove', 'view',],
-            full_control: false
+            self: ['view', 'update', 'delete'],
+            messages: ['view', 'edit', 'update'],
+            users: ['view']
         },
         events: {
-            careted: '',
-            general: [],
-            deleted: '',
+            joined: '',
+            general: []
         },
         flags: {
             profile_completed: false,
@@ -61,22 +62,20 @@ const user = {
             image: '/assets/images/user/user.png',
             primary_address: {}
         },
-        permission: {
+        permissions: {
+            restricted: false,
             admin: true,
-            access: {
-                view: true,
-                read: true,
-                add: true,
-                edit: true,
-                aprove: true,
-                delete: true,
+            access:{
+                users: true,
+                messages: true
             },
-            full_control: true
+            users: ['all'],
+            messages: ['all'],
+            admins: ['all']     
         },
         events: {
-            careted: '',
-            general: [],
-            deleted: '',
+            joined: '',
+            general: []
         },
         flags: {
             profile_completed: false,

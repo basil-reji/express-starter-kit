@@ -5,24 +5,28 @@ var passport = require('../config/authentication');
 
 const app_name = process.env.APP_NAME
 
-const isUser = (req, res, next) =>{
-    if (req.user) {
-        res.redirect('/');
-    } else {
-        next();
-    }
-}
+router.use((req, res, next) => {
+    let user = req.user;
 
-const haveFullControll = (req, res, next) => {
-    if (req.user.permission.full_control) {
-        next();
+    if (user) {
+        if (req.originalUrl == '/login' || req.originalUrl == '/signup') {
+            res.redirect('/')
+        } else {
+            if(user.permissions.admin){
+                if(req.originalUrl.startsWith("/admin")){
+                    next()
+                }else{
+                    res.redirect('/admin')
+                }
+            }
+        }
     } else {
-        res.redirect('/');
+        next()
     }
-}
+})
 
 /* GET home page. */
-router.get('/login', isUser, function (req, res, next) {
+router.get('/login', function (req, res, next) {
     let message = req.flash('message');
     res.render('auth/login', {
         title: `Login | ${app_name}`,
@@ -33,7 +37,7 @@ router.get('/login', isUser, function (req, res, next) {
     });
 });
 
-router.get('/signup', isUser, function (req, res, next) {
+router.get('/signup', function (req, res, next) {
     let message = req.flash('message');
     res.render('auth/signup', {
         title: `Signup | ${app_name}`,
@@ -44,7 +48,7 @@ router.get('/signup', isUser, function (req, res, next) {
     });
 });
 
-router.post('/signup', isUser, function (req, res, next) {
+router.post('/signup', function (req, res, next) {
     // console.log(req.body);
     // let user = req.body
 
@@ -66,7 +70,7 @@ router.post('/signup', isUser, function (req, res, next) {
 
 });
 
-router.post('/login', isUser, passport.authenticate('local-login', {
+router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: {
@@ -79,15 +83,9 @@ router.post('/login', isUser, passport.authenticate('local-login', {
 router.get('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) { return next(err); }
-        if(req.session){ req.session.destroy() }
+        if (req.session) { req.session.destroy() }
         res.redirect('/');
     });
 });
-
-// router.get('/test', function (req, res, next) {
-//     authenticate.test('62c99565949dd148c779750a').then((user)=>{
-//         res.send(user)
-//     })
-// });
 
 module.exports = router;

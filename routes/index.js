@@ -5,10 +5,10 @@ var userControl = require('../controller/user');
 const app_name = process.env.APP_NAME
 
 /* GET home page. */
-router.get('/', async function (req, res, next) {
+router.get('/', (req, res, next) => {
     let user = req.user
     // console.log(req.user);
-    if (user && user.permission.admin) {
+    if (user && user.permissions.admin) {
         res.redirect('/admin/')
     } else {
         res.render('index', {
@@ -18,7 +18,7 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-router.get('/contact', function (req, res, next) {
+router.get('/contact', (req, res, next) => {
     let user = req.user;
     res.render('pages/contact', {
         title: `Test Page | ${app_name}`,
@@ -26,7 +26,7 @@ router.get('/contact', function (req, res, next) {
     });
 });
 
-router.post('/contact', function (req, res, next) {
+router.post('/contact', (req, res, next) => {
     let user = req.user;
     if (user) {
         req.body.user = user.id;
@@ -53,7 +53,7 @@ router.post('/contact', function (req, res, next) {
     })
 });
 
-router.get('/test', function (req, res, next) {
+router.get('/test', (req, res, next) => {
     let user = req.user;
     res.render('test', {
         title: `Test Page | ${app_name}`,
@@ -61,7 +61,7 @@ router.get('/test', function (req, res, next) {
     });
 });
 
-router.post('/test', function (req, res, next) {
+router.post('/test', (req, res, next) => {
     let user = req.user;
     // console.log(req.body)
     res.send(

@@ -13,13 +13,15 @@
                     <h5>Dashboard</h5>
                 </a>
             </li>
+            {{#if user.permissions.access.messages}}
             <li>
                 <a href="/admin/messages/" {{#if messages_page}}class="active"{{/if}}>
                     <i class="ri-message-3-{{#if message_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Messages</h5>
                 </a>
             </li>
-            {{#if user.permission.full_control}}
+            {{/if}}
+            {{#if user.permissions.access.admins}}
             <li>
                 <a href="/admin/admins/" {{#if admins_page}}class="active"{{/if}}>
                     <i class="ri-shield-user-{{#if admins_page}}fill{{else}}line{{/if}} sico"></i>

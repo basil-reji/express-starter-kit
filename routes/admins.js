@@ -2,30 +2,13 @@ var express = require('express');
 var router = express.Router();
 const admin = require('../controller/admin');
 const authenticate = require('../controller/authentication')
+const {access_controll, admin_vadlidation} = require('../middlewares/access_control')
 
 const app_name = process.env.APP_NAME
 
-const isAdmin = (req, res, next) => {
-    try {
-        if (req.user.permission.admin) {
-            next();
-        } else {
-            res.redirect('/login');
-        }
-    } catch {
-        res.redirect('/login');
-    }
-}
+router.use(admin_vadlidation())
 
-const haveFullControll = (req, res, next) => {
-    if (req.user.permission.full_control) {
-        next();
-    } else {
-        res.redirect('/');
-    }
-}
-
-router.get('/', isAdmin, function (req, res, next) {
+router.get('/', function (req, res, next) {
     let user = req.user
     res.render('admin/dashboard', {
         title: app_name,
@@ -41,7 +24,7 @@ router.get('/', isAdmin, function (req, res, next) {
     });
 });
 
-router.get('/messages', isAdmin, function (req, res, next) {
+router.get('/messages', access_controll('messages', 'view'), function (req, res, next) {
     let user = req.user;
     admin.message.getAll()
         .then((data) => {
@@ -62,7 +45,7 @@ router.get('/messages', isAdmin, function (req, res, next) {
         })
 });
 
-router.post('/messages/delete', isAdmin, function (req, res, next) {
+router.post('/messages/delete', access_controll('messages', 'delete'), function (req, res, next) {
     let user = req.user
     admin.message.delete(req.body.id).then((response) => {
         res.send(
@@ -74,7 +57,7 @@ router.post('/messages/delete', isAdmin, function (req, res, next) {
     })
 });
 
-router.get('/admins', isAdmin, haveFullControll, function (req, res, next) {
+router.get('/admins', access_controll('admins', 'view'), function (req, res, next) {
     let user = req.user
     admin.admins.getAll()
         .then((admins) => {
@@ -95,8 +78,9 @@ router.get('/admins', isAdmin, haveFullControll, function (req, res, next) {
         })
 });
 
-router.get('/add-admin', isAdmin, haveFullControll, function (req, res, next) {
-    let user = req.user
+router.get('/add-admin', access_controll('admins', 'add'), function (req, res, next) {
+    let user = req.user;
+    let message = req.flash('message');
     res.render('admin/admins/add_admin', {
         title: app_name,
         page_title: 'Admins',
@@ -111,19 +95,18 @@ router.get('/add-admin', isAdmin, haveFullControll, function (req, res, next) {
             }
         ],
         admins_page: true,
-        user
+        user,
+        message
     });
 });
 
-router.post('/add-admin', haveFullControll, function (req, res, next) {
+router.post('/add-admin', access_controll('admins', 'add'), function (req, res, next) {
     // console.log(req.body);
     let user = req.body
 
     authenticate.check_user_exist(user.email).then((response) => {
         if (user.password == user.cpassword) {
             admin.admins.add(user).then((response) => {
-                // console.log(user);
-                // console.log(response);
                 res.redirect('/admin/admins')
             })
         } else {
@@ -137,7 +120,7 @@ router.post('/add-admin', haveFullControll, function (req, res, next) {
 
 });
 
-router.get('/admins/:id', isAdmin, haveFullControll, function (req, res, next) {
+router.get('/admins/:id', access_controll('admins', 'edit'), function (req, res, next) {
     let user = req.user
     admin.admins.get(req.params.id)
         .then((admin) => {
@@ -162,7 +145,7 @@ router.get('/admins/:id', isAdmin, haveFullControll, function (req, res, next) {
         })
 });
 
-router.post('/admins/update/:id', isAdmin, haveFullControll, function (req, res, next) {
+router.post('/admins/update/:id', access_controll('admins', 'update'), function (req, res, next) {
     // console.log(req.params.id);
     // console.log(req.body)
     let user = req.user
@@ -172,7 +155,7 @@ router.post('/admins/update/:id', isAdmin, haveFullControll, function (req, res,
         })
 });
 
-router.post('/admins/remove/', isAdmin, haveFullControll, function (req, res, next) {
+router.post('/admins/remove/', access_controll('admins', 'remove'), function (req, res, next) {
     let user = req.user
     admin.admins.remove(req.body.id).then((response) => {
         res.send(
@@ -184,7 +167,7 @@ router.post('/admins/remove/', isAdmin, haveFullControll, function (req, res, ne
     })
 });
 
-router.get('/account', isAdmin, function (req, res, next) {
+router.get('/account', function (req, res, next) {
     let user = req.user
     res.render('admin/account', {
         title: app_name,
@@ -195,12 +178,12 @@ router.get('/account', isAdmin, function (req, res, next) {
                 active: true,
             }
         ],
-        admin_page: true,
+        account_page: true,
         user
     });
 });
 
-router.post('/account/update', isAdmin, function (req, res, next) {
+router.post('/account/update', function (req, res, next) {
     let user = req.user
     // console.log(req.body)
     admin.account.update(user._id, req.body)

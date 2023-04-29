@@ -27,7 +27,7 @@ module.exports = {
     check_user_exist: (email) => {
         return new Promise(async (resolve, reject) => {
             db.get()
-                .collection(collections)
+                .collection(collections.USER)
                 .findOne(
                     {
                         email: email
@@ -38,7 +38,7 @@ module.exports = {
                 )
                 .then((response) => {
                     if (response) {
-                        reject('User Already Registered')
+                        reject('User Already Exist')
                     } else {
                         resolve(true)
                     }
