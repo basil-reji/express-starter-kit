@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var admin = require('../controller/admin');
+const admin = require('../controller/admin');
+const authenticate = require('../controller/authentication')
 
 const app_name = process.env.APP_NAME
 
@@ -63,7 +64,7 @@ router.get('/messages', isAdmin, function (req, res, next) {
 
 router.post('/messages/delete', isAdmin, function (req, res, next) {
     let user = req.user
-    admin.deleteMessage(req.body.id).then((response) => {
+    admin.message.delete(req.body.id).then((response) => {
         res.send(
             {
                 response: "acknowledged",
@@ -94,13 +95,33 @@ router.get('/admins', isAdmin, haveFullControll, function (req, res, next) {
         })
 });
 
+router.get('/add-admin', isAdmin, haveFullControll, function (req, res, next) {
+    let user = req.user
+    res.render('admin/admins/add_admin', {
+        title: app_name,
+        page_title: 'Admins',
+        breadcrumbs: [
+            {
+                page_name: 'Admins',
+                page_link: '/admins'
+            },
+            {
+                page_name: 'Add Admin',
+                active: true,
+            }
+        ],
+        admins_page: true,
+        user
+    });
+});
+
 router.post('/add-admin', haveFullControll, function (req, res, next) {
     // console.log(req.body);
     let user = req.body
 
     authenticate.check_user_exist(user.email).then((response) => {
         if (user.password == user.cpassword) {
-            admin.add_admin(user).then((response) => {
+            admin.admins.add(user).then((response) => {
                 // console.log(user);
                 // console.log(response);
                 res.redirect('/admin/admins')
@@ -147,7 +168,6 @@ router.post('/admins/update/:id', isAdmin, haveFullControll, function (req, res,
     let user = req.user
     admin.admins.update(req.params.id, req.body)
         .then((response) => {
-            // console.log(response);
             res.redirect('/admin/admins/')
         })
 });
@@ -162,26 +182,6 @@ router.post('/admins/remove/', isAdmin, haveFullControll, function (req, res, ne
             }
         );
     })
-});
-
-router.get('/add-admin', isAdmin, haveFullControll, function (req, res, next) {
-    let user = req.user
-    res.render('admin/admins/add_admin', {
-        title: app_name,
-        page_title: 'Admins',
-        breadcrumbs: [
-            {
-                page_name: 'Admins',
-                page_link: '/admins'
-            },
-            {
-                page_name: 'Add Admin',
-                active: true,
-            }
-        ],
-        admins_page: true,
-        user
-    });
 });
 
 router.get('/account', isAdmin, function (req, res, next) {
@@ -203,7 +203,7 @@ router.get('/account', isAdmin, function (req, res, next) {
 router.post('/account/update', isAdmin, function (req, res, next) {
     let user = req.user
     // console.log(req.body)
-    admin.updateAccount(user._id, req.body)
+    admin.account.update(user._id, req.body)
         .then((response) => {
             res.send({
                 status: true,

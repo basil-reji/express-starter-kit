@@ -63,7 +63,7 @@ router.get('/test', function (req, res, next) {
 
 router.post('/test', function (req, res, next) {
     let user = req.user;
-    console.log(req.body)
+    // console.log(req.body)
     res.send(
         {
             response: "acknowledged",

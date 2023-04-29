@@ -1,3 +1,4 @@
+var fs = require('fs');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -33,7 +34,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine("hbs", hbs.engine);
 
+// logger setup
+var app_log = fs.createWriteStream('./logs/app.log', {flags: 'a'});
+var error_log = fs.createWriteStream('./logs/error.log', {flags: 'a'});
+var short_log = fs.createWriteStream('./logs/short.log', {flags: 'a'});
+
 app.use(logger('dev'));
+app.use(logger('dev', { stream: error_log }));
+app.use(logger('short', { stream: short_log }));
+app.use(logger('combined', { stream: app_log }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -42,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // express-session setup
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 6000000 },
+    cookie: { maxAge: parseInt(process.env.SESSION_MAX_AGE) },
     store: db.get(),
     resave: true,
     saveUninitialized: true
