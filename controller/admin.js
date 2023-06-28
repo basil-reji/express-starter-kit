@@ -32,6 +32,10 @@ const account = {
                 })
         })
     },
+
+    updatePassword: (id, data) => {
+        
+    }
 }
 
 const admins = {

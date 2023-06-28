@@ -9,7 +9,7 @@ passport.use('local-login', new LocalStrategy(
     {
         usernameField: 'email',
         passwordField: 'password',
-        passReqToCallback: true
+        passReqToCallback: true,
     },
     (req, email, password, done) => {
         db.get()
@@ -21,13 +21,15 @@ passport.use('local-login', new LocalStrategy(
                 {
                     projection: {
                         email: 1,
-                        password: 1
+                        password: 1,
+                        status: 1
                     }
                 }
             )
             .then((user) => {
                 if (user) {
-                    bcrypt
+                    if (user.status == 'active'){
+                        bcrypt
                         .compare(password, user.password)
                         .then((status) => {
                             if (status) {
@@ -38,6 +40,9 @@ passport.use('local-login', new LocalStrategy(
                         }).catch((error) => {
                             return done(error)
                         });
+                    }else{
+                        return done(null, false, req.flash('message',`Account is ${user.status}`));
+                    }
                 } else {
                     return done(null, false, req.flash('message','Incorrect Email'));
                 }

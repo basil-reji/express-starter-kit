@@ -623,6 +623,16 @@ form .btn-primary:hover {
 .forms .log_footer a {
   font-weight: 600;
 }
+.forms.inner_form {
+  padding: 0rem;
+  margin: 0rem;
+  box-shadow: none;
+}
+.forms.inner_form form {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+}
 
 .dashboard .filter {
   position: absolute;

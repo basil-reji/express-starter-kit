@@ -1,12 +1,14 @@
 
-const access_controll = (asset, access) => {
+const access_controll = (asset, permission) => {
     return (req, res, next) => {
         let user = req.user;
-    
+
         if (user) {
-            if (user.permissions[asset].includes('all')) {
+            if (user.permissions['all']) {
                 next()
-            } else if (user.permissions[asset].includes(access)) {
+            } else if (user.permissions[asset]['all']) {
+                next()
+            } else if (user.permissions[asset][permission]) {
                 next()
             } else {
                 res.redirect('/')
@@ -22,9 +24,11 @@ const admin_vadlidation = () => {
         let user = req.user;
 
         if (user) {
+
             if (user.permissions.admin) {
                 next()
             } else if (user.role == 'admin') {
+                next()
             } else {
                 res.redirect('/')
             }

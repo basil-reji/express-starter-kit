@@ -31,11 +31,11 @@
                         {{#with user}}
                         <div class="row mb-3">
                             <div class="col-lg-3 col-md-4 label">First Name</div>
-                            <div class="col-lg-9 col-md-8">{{fname}}</div>
+                            <div class="col-lg-9 col-md-8" id="profile-overview-fname">{{fname}}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3 col-md-4 label">Surame</div>
-                            <div class="col-lg-9 col-md-8">{{sname}}</div>
+                            <div class="col-lg-9 col-md-8" id="profile-overview-sname">{{sname}}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3 col-md-4 label">Email ID</div>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3 col-md-4 label">Phone</div>
-                            <div class="col-lg-9 col-md-8">{{phone}}</div>
+                            <div class="col-lg-9 col-md-8" id="profile-overview-phone">{{phone}}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3 col-md-4 label">Role</div>
@@ -117,35 +117,42 @@
                     <div class="tab-pane fade" id="profile-change-password">
                         <h5 class="card-title">Change You Password</h5>
 
-                        <form class="">
+                        <div class="forms inner_form">
+                            <form id="changePassword">
 
-                            <div class="row mb-3">
-                                <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
-                                    Password</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="password" type="password" class="form-control" id="currentPassword">
+                                <p class="error" id="error"></p>
+
+                                <div class="row mb-3">
+                                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
+                                        Password</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="password" type="password" class="form-control"
+                                            id="currentPassword">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                <div class="row mb-3">
+                                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
+                                        Password</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New
-                                    Password</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                <div class="row mb-3">
+                                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New
+                                        Password</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="renewpassword" type="password" class="form-control"
+                                            id="renewPassword">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="text-center pt-4">
-                                <button type="submit" class="btn-primary">Change Password</button>
-                            </div>
-                        </form><!-- End Change Password Form -->
+                                <div class="text-center pt-4">
+                                    <button type="submit" class="btn-primary">Change Password</button>
+                                </div>
+                            </form>
+                        </div>
 
                     </div>
 
@@ -191,18 +198,56 @@
             }
 
             $.ajax({
-                url: `/admin/account/update`,
+                url: `/admin/account/update/profile`,
                 method: 'post',
                 data: values,
                 success: (response) => {
                     if (response.status == true) {
-                        console.log('Success');
+                        $("#profile-overview-fname").html(values.fname);
+                        $("#profile-overview-sname").html(values.sname);
+                        if (values.phone.lenght > 6) {
+                            $("#profile-overview-phone").html(values.phone);
+                        }
                     } else {
-                        console.log('Error');
                         console.log(response.message);
                     }
                 }
             })
         })
+
+        $("#changePassword").submit(function (e) {
+            e.preventDefault();
+
+            
+            var $inputs = $('#changePassword :input');
+
+            var values = {};
+            $inputs.each(function () {
+                values[this.name] = $(this).val();
+            });
+
+            console.log(values)
+
+            $.ajax({
+                url: `/admin/account/update/password`,
+                method: 'post',
+                data: values,
+                success: (response) => {
+                    if (response.status == true) {
+                        $("#profile-overview-fname").html(values.fname);
+                        $("#profile-overview-sname").html(values.sname);
+                        if (values.phone.lenght > 6) {
+                            $("#profile-overview-phone").html(values.phone);
+                        }
+                    } else {
+                        console.log(response.message);
+                    }
+                }
+            })
+            
+        })
+
+
     });
 </script>
+

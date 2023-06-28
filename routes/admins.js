@@ -183,7 +183,19 @@ router.get('/account', function (req, res, next) {
     });
 });
 
-router.post('/account/update', function (req, res, next) {
+router.post('/account/update/profile', function (req, res, next) {
+    let user = req.user
+    // console.log(req.body)
+    admin.account.update(user._id, req.body)
+        .then((response) => {
+            res.send({
+                status: true,
+                message: 'ok'
+            })
+        })
+});
+
+router.post('/account/update/password', function (req, res, next) {
     let user = req.user
     // console.log(req.body)
     admin.account.update(user._id, req.body)

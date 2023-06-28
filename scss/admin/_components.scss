@@ -184,4 +184,16 @@
             font-weight: 600;
         }
     }
+
+    &.inner_form{
+        padding: 0rem;
+        margin: 0rem;
+        box-shadow: none;
+
+        form{
+            margin: 0;
+            padding: 0;
+            box-shadow: none;
+        }
+    }
 }

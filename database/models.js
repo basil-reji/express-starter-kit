@@ -6,13 +6,16 @@ const user = {
         phone: null,
         password: null,
         role: 'user',
+        status: 'active',
         profile: {
             image: '/assets/images/user/user.png',
             primary_address: {}
         },
         permissions: {
             restricted: true,
-            self: ['view', 'update', 'delete']
+            self: {
+                all: true,
+            }
         },
         events: {
             joined: '',
@@ -30,17 +33,29 @@ const user = {
         phone: null,
         password: null,
         role: 'admin',
+        status: 'active',
         profile: {
             image: '/assets/images/user/user.png',
             primary_address: {}
         },
-        access: ['admin', 'restricted'],
         permissions: {
             restricted: false,
             admin: true,
-            self: ['view', 'update', 'delete'],
-            messages: ['view', 'edit', 'update'],
-            users: ['view']
+            all: false,
+            self: {
+                all: false,
+                view: true,
+                edit: true,
+                update: true,
+            },
+            messages: {
+                all: false,
+                view: true,
+            },
+            users: {
+                all: false,
+                view: true,
+            },
         },
         events: {
             joined: '',
@@ -58,6 +73,7 @@ const user = {
         phone: null,
         password: null,
         role: 'super_admin',
+        status: 'active',
         profile: {
             image: '/assets/images/user/user.png',
             primary_address: {}
@@ -65,13 +81,19 @@ const user = {
         permissions: {
             restricted: false,
             admin: true,
-            access:{
-                users: true,
-                messages: true
+            all: true,
+            admins: {
+                all: true,
             },
-            users: ['all'],
-            messages: ['all'],
-            admins: ['all']     
+            users: {
+                all: true,
+            },
+            messages: {
+                all: true,
+            },
+            registrations: {
+                all: true,
+            },
         },
         events: {
             joined: '',
