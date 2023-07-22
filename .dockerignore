@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# git related
+.git/
+.gitignore
+*.orig
+*.swp
+*.patch
+*.diff
+*.rej
+*.bak
+*.orig.*
+
+# dotenv environment variables file
+.env
+.env.test

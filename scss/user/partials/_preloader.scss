@@ -1,0 +1,32 @@
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    overflow: hidden;
+    background: $color_4;
+    transition: all 0.6s ease-out;
+}
+
+#preloader:before {
+    $var_color: rgba($color: $color_1, $alpha: 0.1);
+    content: "";
+    position: fixed;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    border: 6px solid $white;
+    border-color: $var_color $var_color $color_3 $var_color;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: animate-preloader 1.5s linear infinite;
+}
+
+@keyframes animate-preloader {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

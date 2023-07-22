@@ -1,41 +1,30 @@
-<header id="header" class="fixed-top">
+<header id="header" class="fixed-top {{#if home_page}}{{else}}inner-page{{/if}}">
     <div class="container d-flex align-items-center justify-content-between">
 
-        <h1 class="logo"><a href="/">ExpressProject</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <a href="/" class="logo me-auto me-lg-0">
+            <h1 class="heading">
+                Express App
+            </h1>
+        </a>
 
         <nav id="navbar" class="navbar">
-            <ul class="nav-items nav-ul">
+            <ul id="nav-items" class="nav-items nav-ul">
                 <li class="nav-item nav-li">
-                    <a class="nav-link scrollto active" href="#hero">Home</a>
+                    <a class="nav-link scrollto {{#if home_page}}active{{/if}}" href="/#">Home</a>
                 </li>
             </ul>
+        </nav>
 
-            {{#if user}}
-            <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    My Account
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
-                    <h6 class="dropdown-header">{{user.fname}} {{user.sname}}</h6>
-                    <div class="dropdown-divider"></div>
-                    <li><a class="dropdown-item" href="#">My Account</a></li>
-                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                </ul>
-            </div>
-            {{else}}
-            <a class="btn" href="/login">Login</a>
-            {{/if}}
-
+        <div class="btn-group">
+            <a class="btn" href="/contact">
+                Contact Us
+            </a>
             <div class="harmburger">
                 <div class="lin"></div>
                 <div class="lin"></div>
                 <div class="lin"></div>
             </div>
-
-        </nav>
+        </div>
     </div>
     </nav><!-- .navbar -->
 

@@ -13,6 +13,7 @@ router.get('/', (req, res, next) => {
     } else {
         res.render('index', {
             title: app_name,
+            home_page: true,
             user
         });
     }

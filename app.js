@@ -34,15 +34,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine("hbs", hbs.engine);
 
-// logger setup
-var app_log = fs.createWriteStream('./logs/app.log', {flags: 'a'});
-var error_log = fs.createWriteStream('./logs/error.log', {flags: 'a'});
-var short_log = fs.createWriteStream('./logs/short.log', {flags: 'a'});
-
 app.use(logger('dev'));
-app.use(logger('dev', { stream: error_log }));
-app.use(logger('short', { stream: short_log }));
-app.use(logger('combined', { stream: app_log }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -97,6 +89,8 @@ app.use(function (err, req, res, next) {
     // console.log(error);
     res.render('error', {
         title: `${error.code} Error | ${process.env.APP_NAME}`,
+        noFooter: true,
+        noHeader: true,
         error
     });
 });
