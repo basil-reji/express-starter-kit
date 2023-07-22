@@ -11,17 +11,18 @@ router.use((req, res, next) => {
     if (user) {
         if (req.originalUrl == '/login' || req.originalUrl == '/signup') {
             res.redirect('/')
-        } else {
-            if(user.permissions.admin){
-                if(req.originalUrl.startsWith("/admin")){
-                    next()
-                }else{
-                    res.redirect('/admin')
-                }
+        } else if (user.permissions.admin) {
+            if (req.originalUrl.startsWith("/admin")) {
+                next()
+            } else {
+                res.redirect('/admin')
             }
         }
+        else {
+            next();
+        }
     } else {
-        next()
+        next();
     }
 })
 
@@ -50,11 +51,11 @@ router.get('/signup', function (req, res, next) {
 
 router.post('/signup', function (req, res, next) {
     // console.log(req.body);
-    // let user = req.body
+    let user = req.body
 
     authenticate.check_user_exist(user.email).then((response) => {
         if (user.password == user.cpassword) {
-            authenticate.do_signup(user).then((response) => {
+            authenticate.signup(user).then((response) => {
                 // console.log(user);
                 // console.log(response);
                 res.redirect('/login')
@@ -81,6 +82,14 @@ router.post('/login', passport.authenticate('local-login', {
 }));
 
 router.get('/logout', function (req, res, next) {
+    req.logout(function (err) {
+        if (err) { return next(err); }
+        if (req.session) { req.session.destroy() }
+        res.redirect('/');
+    });
+});
+
+router.get('/admin/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) { return next(err); }
         if (req.session) { req.session.destroy() }

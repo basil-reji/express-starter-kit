@@ -2,13 +2,14 @@ const db = require('../database/connection');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
 const collections = require('../database/collections.json');
+const { models } = require('../database/models');
 
 
 module.exports = {
 
     signup: (inf) => {
         return new Promise(async (resolve, reject) => {
-            let user = db.models.user.user;
+            let user = models.user.user;
             user.fname = inf.fname;
             user.sname = inf.sname;
             user.email = inf.email;

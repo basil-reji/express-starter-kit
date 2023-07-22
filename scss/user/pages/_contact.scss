@@ -1,29 +1,20 @@
-
-@keyframes animate-loading {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 .contact {
+    margin-top: 3rem;
+
     .info-container {
-        background-color: $dark_color_2;
+        background-color: $color_4;
         height: 100%;
         padding: 20px;
-        border-radius: 10px 0 0 10px;
+        border-radius: 1rem;
         box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
     }
 
     .info-item {
         width: 100%;
-        background-color: $dark_color_3;
+        background-color: $color_4;
         margin-bottom: 20px;
         padding: 20px;
-        border-radius: 10px;
+        // border-radius: 4rem;
         color: $white;
 
         &:last-child {
@@ -40,7 +31,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 50px;
+            border-radius: 50%;
             transition: all 0.3s ease-in-out;
             margin-right: 15px;
         }
@@ -58,6 +49,14 @@
             font-size: 14px;
         }
 
+        a {
+            color: $white;
+
+            &:hover {
+                color: $color_2;
+            }
+        }
+
         &:hover {
             i {
                 background: $white;
@@ -72,7 +71,7 @@
         background: $white;
         box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
         padding: 30px;
-        border-radius: 0 10px 10px 0;
+        border-radius: 1rem;
 
         .form-group {
             padding-bottom: 8px;
@@ -133,7 +132,7 @@
             padding: 10px 12px;
 
             &:focus {
-                border-color: $color_2;
+                border-color: $color_4;
             }
         }
 
@@ -141,7 +140,7 @@
             padding: 12px 15px;
 
             &:focus {
-                border-color: $color_2;
+                border-color: $color_4;
             }
         }
 
@@ -149,22 +148,21 @@
             padding: 12px 15px;
 
             &:focus {
-                border-color: $color_2;
+                border-color: $color_4;
             }
         }
 
         button[type=submit] {
-            background: $color_2;
+            background: $color_3;
             border: 0;
             padding: 0.65rem 1.5rem;
-            color: $white;
+            color: $color_1;
             font-weight: 700;
             transition: all 0.3s ease;
-            border-radius: 50px;
+            border-radius: 2rem;
 
             &:hover {
-                background: $color_1;
-                color: $dark_color_1;
+                background: $color_2;
             }
         }
     }

@@ -23,6 +23,7 @@ router.get('/contact', (req, res, next) => {
     let user = req.user;
     res.render('pages/contact', {
         title: `Test Page | ${app_name}`,
+        contact_page: true,
         user
     });
 });

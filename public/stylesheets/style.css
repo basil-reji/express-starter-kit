@@ -403,27 +403,21 @@ section .section-title p {
   font-weight: 600;
 }
 
-@keyframes animate-loading {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.contact {
+  margin-top: 3rem;
 }
 .contact .info-container {
-  background-color: #051e28;
+  background-color: #06283D;
   height: 100%;
   padding: 20px;
-  border-radius: 10px 0 0 10px;
+  border-radius: 1rem;
   box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
 }
 .contact .info-item {
   width: 100%;
-  background-color: #033447;
+  background-color: #06283D;
   margin-bottom: 20px;
   padding: 20px;
-  border-radius: 10px;
   color: #fff;
 }
 .contact .info-item:last-child {
@@ -439,7 +433,7 @@ section .section-title p {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50px;
+  border-radius: 50%;
   transition: all 0.3s ease-in-out;
   margin-right: 15px;
 }
@@ -454,6 +448,12 @@ section .section-title p {
   margin-bottom: 0;
   font-size: 14px;
 }
+.contact .info-item a {
+  color: #fff;
+}
+.contact .info-item a:hover {
+  color: #47B5FF;
+}
 .contact .info-item:hover i {
   background: #fff;
   color: #47B5FF;
@@ -464,7 +464,7 @@ section .section-title p {
   background: #fff;
   box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
   padding: 30px;
-  border-radius: 0 10px 10px 0;
+  border-radius: 1rem;
 }
 .contact .php-email-form .form-group {
   padding-bottom: 8px;
@@ -518,32 +518,31 @@ section .section-title p {
   padding: 10px 12px;
 }
 .contact .php-email-form textarea:focus {
-  border-color: #47B5FF;
+  border-color: #06283D;
 }
 .contact .php-email-form input[type=text] {
   padding: 12px 15px;
 }
 .contact .php-email-form input[type=text]:focus {
-  border-color: #47B5FF;
+  border-color: #06283D;
 }
 .contact .php-email-form input[type=email] {
   padding: 12px 15px;
 }
 .contact .php-email-form input[type=email]:focus {
-  border-color: #47B5FF;
+  border-color: #06283D;
 }
 .contact .php-email-form button[type=submit] {
-  background: #47B5FF;
+  background: #1363DF;
   border: 0;
   padding: 0.65rem 1.5rem;
-  color: #fff;
+  color: #DFF6FF;
   font-weight: 700;
   transition: all 0.3s ease;
-  border-radius: 50px;
+  border-radius: 2rem;
 }
 .contact .php-email-form button[type=submit]:hover {
-  background: #DFF6FF;
-  color: #041116;
+  background: #47B5FF;
 }
 
 #header {
@@ -573,11 +572,11 @@ section .section-title p {
 #header .logo h1 {
   font-size: 1rem;
   font-family: "Open Sans", sans-serif;
-  color: #DFF6FF;
+  color: #fff;
   margin: 0;
 }
 #header .logo h1 span {
-  color: #47B5FF;
+  color: #06283D;
 }
 #header .navbar {
   margin: 0.5rem 0;
@@ -632,13 +631,13 @@ section .section-title p {
   transition: all 0.4s ease;
 }
 #header .navbar .nav-items .nav-item .nav-link.active {
-  color: #DFF6FF;
+  color: #1363DF;
 }
 #header .navbar .nav-items .nav-item .nav-link.active:focus {
   color: #DFF6FF;
 }
 #header .navbar .nav-items .nav-item:hover .nav-link {
-  color: #47B5FF;
+  color: #1363DF;
 }
 #header .navbar .nav-items .nav-item:hover .nav-link::after {
   transform: translate(0, 0);
@@ -690,26 +689,84 @@ section .section-title p {
 #header .harmburger.active .lin:nth-child(3) {
   transform: translate(0, -350%) rotate(-45deg);
 }
-#header::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(4, 17, 22, 0.85);
-  backdrop-filter: blur(1rem);
-  opacity: 0;
+#header.inner-page .logo h1, #header.header-scrolled .logo h1 {
+  color: #252A34;
+  margin: 0;
+}
+#header.inner-page .logo h1 span, #header.header-scrolled .logo h1 span {
+  color: #1363DF;
+}
+#header.inner-page .navbar .nav-items .nav-item .nav-link, #header.header-scrolled .navbar .nav-items .nav-item .nav-link {
+  color: rgba(0, 0, 0, 0.5);
+}
+#header.inner-page .navbar .nav-items .nav-item .nav-link::after, #header.header-scrolled .navbar .nav-items .nav-item .nav-link::after {
+  background-color: #47B5FF;
+}
+#header.inner-page .navbar .nav-items .nav-item .nav-link.active, #header.header-scrolled .navbar .nav-items .nav-item .nav-link.active {
+  color: #47B5FF;
+}
+#header.inner-page .navbar .nav-items .nav-item .nav-link.active:focus, #header.header-scrolled .navbar .nav-items .nav-item .nav-link.active:focus {
+  color: #DFF6FF;
+}
+#header.inner-page .navbar .nav-items .nav-item:hover .nav-link, #header.header-scrolled .navbar .nav-items .nav-item:hover .nav-link {
+  color: #47B5FF;
+}
+#header.inner-page .btn-group, #header.header-scrolled .btn-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-left: 1rem;
+}
+#header.inner-page .btn-group .btn, #header.header-scrolled .btn-group .btn {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border-radius: 5rem;
+  color: #47B5FF;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 0.1rem solid #47B5FF;
+  z-index: 997;
+  transition: all 0.3s ease;
+}
+#header.inner-page .btn-group .btn:hover, #header.header-scrolled .btn-group .btn:hover {
+  background: #47B5FF;
+  color: #fff;
+}
+#header.inner-page .harmburger, #header.header-scrolled .harmburger {
+  cursor: pointer;
+  display: none;
+  margin: 0rem 0.5rem;
+  margin-left: 1rem;
+  z-index: 999;
+}
+#header.inner-page .harmburger .lin, #header.header-scrolled .harmburger .lin {
+  background-color: #fff;
+  height: 0.15rem;
+  border-radius: 1rem;
+  width: 1.7rem;
+  margin: 0.4rem 0rem;
   transition: all 0.3s ease-in-out;
-  z-index: 0;
+}
+#header.inner-page .harmburger.active .lin:nth-child(1), #header.header-scrolled .harmburger.active .lin:nth-child(1) {
+  transform: translate(0, 350%) rotate(45deg);
+}
+#header.inner-page .harmburger.active .lin:nth-child(2), #header.header-scrolled .harmburger.active .lin:nth-child(2) {
+  opacity: 0;
+}
+#header.inner-page .harmburger.active .lin:nth-child(3), #header.header-scrolled .harmburger.active .lin:nth-child(3) {
+  transform: translate(0, -350%) rotate(-45deg);
+}
+#header.inner-page {
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.05);
 }
 #header.header-scrolled {
   padding: 0.75rem 0;
-  background: rgba(223, 246, 255, 0.01);
-  box-shadow: 0 0.5rem 2rem rgba(37, 42, 52, 0.5);
-}
-#header.header-scrolled::after {
-  opacity: 1;
+  background: white;
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
 }
 @media (max-width: 992px) {
   #header {

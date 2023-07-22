@@ -10,15 +10,36 @@
         <nav id="navbar" class="navbar">
             <ul id="nav-items" class="nav-items nav-ul">
                 <li class="nav-item nav-li">
-                    <a class="nav-link scrollto {{#if home_page}}active{{/if}}" href="/#">Home</a>
+                    <a class="nav-link scrollto {{#if home_page}}active{{/if}}" href="/">Home</a>
+                </li>
+            </ul>
+            <ul id="nav-items" class="nav-items nav-ul">
+                <li class="nav-item nav-li">
+                    <a class="nav-link scrollto {{#if contact_page}}active{{/if}}" href="/contact">Contact Us</a>
                 </li>
             </ul>
         </nav>
 
         <div class="btn-group">
-            <a class="btn" href="/contact">
-                Contact Us
-            </a>
+            {{!-- <a class="btn" href="/contact">
+                Login/Signup
+            </a> --}}
+            {{#if user}}
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    My Account
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
+                    <h6 class="dropdown-header">{{user.fname}} {{user.sname}}</h6>
+                    <div class="dropdown-divider"></div>
+                    <li><a class="dropdown-item" href="#">My Account</a></li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+            {{else}}
+            <a class="btn" href="/login">Login/Signup</a>
+            {{/if}}
             <div class="harmburger">
                 <div class="lin"></div>
                 <div class="lin"></div>
