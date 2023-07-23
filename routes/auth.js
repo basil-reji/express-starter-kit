@@ -27,7 +27,7 @@ router.use((req, res, next) => {
 })
 
 /* GET home page. */
-router.get('/login', function (req, res, next) {
+router.get('/login', (req, res, next) => {
     let message = req.flash('message');
     res.render('auth/login', {
         title: `Login | ${app_name}`,
@@ -38,7 +38,7 @@ router.get('/login', function (req, res, next) {
     });
 });
 
-router.get('/signup', function (req, res, next) {
+router.get('/signup', (req, res, next) => {
     let message = req.flash('message');
     res.render('auth/signup', {
         title: `Signup | ${app_name}`,
@@ -49,7 +49,7 @@ router.get('/signup', function (req, res, next) {
     });
 });
 
-router.post('/signup', function (req, res, next) {
+router.post('/signup', (req, res, next) => {
     // console.log(req.body);
     let user = req.body
 
@@ -81,19 +81,28 @@ router.post('/login', passport.authenticate('local-login', {
     failureMessage: true
 }));
 
-router.get('/logout', function (req, res, next) {
-    req.logout(function (err) {
+router.get('/logout', (req, res, next) => {
+    req.logout((err) => {
         if (err) { return next(err); }
         if (req.session) { req.session.destroy() }
         res.redirect('/');
     });
 });
 
-router.get('/admin/logout', function (req, res, next) {
-    req.logout(function (err) {
+router.get('/admin/logout', (req, res, next) => {
+    req.logout((err) => {
         if (err) { return next(err); }
         if (req.session) { req.session.destroy() }
         res.redirect('/');
+    });
+});
+
+router.get('/forgot-password', (req, res, next) =>{
+    res.render('auth/forgot_password', {
+        title: `Forgot Password | ${app_name}`,
+        noHeader: true,
+        noFooter: true,
+        app_name
     });
 });
 
