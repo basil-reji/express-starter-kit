@@ -1,9 +1,8 @@
-const db = require('../database/connection');
+const mongoose = require('mongoose');
+const db = require('../config/database');
 const { models } = require('../database/models');
 const collections = require('../database/collections.json');
 const bcrypt = require('bcrypt');
-const { ObjectId } = require('mongodb');
-
 const account = {
     
     update: (id, data) => {
@@ -14,11 +13,10 @@ const account = {
             user.phone = data.phone;
         }
         return new Promise((resolve, reject) => {
-            db.get()
-                .collection(collections.USER)
+            db.collection(collections.USER)
                 .updateOne(
                     {
-                        '_id': ObjectId(id)
+                        '_id': new mongoose.Types.ObjectId(id)
                     },
                     {
                         $set: user,
@@ -42,8 +40,7 @@ const admins = {
 
     getAll: () => {
         return new Promise((resolve, reject) => {
-            db.get()
-                .collection(collections.USER)
+            db.collection(collections.USER)
                 .find(
                     {
                         'role': {
@@ -71,11 +68,10 @@ const admins = {
 
     get: (id) => {
         return new Promise((resolve, reject) => {
-            db.get()
-                .collection(collections.USER)
+            db.collection(collections.USER)
                 .findOne(
                     {
-                        '_id': ObjectId(id)
+                        '_id': new mongoose.Types.ObjectId(id)
                     },
                     {
                         projection: {
@@ -107,8 +103,7 @@ const admins = {
             user.sname = inf.sname;
             user.email = inf.email;
             user.password = await bcrypt.hash(inf.password, 10);
-            db.get()
-                .collection(collections.USER)
+            db.collection(collections.USER)
                 .insertOne(user)
                 .then((response) => {
                     resolve(response)
@@ -136,11 +131,10 @@ const admins = {
             user = {}
         }
         return new Promise((resolve, reject) => {
-            db.get()
-                .collection(collections.USER)
+            db.collection(collections.USER)
                 .updateOne(
                     {
-                        '_id': ObjectId(id)
+                        '_id': new mongoose.Types.ObjectId(id)
                     },
                     {
                         $set: user,
@@ -157,11 +151,10 @@ const admins = {
 
     remove: (id) => {
         return new Promise((resolve, reject) => {
-            db.get()
-                .collection(collections.USER)
-                .remove(
+            db.collection(collections.USER)
+                .deleteOne(
                     {
-                        _id: ObjectId(id)
+                        _id: new mongoose.Types.ObjectId(id)
                     }
                 )
                 .then((response) => {
@@ -178,8 +171,7 @@ const message = {
 
     getAll: () => {
         return new Promise((resolve, reject) => {
-            db.get()
-                .collection(collections.MESSAGE)
+            db.collection(collections.MESSAGE)
                 .find()
                 .toArray()
                 .then((response) => {
@@ -192,11 +184,10 @@ const message = {
 
     delete: (id) => {
         return new Promise((resolve, reject) => {
-            db.get()
-                .collection(collections.MESSAGE)
-                .remove(
+            db.collection(collections.MESSAGE)
+                .deleteOne(
                     {
-                        _id: ObjectId(id)
+                        _id: new mongoose.Types.ObjectId(id)
                     }
                 )
                 .then((response) => {

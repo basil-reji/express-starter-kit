@@ -1,9 +1,9 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
-const db = require('../database/connection');
+const db = require('./database');
+const mongoose = require('mongoose')
 const collections = require('../database/collections.json');
 const bcrypt = require('bcrypt');
-const ObjectId = require('mongodb').ObjectId;
 
 passport.use('local-login', new LocalStrategy(
     {
@@ -12,8 +12,7 @@ passport.use('local-login', new LocalStrategy(
         passReqToCallback: true,
     },
     (req, email, password, done) => {
-        db.get()
-            .collection(collections.USER)
+        db.collection(collections.USER)
             .findOne(
                 {
                     email: email
@@ -28,23 +27,23 @@ passport.use('local-login', new LocalStrategy(
             )
             .then((user) => {
                 if (user) {
-                    if (user.status == 'active') {
+                    if (user.status == 'active'){
                         bcrypt
-                            .compare(password, user.password)
-                            .then((status) => {
-                                if (status) {
-                                    return done(null, user);
-                                } else {
-                                    return done(null, false, req.flash('message', 'Incorrect password'));
-                                }
-                            }).catch((error) => {
-                                return done(error)
-                            });
-                    } else {
-                        return done(null, false, req.flash('message', `Account is ${user.status}`));
+                        .compare(password, user.password)
+                        .then((status) => {
+                            if (status) {
+                                return done(null, user);
+                            } else {
+                                return done(null, false, req.flash('message', 'Incorrect password'));
+                            }
+                        }).catch((error) => {
+                            return done(error)
+                        });
+                    }else{
+                        return done(null, false, req.flash('message',`Account is ${user.status}`));
                     }
                 } else {
-                    return done(null, false, req.flash('message', 'Incorrect Email'));
+                    return done(null, false, req.flash('message','Incorrect Email'));
                 }
             }).catch((error) => {
                 return done(error)
@@ -54,11 +53,16 @@ passport.use('local-login', new LocalStrategy(
 
 passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
-        db.get()
-            .collection(collections.USER)
+        cb(null, user._id);
+    });
+});
+
+passport.deserializeUser(function (id, cb) {
+    process.nextTick(function () {
+        db.collection(collections.USER)
             .findOne(
                 {
-                    _id: ObjectId(user._id)
+                    _id: new mongoose.Types.ObjectId(id)
                 },
                 {
                     projection: {
@@ -67,18 +71,10 @@ passport.serializeUser(function (user, cb) {
                 }
             )
             .then((user) => {
-                // console.log("db read")
-                // console.log(user)
-                return cb(null, user);
+                return cb(null, user)
             }).catch((error) => {
                 return cb(error)
             })
-    });
-});
-
-passport.deserializeUser(function (user, cb) {
-    process.nextTick(function () {
-        return cb(null, user);
     });
 });
 

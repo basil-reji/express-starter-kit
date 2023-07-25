@@ -1,6 +1,5 @@
-const db = require('../database/connection');
+const db = require('../config/database');
 const bcrypt = require('bcrypt');
-const { ObjectId } = require('mongodb');
 const collections = require('../database/collections.json');
 
 const contact = {
@@ -8,8 +7,7 @@ const contact = {
         return new Promise(async (resolve, reject) => {
             delete data[''];
             data.date = new Date();
-            db.get()
-                .collection(collections.MESSAGE)
+            db.collection(collections.MESSAGE)
                 .insertOne(data)
                 .then((response) => {
                     resolve(response)

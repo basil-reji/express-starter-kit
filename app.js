@@ -12,7 +12,6 @@ var passport = require('passport')
 
 dotenv.config()
 
-var db = require('./database/connection')
 var engineHelper = require("./helper/hbs");
 
 var authRouter = require('./routes/auth');
@@ -21,6 +20,15 @@ var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admins');
 
 var app = express();
+
+const db = require('./config/database');
+// const Session = require('./database/schema/session');
+
+//database connection
+db.on('error', (e) => {
+    console.log("Data Base Error")
+    console.log(e.message)
+});
 
 // view engine setup
 const hbs = engine.create({
@@ -44,7 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     cookie: { maxAge: parseInt(process.env.SESSION_MAX_AGE) },
-    store: db.get(),
+    store: new session.MemoryStore(),
     resave: true,
     saveUninitialized: true
 }));
@@ -54,16 +62,7 @@ app.use(passport.session());
 app.use(passport.authenticate('session'));
 
 // express-flash setup
-app.use(flash())
-
-//db connection
-db.connect((err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        // console.log("Data Base Connected...");
-    }
-});
+app.use(flash());
 
 app.use('/', authRouter);
 app.use('/', indexRouter);

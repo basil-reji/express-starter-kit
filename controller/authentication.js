@@ -1,6 +1,5 @@
-const db = require('../database/connection');
+const db = require('../config/database');
 const bcrypt = require('bcrypt');
-const { ObjectId } = require('mongodb');
 const collections = require('../database/collections.json');
 const { models } = require('../database/models');
 
@@ -14,8 +13,7 @@ module.exports = {
             user.sname = inf.sname;
             user.email = inf.email;
             user.password = await bcrypt.hash(inf.password, 10);
-            db.get()
-                .collection(collections.USER)
+            db.collection(collections.USER)
                 .insertOne(user)
                 .then((response) => {
                     resolve(response)
@@ -27,8 +25,7 @@ module.exports = {
 
     check_user_exist: (email) => {
         return new Promise(async (resolve, reject) => {
-            db.get()
-                .collection(collections.USER)
+            db.collection(collections.USER)
                 .findOne(
                     {
                         email: email
@@ -51,8 +48,7 @@ module.exports = {
 
     // test: (email) => {
     //     return new Promise((resolve, reject) => {
-    //         db.get()
-    //             .collection(collections)
+    //         db   .collection(collections)
     //             .findOne(
     //                 {
     //                     _id: ObjectId(email)
