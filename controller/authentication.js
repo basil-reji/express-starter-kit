@@ -1,48 +1,46 @@
-const db = require('../config/database');
-const bcrypt = require('bcrypt');
-const collections = require('../database/collections.json');
-const { models } = require('../database/models');
-
+// const db = require('../config/database');
+// const bcrypt = require('bcrypt');
+// const collections = require('../database/collections.json');
+// const { models } = require('../database/models');
+const User = require('../database/schema/user');
 
 module.exports = {
 
     signup: (inf) => {
         return new Promise(async (resolve, reject) => {
-            let user = models.user.user;
-            user.fname = inf.fname;
-            user.sname = inf.sname;
+            let user = new User;
+            user.firstName = inf.fname;
+            user.surName = inf.sname;
             user.email = inf.email;
-            user.password = await bcrypt.hash(inf.password, 10);
-            db.collection(collections.USER)
-                .insertOne(user)
+            user.password = inf.password;
+
+            user.save()
                 .then((response) => {
-                    resolve(response)
+                    resolve(response);
                 }).catch((error) => {
-                    reject(error)
+                    reject(error);
                 })
         })
     },
 
     check_user_exist: (email) => {
         return new Promise(async (resolve, reject) => {
-            db.collection(collections.USER)
-                .findOne(
-                    {
-                        email: email
-                    },
-                    {
-                        email: 1
-                    }
-                )
-                .then((response) => {
-                    if (response) {
-                        reject('User Already Exist')
-                    } else {
-                        resolve(true)
-                    }
-                }).catch((error) => {
-                    reject(error)
-                })
+            User.findOne(
+                {
+                    email: email
+                },
+                {
+                    email: 1
+                }
+            ).then((response) => {
+                if (response) {
+                    reject('User Already Exist')
+                } else {
+                    resolve(true)
+                }
+            }).catch((error) => {
+                reject(error)
+            })
         })
     },
 

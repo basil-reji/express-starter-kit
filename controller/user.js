@@ -1,19 +1,20 @@
-const db = require('../config/database');
-const bcrypt = require('bcrypt');
-const collections = require('../database/collections.json');
+const Message = require('../database/schema/message');
 
 const contact = {
     message: (data) => {
         return new Promise(async (resolve, reject) => {
-            delete data[''];
-            data.date = new Date();
-            db.collection(collections.MESSAGE)
-                .insertOne(data)
-                .then((response) => {
-                    resolve(response)
-                }).catch((error) => {
-                    reject(error)
-                })
+            let message = new Message;
+            message.name = data.name;
+            message.email = data.email;
+            message.subject = data.subject;
+            message.message = data.message;
+
+            message.save()
+            .then((response) => {
+                resolve(response)
+            }).catch((error) => {
+                reject(error)
+            })
         })
     },
 }

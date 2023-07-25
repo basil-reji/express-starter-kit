@@ -8,7 +8,7 @@ const app_name = process.env.APP_NAME
 router.get('/', (req, res, next) => {
     let user = req.user
     // console.log(req.user);
-    if (user && user.permissions.admin) {
+    if (user && user.role=='super_admin') {
         res.redirect('/admin/')
     } else {
         res.render('index', {
@@ -35,7 +35,7 @@ router.post('/contact', (req, res, next) => {
     } else {
         req.body.user = null;
     }
-    console.log(req.body)
+    // console.log(req.body)
     userControl.contact.message(req.body)
     .then((response) => {
         res.send(

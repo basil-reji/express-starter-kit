@@ -1,0 +1,42 @@
+{
+    "user": [],
+    "admin": [
+        {
+            "asset": "users",
+            "read": true,
+            "write": false,
+            "edit": true,
+            "delete": false
+        },
+        {
+            "asset": "messages",
+            "read": true,
+            "write": false,
+            "edit": false,
+            "delete": false
+        }
+    ],
+    "super_admin": [
+        {
+            "asset": "users",
+            "read": true,
+            "write": true,
+            "edit": true,
+            "delete": true
+        },
+        {
+            "asset": "admins",
+            "read": true,
+            "write": true,
+            "edit": true,
+            "delete": true
+        },
+        {
+            "asset": "messages",
+            "read": true,
+            "write": true,
+            "edit": true,
+            "delete": true
+        }
+    ]
+}

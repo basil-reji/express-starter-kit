@@ -68,7 +68,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-    {{#if user.permissions.admin}}
+    {{#if permissions.admin}}
     <link rel='stylesheet' href='/stylesheets/admin.css' />
     {{else}}
     <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -80,7 +80,7 @@
 
     <div id="preloader"></div>
     {{#if noHeader}}
-    {{else if user.permissions.admin}}
+    {{else if permissions.admin}}
     {{>admin/sidebar}}
     {{>admin/header}}
     {{else}}
@@ -92,7 +92,7 @@
     {{/if}}
 
     <main id="main">
-        {{#if user.permissions.admin}}
+        {{#if permissions.admin}}
         <div class="pagetitle">
             <h2>{{page_title}}</h2>
             <nav>
@@ -116,13 +116,13 @@
 
         {{{body}}}
 
-        {{#if user.permissions.admin}}
+        {{#if permissions.admin}}
         {{>admin/footer}}
         {{/if}}
     </main>
 
     {{#if noFooter}}
-    {{else if user.permissions.admin}}
+    {{else if permissions.admin}}
     {{else}}
     {{>footer}}
     {{/if}}
@@ -152,7 +152,7 @@
     <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-    {{#if user.permissions.admin}}
+    {{#if permissions.admin}}
     <script src="/javascripts/admin.js"></script>
     {{else}}
     <script src="/javascripts/script.js"></script>

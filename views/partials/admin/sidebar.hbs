@@ -14,38 +14,22 @@
                 </a>
             </li>
 
-            {{#if user.permissions.messages.all}}
+            {{#if permissions.messages.read}}
             <li>
                 <a href="/admin/messages/" {{#if messages_page}}class="active" {{/if}}>
                     <i class="ri-message-3-{{#if messages_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Message</h5>
                 </a>
             </li>
-            {{else if user.permissions.messages.view}}
-            <li>
-                <a href="/admin/messages/" {{#if messages_page}}class="active" {{/if}}>
-                    <i class="ri-message-3-{{#if messages_page}}fill{{else}}line{{/if}} sico"></i>
-                    <h5>Message</h5>
-                </a>
-            </li>
-            {{else}}
             {{/if}}
 
-            {{#if user.permissions.admins.all}}
+            {{#if permissions.admins.read}}
             <li>
                 <a href="/admin/admins/" {{#if admins_page}}class="active" {{/if}}>
                     <i class="ri-shield-user-{{#if admins_page}}fill{{else}}line{{/if}} sico"></i>
                     <h5>Admins</h5>
                 </a>
             </li>
-            {{else if user.permissions.admins.view}}
-            <li>
-                <a href="/admin/admins/" {{#if admins_page}}class="active" {{/if}}>
-                    <i class="ri-shield-user-{{#if admins_page}}fill{{else}}line{{/if}} sico"></i>
-                    <h5>Admins</h5>
-                </a>
-            </li>
-            {{else}}
             {{/if}}
             <li>
                 <a href="/admin/account/" {{#if account_page}}class="active"{{/if}}>

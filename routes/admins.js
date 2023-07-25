@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 const admin = require('../controller/admin');
-const authenticate = require('../controller/authentication')
-const {access_controll, admin_vadlidation} = require('../middlewares/access_control')
+const authenticate = require('../controller/authentication');
+const userPermissions = require('../middlewares/userPersmissions');
+const userValidation = require('../middlewares/userValidation');
 
 const app_name = process.env.APP_NAME
 
-router.use(admin_vadlidation())
+router.use(userValidation(["super_admin", "admin"]))
+router.use(userPermissions.findAll());
 
 router.get('/', function (req, res, next) {
     let user = req.user
@@ -24,7 +26,7 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/messages', access_controll('messages', 'view'), function (req, res, next) {
+router.get('/messages', userPermissions.validate('messages', 'read'), function (req, res, next) {
     let user = req.user;
     admin.message.getAll()
         .then((data) => {
@@ -45,8 +47,7 @@ router.get('/messages', access_controll('messages', 'view'), function (req, res,
         })
 });
 
-router.post('/messages/delete', access_controll('messages', 'delete'), function (req, res, next) {
-    let user = req.user
+router.post('/messages/delete', userPermissions.validate('messages', 'delete'), function (req, res, next) {
     admin.message.delete(req.body.id).then((response) => {
         res.send(
             {
@@ -57,7 +58,7 @@ router.post('/messages/delete', access_controll('messages', 'delete'), function 
     })
 });
 
-router.get('/admins', access_controll('admins', 'view'), function (req, res, next) {
+router.get('/admins', userPermissions.validate('admins', 'write'), function (req, res, next) {
     let user = req.user
     admin.admins.getAll()
         .then((admins) => {
@@ -78,7 +79,7 @@ router.get('/admins', access_controll('admins', 'view'), function (req, res, nex
         })
 });
 
-router.get('/add-admin', access_controll('admins', 'add'), function (req, res, next) {
+router.get('/add-admin', userPermissions.validate('admins', 'write'), function (req, res, next) {
     let user = req.user;
     let message = req.flash('message');
     res.render('admin/admins/add_admin', {
@@ -100,7 +101,7 @@ router.get('/add-admin', access_controll('admins', 'add'), function (req, res, n
     });
 });
 
-router.post('/add-admin', access_controll('admins', 'add'), function (req, res, next) {
+router.post('/add-admin', userPermissions.validate('admins', 'write'), function (req, res, next) {
     // console.log(req.body);
     let user = req.body
 
@@ -120,7 +121,7 @@ router.post('/add-admin', access_controll('admins', 'add'), function (req, res, 
 
 });
 
-router.get('/admins/:id', access_controll('admins', 'edit'), function (req, res, next) {
+router.get('/admins/:id', userPermissions.validate('admins', 'edit'), function (req, res, next) {
     let user = req.user
     admin.admins.get(req.params.id)
         .then((admin) => {
@@ -145,7 +146,7 @@ router.get('/admins/:id', access_controll('admins', 'edit'), function (req, res,
         })
 });
 
-router.post('/admins/update/:id', access_controll('admins', 'update'), function (req, res, next) {
+router.post('/admins/update/:id', userPermissions.validate('admins', 'edit'), function (req, res, next) {
     // console.log(req.params.id);
     // console.log(req.body)
     let user = req.user
@@ -155,7 +156,7 @@ router.post('/admins/update/:id', access_controll('admins', 'update'), function 
         })
 });
 
-router.post('/admins/remove/', access_controll('admins', 'remove'), function (req, res, next) {
+router.post('/admins/remove/', userPermissions.validate('admins', 'delete'), function (req, res, next) {
     let user = req.user
     admin.admins.remove(req.body.id).then((response) => {
         res.send(
