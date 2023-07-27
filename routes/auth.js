@@ -51,24 +51,15 @@ router.get('/signup', (req, res, next) => {
 
 router.post('/signup', (req, res, next) => {
     // console.log(req.body);
-    let user = req.body
-
-    authenticate.check_user_exist(user.email).then((response) => {
-        if (user.password == user.cpassword) {
-            authenticate.signup(user).then((response) => {
-                // console.log(user);
-                // console.log(response);
-                res.redirect('/login')
-            })
-        } else {
-            req.flash('message', `Password not match`);
-            res.redirect('/signup');
-        }
-    }).catch((error) => {
-        req.flash('message', `${error}`);
-        res.redirect('/signup');
-    })
-
+    let user = req.body;
+    authenticate.signup(user)
+        .then((response) => {
+            res.status(202).redirect('/login')
+        })
+        .catch((error) => {
+            req.flash('message', Object.values(error)[0]);
+            res.status(400).redirect('/signup');
+        })
 });
 
 router.post('/login', passport.authenticate('local-login', {
@@ -97,7 +88,7 @@ router.get('/admin/logout', (req, res, next) => {
     });
 });
 
-router.get('/forgot-password', (req, res, next) =>{
+router.get('/forgot-password', (req, res, next) => {
     res.render('auth/forgot_password', {
         title: `Forgot Password | ${app_name}`,
         noHeader: true,

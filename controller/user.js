@@ -1,4 +1,4 @@
-const Message = require('../database/schema/message');
+const Message = require('../database/models/message');
 
 const contact = {
     message: (data) => {

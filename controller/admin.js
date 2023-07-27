@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 const db = require('../config/database');
-const { models } = require('../database/models');
+const User = require('../database/models/user');
 const collections = require('../database/collections.json');
 const bcrypt = require('bcrypt');
 const account = {
-    
     update: (id, data) => {
         let user = {};
         user.fname = data.fname;

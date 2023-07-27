@@ -1,68 +1,65 @@
-// const db = require('../config/database');
-// const bcrypt = require('bcrypt');
-// const collections = require('../database/collections.json');
-// const { models } = require('../database/models');
-const User = require('../database/schema/user');
+const User = require('../database/models/user');
+const { getErrors, getErrorMessages } = require('../helper/errorHandler')
 
-module.exports = {
+const signup = (info) => {
+    return new Promise(async (resolve, reject) => {
 
-    signup: (inf) => {
-        return new Promise(async (resolve, reject) => {
-            let user = new User;
-            user.firstName = inf.fname;
-            user.surName = inf.sname;
-            user.email = inf.email;
-            user.password = inf.password;
-
-            user.save()
-                .then((response) => {
-                    resolve(response);
-                }).catch((error) => {
-                    reject(error);
-                })
-        })
-    },
-
-    check_user_exist: (email) => {
-        return new Promise(async (resolve, reject) => {
-            User.findOne(
-                {
-                    email: email
-                },
-                {
-                    email: 1
-                }
-            ).then((response) => {
+        checkUserExistance(info.email)
+            .then((response) => {
                 if (response) {
-                    reject('User Already Exist')
+                    if (info.password == info.cpassword) {
+                        let user = new User;
+                        user.firstName = info.fname;
+                        user.surName = info.sname;
+                        user.email = info.email;
+                        user.password = info.password;
+                        user.save()
+                            .then((response) => {
+                                resolve(response);
+                            }).catch((err) => {
+                                reject(getErrors(err));
+                            });
+                    } else {
+                        reject({ password: 'passwords must be same' });
+                    }
                 } else {
-                    resolve(true)
+                    reject({ email: 'Some Error' })
                 }
             }).catch((error) => {
                 reject(error)
             })
-        })
-    },
+    })
+}
 
-    // test: (email) => {
-    //     return new Promise((resolve, reject) => {
-    //         db   .collection(collections)
-    //             .findOne(
-    //                 {
-    //                     _id: ObjectId(email)
-    //                 },
-    //                 {
-    //                     projection: {
-    //                         password: 0
-    //                     }
-    //                 }~
-    //             )
-    //             .then((response) => {
-    //                 // console.log(response)
-    //                 resolve(response);
-    //             }).catch((error) => {
-    //                 reject(error);
-    //             })
-    //     })
-    // },
+const checkUserExistance = (email) => {
+    return new Promise(async (resolve, reject) => {
+        User.findOne(
+            {
+                email: email
+            },
+            {
+                email: 1
+            }
+        ).then((response) => {
+            if (response) {
+                reject({ email: 'User Already Exist' })
+            } else {
+                resolve(true)
+            }
+        }).catch((error) => {
+            const errors = handleErrors(error);
+            reject(errors);
+        })
+    })
+}
+
+const login = (user) => {
+    return new Promise((resolve, reject) => {
+
+    })
+}
+
+module.exports = {
+    signup,
+    login
 }

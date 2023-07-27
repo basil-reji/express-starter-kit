@@ -1,13 +1,24 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const collections = require('../collections.json');
+const { isEmail, isEmpty } = require('validator')
 
 const userSchema = new mongoose.Schema({
-    firstName: { type: String, required: true },
-    surName: { type: String, required: true },
-    email: { type: String, required: true },
+    firstName: { type: String },
+    surName:{ type: String },
+    email: {
+        type: String,
+        required: [true, 'Please enter an email'],
+        unique: true,
+        lowercase: true,
+        validate: [isEmail, 'Please enter a valid email']
+    },
     phone: { type: String },
-    password: { type: String, required: true },
+    password: {
+        type: String,
+        required: [true, 'Please enter a password'],
+        minlength: [8, 'Minimum password length is 8 characters']
+    },
     role: {
         type: String,
         required: true,
@@ -28,18 +39,19 @@ const userSchema = new mongoose.Schema({
         default: 'active'
     },
     address: {
-        addressLine1: { type: String },
-        addressLine2: { type: String },
-        city: { type: String },
+        type: Object,
+        addressLine1: { type: String, default: null},
+        addressLine2: { type: String, default: null},
+        city: { type: String, default: null},
         state: { type: String },
-        postalCode: { type: String },
+        zip: { type: Number, default: null },
         country: { type: String },
     }
-}, 
-{ 
-    timestamps: true,
-    collection: collections.USER
-});
+},
+    {
+        timestamps: true,
+        collection: collections.USER
+    });
 
 // Hash the password before saving it to the database
 userSchema.pre('save', async function (next) {
@@ -47,7 +59,7 @@ userSchema.pre('save', async function (next) {
     if (!user.isModified('password')) return next();
 
     try {
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(user.password, salt);
         user.password = hashedPassword;
         return next();
@@ -55,6 +67,19 @@ userSchema.pre('save', async function (next) {
         return next(err);
     }
 });
+
+//
+userSchema.statics.login = async function (email, password) {
+    const user = await this.findOne({ email });
+    if (user) {
+        const auth = await bcrypt.compare(password, user.password);
+        if (auth) {
+            return user;
+        }
+        throw Error('incorrect password');
+    }
+    throw Error('incorrect email');
+};
 
 const User = mongoose.model('User', userSchema);
 
