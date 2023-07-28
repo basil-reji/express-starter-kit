@@ -1,35 +1,62 @@
 const jwt = require('jsonwebtoken');
 const User = require('../database/models/user');
 
-const checkUser = (req, res, next) => {
-    const token = req.cookies['accessToken'];
-    if (token) {
-        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
-            User.findById(decodedToken.id)
-                .select({
-                    _id: false,
-                    password: false,
-                    flags: false,
-                })
-                .lean()
-                .then((user) => {
-                    if (user) {
-                        res.locals.user = user;
-                        next();
-                    } else {
-                        next();
-                    }
-                }).catch((error) => {
-                    res.status(400)
-                    next()
-                })
-        })
-    } else {
-        next();
+const validateUser = (roles) => {
+    return (req, res, next) => {
+        let user = res.locals.user;
+
+        if (user) {
+            if (roles.includes(user.role)) {
+                next();
+            } else {
+                res.redirect('/');
+            }
+        } else {
+            res.redirect('/login')
+        }
+
     }
-};
+}
+
+const findUserPermissions = () => {
+    return (req, res, next) => {
+        let user = res.locals.user;
+
+        if (user) {
+            let permissions = {};
+            if (["admin", "super_admin"].includes(user.role)) {
+                permissions['admin'] = true;
+            }
+            user.permissions.forEach(element => {
+                permissions[element.asset] = element;
+            });
+            res.locals.permissions = permissions;
+            next();
+        } else {
+            res.locals.permissions = {}
+            next();
+        }
+    }
+}
+
+const validateUserPermission = (asset, permission) => {
+    return (req, res, next) => {
+        let user = res.locals.user;
+
+        const assetPermissions = user.permissions.find(
+            (permission) => permission.asset === asset
+        );
+
+        if(assetPermissions[permission]){
+            next();
+        }else{
+            res.redirect("/")
+        }
+    }
+}
 
 module.exports = {
-    // authorizeUser,
-    checkUser
+    validateUser,
+    findUserPermissions,
+    validateUserPermission
 }

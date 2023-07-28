@@ -8,7 +8,7 @@ var engine = require("express-handlebars");
 var session = require("express-session");
 var flash = require("express-flash");
 var dotenv = require('dotenv');
-var {checkUser} = require('./middlewares/authorization')
+var checkUser = require('./middlewares/checkUser');
 
 dotenv.config()
 

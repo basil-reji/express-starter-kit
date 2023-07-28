@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const collections = require('../collections.json');
-const { isEmail, isEmpty } = require('validator')
+const { isEmail } = require('validator')
 
 const userSchema = new mongoose.Schema({
     firstName: { type: String },
@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema({
         zip: { type: Number, default: null },
         country: { type: String },
     },
-    flags:{
+    flags: {
         type: Object,
         default: {}
     }

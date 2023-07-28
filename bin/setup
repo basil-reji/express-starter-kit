@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
-const User = require('../database/schema/user');
-const permissions = require('../database/models/permissions.json');
+const User = require('../database/models/user');
+const permissions = require('../database/permissions.json');
 
 dotenv.config();
 

@@ -1,17 +1,16 @@
 var express = require('express');
 var router = express.Router();
 const admin = require('../controller/admin');
+const { validateUser } = require('../middlewares/authorization');
+const { findUserPermissions, validateUserPermission } = require('../middlewares/authorization');
 const authenticate = require('../controller/authentication');
-const userPermissions = require('../middlewares/userPersmissions');
-const userValidation = require('../middlewares/userValidation');
 
 const app_name = process.env.APP_NAME
 
-router.use(userValidation(["super_admin", "admin"]))
-router.use(userPermissions.findAll());
+router.use(validateUser(["super_admin", "admin"]))
+router.use(findUserPermissions());
 
 router.get('/', function (req, res, next) {
-    let user = req.user
     res.render('admin/dashboard', {
         title: app_name,
         page_title: 'Dashboard',
@@ -21,13 +20,12 @@ router.get('/', function (req, res, next) {
                 active: true,
             }
         ],
-        dashboard_page: true,
-        user
+        dashboard_page: true
     });
 });
 
-router.get('/messages', userPermissions.validate('messages', 'read'), function (req, res, next) {
-    let user = req.user;
+router.get('/messages', validateUserPermission('messages', 'read'), function (req, res, next) {
+    ;
     admin.message.getAll()
         .then((data) => {
             // console.log(data)
@@ -41,13 +39,12 @@ router.get('/messages', userPermissions.validate('messages', 'read'), function (
                     }
                 ],
                 messages_page: true,
-                user,
                 data
             });
         })
 });
 
-router.post('/messages/delete', userPermissions.validate('messages', 'delete'), function (req, res, next) {
+router.post('/messages/delete', validateUserPermission('messages', 'delete'), function (req, res, next) {
     admin.message.delete(req.body.id).then((response) => {
         res.send(
             {
@@ -58,8 +55,7 @@ router.post('/messages/delete', userPermissions.validate('messages', 'delete'), 
     })
 });
 
-router.get('/admins', userPermissions.validate('admins', 'write'), function (req, res, next) {
-    let user = req.user
+router.get('/admins', validateUserPermission('admins', 'write'), function (req, res, next) {
     admin.admins.getAll()
         .then((admins) => {
             // console.log(response);
@@ -73,14 +69,13 @@ router.get('/admins', userPermissions.validate('admins', 'write'), function (req
                     }
                 ],
                 admins_page: true,
-                user,
                 admins
             });
         })
 });
 
-router.get('/add-admin', userPermissions.validate('admins', 'write'), function (req, res, next) {
-    let user = req.user;
+router.get('/add-admin', validateUserPermission('admins', 'write'), function (req, res, next) {
+    ;
     let message = req.flash('message');
     res.render('admin/admins/add_admin', {
         title: app_name,
@@ -96,12 +91,11 @@ router.get('/add-admin', userPermissions.validate('admins', 'write'), function (
             }
         ],
         admins_page: true,
-        user,
         message
     });
 });
 
-router.post('/add-admin', userPermissions.validate('admins', 'write'), function (req, res, next) {
+router.post('/add-admin', validateUserPermission('admins', 'write'), function (req, res, next) {
     // console.log(req.body);
     let user = req.body
 
@@ -121,8 +115,7 @@ router.post('/add-admin', userPermissions.validate('admins', 'write'), function 
 
 });
 
-router.get('/admins/:id', userPermissions.validate('admins', 'edit'), function (req, res, next) {
-    let user = req.user
+router.get('/admins/:id', validateUserPermission('admins', 'edit'), function (req, res, next) {
     admin.admins.get(req.params.id)
         .then((admin) => {
             // console.log(response);
@@ -140,24 +133,21 @@ router.get('/admins/:id', userPermissions.validate('admins', 'edit'), function (
                     }
                 ],
                 admins_page: true,
-                user,
                 admin
             });
         })
 });
 
-router.post('/admins/update/:id', userPermissions.validate('admins', 'edit'), function (req, res, next) {
+router.post('/admins/update/:id', validateUserPermission('admins', 'edit'), function (req, res, next) {
     // console.log(req.params.id);
     // console.log(req.body)
-    let user = req.user
     admin.admins.update(req.params.id, req.body)
         .then((response) => {
             res.redirect('/admin/admins/')
         })
 });
 
-router.post('/admins/remove/', userPermissions.validate('admins', 'delete'), function (req, res, next) {
-    let user = req.user
+router.post('/admins/remove/', validateUserPermission('admins', 'delete'), function (req, res, next) {
     admin.admins.remove(req.body.id).then((response) => {
         res.send(
             {
@@ -169,7 +159,6 @@ router.post('/admins/remove/', userPermissions.validate('admins', 'delete'), fun
 });
 
 router.get('/account', function (req, res, next) {
-    let user = req.user
     res.render('admin/account', {
         title: app_name,
         page_title: 'My Account',
@@ -179,13 +168,11 @@ router.get('/account', function (req, res, next) {
                 active: true,
             }
         ],
-        account_page: true,
-        user
+        account_page: true
     });
 });
 
 router.post('/account/update/profile', function (req, res, next) {
-    let user = req.user
     // console.log(req.body)
     admin.account.update(user._id, req.body)
         .then((response) => {
@@ -197,7 +184,6 @@ router.post('/account/update/profile', function (req, res, next) {
 });
 
 router.post('/account/update/password', function (req, res, next) {
-    let user = req.user
     // console.log(req.body)
     admin.account.update(user._id, req.body)
         .then((response) => {
