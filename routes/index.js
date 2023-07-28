@@ -1,25 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var userControl = require('../controller/user');
+var { authorizeUser } = require('../middlewares/authorization');
 
 const app_name = process.env.APP_NAME
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
-    let user = req.user
-    // console.log(req.user);
-    if (user && user.role=='super_admin') {
+router.get('/', authorizeUser, (req, res) => {
+    if (res.locals.user && res.locals.user.role == 'super_admin') {
         res.redirect('/admin/')
     } else {
         res.render('index', {
             title: app_name,
-            home_page: true,
-            user
+            home_page: true
         });
     }
 });
 
-router.get('/contact', (req, res, next) => {
+router.get('/contact', (req, res) => {
     let user = req.user;
     res.render('pages/contact', {
         title: `Test Page | ${app_name}`,
@@ -28,7 +26,7 @@ router.get('/contact', (req, res, next) => {
     });
 });
 
-router.post('/contact', (req, res, next) => {
+router.post('/contact', (req, res) => {
     let user = req.user;
     if (user) {
         req.body.user = user.id;
@@ -37,25 +35,25 @@ router.post('/contact', (req, res, next) => {
     }
     // console.log(req.body)
     userControl.contact.message(req.body)
-    .then((response) => {
-        res.send(
-            {
-                response: "acknowledged",
-                status: true
-            }
-        );
-    })
-    .catch((error) => {
-        res.send(
-            {
-                error,
-                status: false
-            }
-        );
-    })
+        .then((response) => {
+            res.send(
+                {
+                    response: "acknowledged",
+                    status: true
+                }
+            );
+        })
+        .catch((error) => {
+            res.send(
+                {
+                    error,
+                    status: false
+                }
+            );
+        })
 });
 
-router.get('/test', (req, res, next) => {
+router.get('/test', (req, res) => {
     let user = req.user;
     res.render('test', {
         title: `Test Page | ${app_name}`,
@@ -63,7 +61,7 @@ router.get('/test', (req, res, next) => {
     });
 });
 
-router.post('/test', (req, res, next) => {
+router.post('/test', (req, res) => {
     let user = req.user;
     // console.log(req.body)
     res.send(

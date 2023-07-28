@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var authenticate = require('../controller/authentication');
-var passport = require('../config/authentication');
+var authenitcateUser = require('../config/authentication');
 
 const app_name = process.env.APP_NAME
 
@@ -27,7 +27,7 @@ router.use((req, res, next) => {
 })
 
 /* GET home page. */
-router.get('/login', (req, res, next) => {
+router.get('/login', (req, res) => {
     let message = req.flash('message');
     res.render('auth/login', {
         title: `Login | ${app_name}`,
@@ -38,7 +38,7 @@ router.get('/login', (req, res, next) => {
     });
 });
 
-router.get('/signup', (req, res, next) => {
+router.get('/signup', (req, res) => {
     let message = req.flash('message');
     res.render('auth/signup', {
         title: `Signup | ${app_name}`,
@@ -49,7 +49,7 @@ router.get('/signup', (req, res, next) => {
     });
 });
 
-router.post('/signup', (req, res, next) => {
+router.post('/signup', (req, res) => {
     // console.log(req.body);
     let user = req.body;
     authenticate.signup(user)
@@ -62,33 +62,32 @@ router.post('/signup', (req, res, next) => {
         })
 });
 
-router.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: {
-        type: 'messge',
-        message: 'Invalid email or password'
-    },
-    failureMessage: true
-}));
-
-router.get('/logout', (req, res, next) => {
-    req.logout((err) => {
-        if (err) { return next(err); }
-        if (req.session) { req.session.destroy() }
-        res.redirect('/');
-    });
+router.post('/login', (req, res) => {
+    authenitcateUser(req.body.email, req.body.password)
+        .then((accessToken) => {
+            const maxAge = 60 * 60 * 24 * 7
+            res.cookie('accessToken', accessToken, { maxAge: maxAge, httpOnly: true });
+            res.redirect('/');
+        }).catch((error) => {
+            // console.log(error);
+            req.flash('message', error);
+            res.redirect('/login')
+        })
 });
 
-router.get('/admin/logout', (req, res, next) => {
-    req.logout((err) => {
-        if (err) { return next(err); }
-        if (req.session) { req.session.destroy() }
-        res.redirect('/');
-    });
+router.get('/logout', (req, res) => {
+    if (req.session) { req.session.destroy() }
+    res.clearCookie('accessToken');
+    res.redirect('/');
 });
 
-router.get('/forgot-password', (req, res, next) => {
+router.get('/admin/logout', (req, res) => {
+    if (req.session) { req.session.destroy() }
+    res.clearCookie('accessToken');
+    res.redirect('/');
+});
+
+router.get('/forgot-password', (req, res) => {
     res.render('auth/forgot_password', {
         title: `Forgot Password | ${app_name}`,
         noHeader: true,

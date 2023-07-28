@@ -5,7 +5,7 @@ const { isEmail, isEmpty } = require('validator')
 
 const userSchema = new mongoose.Schema({
     firstName: { type: String },
-    surName:{ type: String },
+    surName: { type: String },
     email: {
         type: String,
         required: [true, 'Please enter an email'],
@@ -40,12 +40,17 @@ const userSchema = new mongoose.Schema({
     },
     address: {
         type: Object,
-        addressLine1: { type: String, default: null},
-        addressLine2: { type: String, default: null},
-        city: { type: String, default: null},
+        default: {},
+        addressLine1: { type: String, default: null },
+        addressLine2: { type: String, default: null },
+        city: { type: String, default: null },
         state: { type: String },
         zip: { type: Number, default: null },
         country: { type: String },
+    },
+    flags:{
+        type: Object,
+        default: {}
     }
 },
     {
@@ -68,17 +73,31 @@ userSchema.pre('save', async function (next) {
     }
 });
 
-//
-userSchema.statics.login = async function (email, password) {
-    const user = await this.findOne({ email });
-    if (user) {
-        const auth = await bcrypt.compare(password, user.password);
-        if (auth) {
-            return user;
-        }
-        throw Error('incorrect password');
-    }
-    throw Error('incorrect email');
+userSchema.statics.authenticate = async function (email, password) {
+    return new Promise((resolve, reject) => {
+        this.findOne({ email: email })
+            .select({
+                status: true,
+                password: true
+            })
+            .then((user) => {
+                if (user) {
+                    if (user.status == "active") {
+                        bcrypt.compare(password, user.password).then((auth) => {
+                            if (auth) {
+                                resolve({ id: user._id });
+                            } else {
+                                reject('Incorrect Password');
+                            }
+                        })
+                    } else {
+                        reject(`User is ${user.status}`);
+                    }
+                } else {
+                    reject("Invalid user");
+                }
+            })
+    })
 };
 
 const User = mongoose.model('User', userSchema);

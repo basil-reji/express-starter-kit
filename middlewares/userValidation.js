@@ -1,6 +1,6 @@
 const userVadlidation = (roles) => {
     return (req, res, next) => {
-        let user = req.user;
+        let user = req.locals.user;
 
         if (user) {
             if (roles.includes(user.role)) {

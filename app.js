@@ -8,7 +8,6 @@ var engine = require("express-handlebars");
 var session = require("express-session");
 var flash = require("express-flash");
 var dotenv = require('dotenv');
-var passport = require('passport')
 
 dotenv.config()
 
@@ -56,10 +55,6 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
-
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(passport.authenticate('session'));
 
 // express-flash setup
 app.use(flash());

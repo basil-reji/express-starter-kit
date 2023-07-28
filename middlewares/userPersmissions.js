@@ -27,10 +27,6 @@ const validate = (asset, permission) => {
             (permission) => permission.asset === asset
         );
 
-        console.log(`${asset} : ${permission}`);
-        console.log(user.permissions);
-        console.log(assetPermissions)
-
         if(assetPermissions[permission]){
             next()
         }else{
