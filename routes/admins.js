@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const admin = require('../controller/admin');
+const admins = require('../controller/admins');
+const messages = require('../controller/messages');
 const { validateUser } = require('../middlewares/authorization');
 const { findUserPermissions, validateUserPermission } = require('../middlewares/authorization');
-const authenticate = require('../controller/authentication');
 
 const app_name = process.env.APP_NAME
 
@@ -25,10 +25,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/messages', validateUserPermission('messages', 'read'), function (req, res, next) {
-    ;
-    admin.message.getAll()
+    messages.getAll()
         .then((data) => {
-            // console.log(data)
             res.render('admin/messages', {
                 title: app_name,
                 page_title: 'Contacts',
@@ -45,18 +43,27 @@ router.get('/messages', validateUserPermission('messages', 'read'), function (re
 });
 
 router.post('/messages/delete', validateUserPermission('messages', 'delete'), function (req, res, next) {
-    admin.message.delete(req.body.id).then((response) => {
-        res.send(
-            {
-                response: "acknowledged",
-                status: true
-            }
-        );
-    })
+    messages.remove(req.body.id)
+        .then((response) => {
+            res.status(200)
+                .send(
+                    {
+                        acknowledged: true,
+                        message: "acknowledged"
+                    }
+                );
+        }).catch((error) => {
+            res.status(400)
+                .send(
+                    {
+                        acknowledged: false,
+                    }
+                )
+        })
 });
 
 router.get('/admins', validateUserPermission('admins', 'write'), function (req, res, next) {
-    admin.admins.getAll()
+    admins.getAll()
         .then((admins) => {
             // console.log(response);
             res.render('admin/admins', {
@@ -75,7 +82,6 @@ router.get('/admins', validateUserPermission('admins', 'write'), function (req, 
 });
 
 router.get('/add-admin', validateUserPermission('admins', 'write'), function (req, res, next) {
-    ;
     let message = req.flash('message');
     res.render('admin/admins/add_admin', {
         title: app_name,
@@ -96,29 +102,19 @@ router.get('/add-admin', validateUserPermission('admins', 'write'), function (re
 });
 
 router.post('/add-admin', validateUserPermission('admins', 'write'), function (req, res, next) {
-    // console.log(req.body);
-    let user = req.body
-
-    authenticate.check_user_exist(user.email).then((response) => {
-        if (user.password == user.cpassword) {
-            admin.admins.add(user).then((response) => {
-                res.redirect('/admin/admins')
-            })
-        } else {
-            req.flash('message', `Password not match`);
-            res.redirect('/admin/add-admin');
-        }
-    }).catch((error) => {
-        req.flash('message', `${error}`);
-        res.redirect('/admin/add-admin');
-    })
-
+    admins.add(req.body)
+        .then((response) => {
+            res.status(202).redirect('/admin/admins')
+        })
+        .catch((error) => {
+            req.flash('message', Object.values(error)[0]);
+            res.status(400).redirect('/admin/add-admin');
+        })
 });
 
 router.get('/admins/:id', validateUserPermission('admins', 'edit'), function (req, res, next) {
-    admin.admins.get(req.params.id)
+    admins.get(req.params.id)
         .then((admin) => {
-            // console.log(response);
             res.render('admin/admins/edit_admin', {
                 title: app_name,
                 page_title: 'Admins',
@@ -139,22 +135,21 @@ router.get('/admins/:id', validateUserPermission('admins', 'edit'), function (re
 });
 
 router.post('/admins/update/:id', validateUserPermission('admins', 'edit'), function (req, res, next) {
-    // console.log(req.params.id);
-    // console.log(req.body)
-    admin.admins.update(req.params.id, req.body)
+    admins.update(req.params.id, req.body)
         .then((response) => {
             res.redirect('/admin/admins/')
         })
 });
 
 router.post('/admins/remove/', validateUserPermission('admins', 'delete'), function (req, res, next) {
-    admin.admins.remove(req.body.id).then((response) => {
-        res.send(
-            {
-                response: "ok",
-                status: true
-            }
-        );
+    admins.remove(req.body.id).then((response) => {
+        res.status(200)
+            .send(
+                {
+                    response: "ok",
+                    status: true
+                }
+            );
     })
 });
 
@@ -174,22 +169,18 @@ router.get('/account', function (req, res, next) {
 
 router.post('/account/update/profile', function (req, res, next) {
     // console.log(req.body)
-    admin.account.update(user._id, req.body)
+    admins.updateAccount(res.locals.user._id, req.body)
         .then((response) => {
             res.send({
-                status: true,
-                message: 'ok'
+                acknowledged: true,
+                message: 'acknowledged'
             })
-        })
-});
-
-router.post('/account/update/password', function (req, res, next) {
-    // console.log(req.body)
-    admin.account.update(user._id, req.body)
-        .then((response) => {
-            res.send({
-                status: true,
-                message: 'ok'
+        }).catch((error)=>{
+            res.status(400)
+            .send({
+                acknowledged: false,
+                message: 'error',
+                error: error
             })
         })
 });

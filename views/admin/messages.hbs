@@ -21,7 +21,7 @@
                             {{#each data}}
                                 <tr id="row-{{this._id}}">
                                     <th scope="row">{{add @index 1}}</th>
-                                    <td>{{formatDate this.date}}</td>
+                                    <td>{{formatDate this.createdAt}}</td>
                                     <td>{{this.name}}</td>
                                     <td>{{this.email}}</td>
                                     <td>{{this.subject}}</td>

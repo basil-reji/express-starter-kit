@@ -19,10 +19,14 @@ function deleteMessage(id) {
             },
             method: 'post',
             success: (response) => {
-                if (response.status) {
+                if (response.acknowledged) {
                     $(`#row-${id}`).remove()
                 }
-            }
+            },
+            error: (jqXHR, exception) => {
+                console.log(jqXHR)
+                console.log(exception)
+            },
         })
     }
 }

@@ -31,11 +31,11 @@
                         {{#with user}}
                         <div class="row mb-3">
                             <div class="col-lg-3 col-md-4 label">First Name</div>
-                            <div class="col-lg-9 col-md-8" id="profile-overview-fname">{{fname}}</div>
+                            <div class="col-lg-9 col-md-8" id="profile-overview-fname">{{firstName}}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3 col-md-4 label">Surame</div>
-                            <div class="col-lg-9 col-md-8" id="profile-overview-sname">{{sname}}</div>
+                            <div class="col-lg-9 col-md-8" id="profile-overview-sname">{{surName}}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3 col-md-4 label">Email ID</div>
@@ -49,12 +49,6 @@
                             <div class="col-lg-3 col-md-4 label">Role</div>
                             <div class="col-lg-9 col-md-8">{{role}}</div>
                         </div>
-                        {{#each profile.primary_address}}
-                        <div class="row mb-3">
-                            <div class="col-lg-3 col-md-4 label">{{capsFirst @key}}</div>
-                            <div class="col-lg-9 col-md-8">{{this}}</div>
-                        </div>
-                        {{/each}}
                         {{/with}}
                     </div>
 
@@ -64,19 +58,11 @@
                         {{#with user}}
                         <form id="account_update" action="/admin/account/update" method="post"
                             enctype="multipart/form-data">
-                            <div class="row mb-3">
-                                <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <img src="{{profile.image}}" alt="Profile" style="max-height: 5rem;width:auto;">
-                                    <div class="pt-2">
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="row mb-3">
                                 <label for="firstName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
                                 <div class="col-md-8 col-lg-9">
-                                    <input name="fname" type="text" class="form-control" id="fullName" value="{{fname}}"
+                                    <input name="fname" type="text" class="form-control" id="fullName" value="{{firstName}}"
                                         required>
                                 </div>
                             </div>
@@ -84,7 +70,7 @@
                             <div class="row mb-3">
                                 <label for="Surname" class="col-md-4 col-lg-3 col-form-label">Surname</label>
                                 <div class="col-md-8 col-lg-9">
-                                    <input name="sname" type="text" class="form-control" id="SurName" value="{{sname}}">
+                                    <input name="sname" type="text" class="form-control" id="SurName" value="{{surName}}">
                                 </div>
                             </div>
 
@@ -94,17 +80,6 @@
                                     <input name="phone" type="tel" class="form-control" id="phone" value="{{phone}}">
                                 </div>
                             </div>
-
-                            {{#each profile.primary_address}}
-                            <div class="row mb-3">
-                                <label for="{{capsFirst @key}}" class="col-md-4 col-lg-3 col-form-label">{{capsFirst
-                                    @key}}</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="{{@key}}" type="text" class="form-control" id="{{@key}}" placeholder=""
-                                        value="{{this}}">
-                                </div>
-                            </div>
-                            {{/each}}
 
                             <div class="text-center pt-4">
                                 <button type="submit" class="btn-primary">Save Changes</button>
@@ -218,7 +193,7 @@
         $("#changePassword").submit(function (e) {
             e.preventDefault();
 
-            
+
             var $inputs = $('#changePassword :input');
 
             var values = {};
@@ -226,14 +201,12 @@
                 values[this.name] = $(this).val();
             });
 
-            console.log(values)
-
             $.ajax({
                 url: `/admin/account/update/password`,
                 method: 'post',
                 data: values,
                 success: (response) => {
-                    if (response.status == true) {
+                    if (response.acknowledged == true) {
                         $("#profile-overview-fname").html(values.fname);
                         $("#profile-overview-sname").html(values.sname);
                         if (values.phone.lenght > 6) {
@@ -242,12 +215,14 @@
                     } else {
                         console.log(response.message);
                     }
+                },
+                error: (error) =>{
+                    console.log(error)
                 }
             })
-            
+
         })
 
 
     });
 </script>
-

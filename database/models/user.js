@@ -100,6 +100,28 @@ userSchema.statics.authenticate = async function (email, password) {
     })
 };
 
+userSchema.statics.checkUserExistance = async function (email) {
+    return new Promise(async (resolve, reject) => {
+        User.findOne(
+            {
+                email: email
+            },
+            {
+                email: 1
+            }
+        ).then((response) => {
+            if (response) {
+                reject({ email: 'User Already Exist' })
+            } else {
+                resolve(true)
+            }
+        }).catch((error) => {
+            const errors = handleErrors(error);
+            reject(errors);
+        })
+    })
+}
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

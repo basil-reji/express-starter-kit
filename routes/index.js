@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var userControl = require('../controller/user');
+const messages = require('../controller/messages');
 
 const app_name = process.env.APP_NAME
 
@@ -26,14 +26,7 @@ router.get('/contact', (req, res) => {
 });
 
 router.post('/contact', (req, res) => {
-    let user = req.user;
-    if (user) {
-        req.body.user = user.id;
-    } else {
-        req.body.user = null;
-    }
-    // console.log(req.body)
-    userControl.contact.message(req.body)
+    messages.add(req.body)
         .then((response) => {
             res.send(
                 {
