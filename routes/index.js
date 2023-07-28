@@ -1,12 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var userControl = require('../controller/user');
-var { authorizeUser } = require('../middlewares/authorization');
 
 const app_name = process.env.APP_NAME
 
 /* GET home page. */
-router.get('/', authorizeUser, (req, res) => {
+router.get('/', (req, res) => {
     if (res.locals.user && res.locals.user.role == 'super_admin') {
         res.redirect('/admin/')
     } else {

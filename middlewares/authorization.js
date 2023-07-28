@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../database/models/user');
 
-const authorizeUser = (req, res, next) => {
+const checkUser = (req, res, next) => {
     const token = req.cookies['accessToken'];
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
@@ -30,5 +30,6 @@ const authorizeUser = (req, res, next) => {
 };
 
 module.exports = {
-    authorizeUser
+    // authorizeUser,
+    checkUser
 }

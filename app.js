@@ -8,6 +8,7 @@ var engine = require("express-handlebars");
 var session = require("express-session");
 var flash = require("express-flash");
 var dotenv = require('dotenv');
+var {checkUser} = require('./middlewares/authorization')
 
 dotenv.config()
 
@@ -59,6 +60,7 @@ app.use(session({
 // express-flash setup
 app.use(flash());
 
+app.use('*', checkUser)
 app.use('/', authRouter);
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
