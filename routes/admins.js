@@ -135,7 +135,7 @@ router.get('/admins/:id', validateUserPermission('admins', 'edit'), function (re
 });
 
 router.post('/admins/update/:id', validateUserPermission('admins', 'edit'), function (req, res, next) {
-    admins.update(req.params.id, req.body)
+    admins.updateAdmin(req.params.id, req.body)
         .then((response) => {
             res.redirect('/admin/admins/')
         })
@@ -168,7 +168,6 @@ router.get('/account', function (req, res, next) {
 });
 
 router.post('/account/update/profile', function (req, res, next) {
-    // console.log(req.body)
     admins.updateAccount(res.locals.user._id, req.body)
         .then((response) => {
             res.send({

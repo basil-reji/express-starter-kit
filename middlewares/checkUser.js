@@ -7,7 +7,6 @@ const checkUser = (req, res, next) => {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
             User.findById(decodedToken.id)
                 .select({
-                    _id: false,
                     password: false,
                     flags: false,
                 })
