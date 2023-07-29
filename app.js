@@ -1,30 +1,41 @@
-var fs = require('fs');
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var engine = require("express-handlebars");
-var session = require("express-session");
-var flash = require("express-flash");
-var dotenv = require('dotenv');
-var checkUser = require('./middlewares/checkUser');
+const fs = require('fs');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const engine = require("express-handlebars");
+const session = require("express-session");
+const flash = require("express-flash");
+const dotenv = require('dotenv');
+const rateLimit = require('express-rate-limit');
+const checkUser = require('./middlewares/checkUser');
 
-dotenv.config()
 
-var engineHelper = require("./helper/hbs");
+dotenv.config();
 
-var authRouter = require('./routes/auth');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var adminRouter = require('./routes/admins');
+const engineHelper = require("./helper/hbs");
 
-var app = express();
+// Configuring routes
+const authRouter = require('./routes/auth');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const adminRouter = require('./routes/admins');
 
+// defining the app
+const app = express();
+
+// Middleware to implement rate limiting (express-rate-limit)
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
+
+// database configuration
 const db = require('./config/database');
-// const Session = require('./database/schema/session');
 
-//database connection
+// database connection
 db.on('error', (e) => {
     console.log("Data Base Error")
     console.log(e.message)
