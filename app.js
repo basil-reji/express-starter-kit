@@ -9,7 +9,6 @@ const session = require("express-session");
 const flash = require("express-flash");
 const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
-const crypto = require('crypto');
 const checkUser = require('./middlewares/checkUser');
 
 dotenv.config();
@@ -32,47 +31,12 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-const setNonce = (req, res, next) => {
-    res.locals.nonce = crypto.randomBytes(16).toString('base64');
-    next();
-};
+const setNonce = require("./middlewares/setNonce")
 app.use(setNonce);
 
 //configuring the helmet
-const helmet = require("helmet");
-
-app.use(
-    helmet({
-        contentSecurityPolicy: {
-            directives: {
-                defaultSrc: ["'self'"],
-                baseUri: ["'self'"],
-                fontSrc: ["'self'", "https:", "data:", "fonts.gstatic.com"],
-                formAction: ["'self'"],
-                frameAncestors: ["'self'"],
-                imgSrc: ["'self'", "data:"],
-                objectSrc: ["'none'"],
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.nonce}'`, "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "unpkg.com"],
-                scriptSrcAttr: ["'none'"],
-                styleSrc: ["'self'", "https:", "'unsafe-inline'", "fonts.googleapis.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "unpkg.com"],
-                upgradeInsecureRequests: [],
-            },
-        },
-        crossOriginEmbedderPolicy: { policy: "require-corp" },
-        crossOriginOpenerPolicy: { policy: "same-origin" },
-        crossOriginResourcePolicy: { policy: "same-origin" },
-        dnsPrefetchControl: false,
-        frameguard: { action: "SAMEORIGIN" },
-        hsts: { maxAge: 15552000, includeSubDomains: true },
-        ieNoOpen: true,
-        nosniff: true,
-        originAgentCluster: "?1",
-        permittedCrossDomainPolicies: "none",
-        referrerPolicy: { policy: "no-referrer" },
-        xssFilter: false,
-    })
-);
+const configHelmet = require("./middlewares/helmet");
+app.use(configHelmet);
 
 // database configuration
 const db = require('./config/database');

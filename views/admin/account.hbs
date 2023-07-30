@@ -137,23 +137,10 @@
         </div>
     </div>
 </section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script nonce={{nonce}}>
     var input = document.querySelector("#phone");
-    window.intlTelInput(input, ({
-        preferredCountries: ["in"],
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    }));
 
     $(document).ready(function () {
-
-        $('.iti__flag-container').click(function () {
-            var countryCode = $('.iti__selected-flag').attr('title');
-            var countryCode = countryCode.replace(/[^0-9]/g, '')
-            $('#phone').val("");
-            $('#phone').val("+" + countryCode + " " + $('#phone').val());
-        });
 
         $("#account_update").submit(function (e) {
             e.preventDefault();
@@ -165,13 +152,6 @@
                 values[this.name] = $(this).val();
             });
 
-            var countryCode = $('.iti__selected-flag').attr('title');
-            var countryCode = countryCode.replace(/[^0-9]/g, '')
-
-            if (!(values.phone.includes(countryCode))) {
-                values.phone = `+${countryCode} ${values.phone.replace(" ", "").replace("0", "")}`
-            }
-
             $.ajax({
                 url: `/admin/account/update/profile`,
                 method: 'post',
@@ -180,7 +160,7 @@
                     if (response.status == true) {
                         $("#profile-overview-fname").html(values.fname);
                         $("#profile-overview-sname").html(values.sname);
-                        if (values.phone.lenght > 6) {
+                        if (values.phone.lenght > 2) {
                             $("#profile-overview-phone").html(values.phone);
                         }
                     } else {
