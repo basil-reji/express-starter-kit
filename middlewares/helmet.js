@@ -25,7 +25,6 @@ const configHelmet = helmet({
     hsts: { maxAge: 15552000, includeSubDomains: true },
     ieNoOpen: true,
     nosniff: true,
-    originAgentCluster: "?1",
     permittedCrossDomainPolicies: "none",
     referrerPolicy: { policy: "no-referrer" },
     xssFilter: false,
