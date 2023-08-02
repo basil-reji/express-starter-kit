@@ -106,3 +106,6 @@ dist
 .docker/
 DockerFile
 docker-compose.yml
+
+# API Testing 
+*.rest
