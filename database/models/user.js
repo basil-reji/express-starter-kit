@@ -85,9 +85,11 @@ userSchema.statics.authenticate = async function (email, password) {
                     if (user.status == "active") {
                         bcrypt.compare(password, user.password).then((auth) => {
                             if (auth) {
-                                resolve({ id: user._id });
+                                resolve({ user: user._id });
                             } else {
-                                reject('Incorrect Password');
+                                let error = new Error('Incorrect Password');
+                                error.status = 400;
+                                reject(error);
                             }
                         })
                     } else {
@@ -111,7 +113,9 @@ userSchema.statics.checkUserExistance = async function (email) {
             }
         ).then((response) => {
             if (response) {
-                reject({ email: 'User Already Exist' })
+                let error = new Error('User already exists');
+                error.status = 400;
+                reject(error);
             } else {
                 resolve(true)
             }

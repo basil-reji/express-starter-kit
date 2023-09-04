@@ -10,26 +10,26 @@ $("#harmburger").click(function () {
     feather.replace();
 })()
 
-function deleteMessage(id) {
-    if (confirm("Are you sure?. Do you want to delete? ") == true) {
-        $.ajax({
-            url: `/admin/messages/delete`,
-            data: {
-                id: id
-            },
-            method: 'post',
-            success: (response) => {
-                if (response.acknowledged) {
-                    $(`#row-${id}`).remove()
-                }
-            },
-            error: (jqXHR, exception) => {
-                console.log(jqXHR)
-                console.log(exception)
-            },
-        })
-    }
-}
+// function deleteMessage(id) {
+//     if (confirm("Are you sure?. Do you want to delete? ") == true) {
+//         $.ajax({
+//             url: `/admin/messages/delete`,
+//             data: {
+//                 id: id
+//             },
+//             method: 'post',
+//             success: (response) => {
+//                 if (response.acknowledged) {
+//                     $(`#row-${id}`).remove()
+//                 }
+//             },
+//             error: (jqXHR, exception) => {
+//                 console.log(jqXHR)
+//                 console.log(exception)
+//             },
+//         })
+//     }
+// }
 
 function removeAdmin(id) {
     if (confirm("Are you sure?. Do you want to remove? ") == true) {

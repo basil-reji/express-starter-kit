@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Message = require('../database/models/message');
+const Message = require('@models/message');
 
 const getAll = () => {
     return new Promise((resolve, reject) => {

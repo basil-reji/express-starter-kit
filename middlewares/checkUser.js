@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
-const User = require('../database/models/user');
+const User = require('@models/user');
 
 const checkUser = (req, res, next) => {
     const token = req.cookies['accessToken'];
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
-            User.findById(decodedToken.id)
+            if(decodedToken && decodedToken.user){
+                User.findById(decodedToken.user)
                 .select({
                     password: false,
                     flags: false,
@@ -22,6 +23,9 @@ const checkUser = (req, res, next) => {
                     res.status(400)
                     next()
                 })
+            }else{
+                next();
+            }
         })
     } else {
         next();

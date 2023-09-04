@@ -1,7 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var authenticate = require('../controller/authentication');
-var authenitcateUser = require('../config/authentication');
+const express = require('express');
+const router = express.Router();
+
+const { loadMessage } = require('@controllers/general');
+const user = require('@controllers/user');
 
 const app_name = process.env.APP_NAME
 
@@ -27,65 +28,65 @@ router.use((req, res, next) => {
 })
 
 /* GET home page. */
-router.get('/login', (req, res) => {
-    let message = req.flash('message');
-    res.render('auth/login', {
-        title: `Login | ${app_name}`,
-        noHeader: true,
-        noFooter: true,
-        app_name,
-        message
-    });
-});
+router.get('/login',
+    loadMessage(),
+    (req, res) => {
+        res.render('auth/login', {
+            title: `Login | ${app_name}`,
+            noHeader: true,
+            noFooter: true,
+            app_name,
+        });
+    }
+);
 
-router.get('/signup', (req, res) => {
-    let message = req.flash('message');
-    res.render('auth/signup', {
-        title: `Signup | ${app_name}`,
-        noHeader: true,
-        noFooter: true,
-        app_name,
-        message
-    });
-});
+router.get('/signup',
+    loadMessage(),
+    (req, res) => {
+        res.render('auth/signup', {
+            title: `Signup | ${app_name}`,
+            noHeader: true,
+            noFooter: true,
+            app_name
+        });
+    }
+);
 
-router.post('/signup', (req, res) => {
-    // console.log(req.body);
-    let user = req.body;
-    authenticate.signup(user)
-        .then((response) => {
-            res.status(202).redirect('/login')
-        })
-        .catch((error) => {
-            req.flash('message', Object.values(error)[0]);
-            res.status(400).redirect('/signup');
-        })
-});
+router.post('/signup',
+    user.signup(),
+    (req, res) => {
+        res.redirect('/login');
+    },
+    (error, req, res, next) => {
+        req.flash('message', error.message);
+        res.redirect('/signup');
+    }
+);
 
-router.post('/login', (req, res) => {
-    authenitcateUser(req.body.email, req.body.password)
-        .then((accessToken) => {
-            const maxAge = 60 * 60 * 24 * 7
-            res.cookie('accessToken', accessToken, { maxAge: maxAge, httpOnly: true });
-            res.redirect('/');
-        }).catch((error) => {
-            // console.log(error);
-            req.flash('message', error);
-            res.redirect('/login')
-        })
-});
+router.post('/login',
+    user.login(),
+    (req, res) => {
+        res.redirect('/');
+    },
+    (error, req, res, next) => {
+        req.flash('message', error.message);
+        res.redirect('/login');
+    }
+);
 
-router.get('/logout', (req, res) => {
-    if (req.session) { req.session.destroy() }
-    res.clearCookie('accessToken');
-    res.redirect('/');
-});
+router.get('/logout',
+    user.logout(),
+    (req, res) => {
+        res.redirect('/');
+    }
+);
 
-router.get('/admin/logout', (req, res) => {
-    if (req.session) { req.session.destroy() }
-    res.clearCookie('accessToken');
-    res.redirect('/');
-});
+router.get('/admin/logout',
+    user.logout(),
+    (req, res) => {
+        res.redirect('/');
+    }
+);
 
 router.get('/forgot-password', (req, res) => {
     res.render('auth/forgot_password', {

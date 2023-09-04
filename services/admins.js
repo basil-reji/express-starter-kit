@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const User = require('../database/models/user');
-const UserPermissions = require('../database/permissions.json');
-const { getErrors, getErrorMessages } = require('../helper/errorHandler');
+const User = require('@models/user');
+const UserPermissions = require('@database/permissions.json');
+const { getErrors, getErrorMessages } = require('@utils/errorHandler');
 
 const getAll = () => {
     return new Promise((resolve, reject) => {

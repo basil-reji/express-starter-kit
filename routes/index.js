@@ -1,49 +1,51 @@
-var express = require('express');
-var router = express.Router();
-const messages = require('../controller/messages');
+const express = require('express');
+const router = express.Router();
+
+const index = require('@controllers/index');
+const user = require('@controllers/user');
 
 const app_name = process.env.APP_NAME
 
 /* GET home page. */
-router.get('/', (req, res) => {
-    if (res.locals.user && res.locals.user.role == 'super_admin') {
-        res.redirect('/admin/')
-    } else {
+router.get('/',
+    index.validateAdmin(['super_admin', 'admin']),
+    (req, res) => {
         res.render('index', {
             title: app_name,
             home_page: true
         });
     }
-});
+);
 
-router.get('/contact', (req, res) => {
-    let user = req.user;
-    res.render('pages/contact', {
-        title: `Test Page | ${app_name}`,
-        contact_page: true,
-        user
-    });
-});
+router.get('/contact',
+    (req, res) => {
+        res.render('pages/contact', {
+            title: `Contact Page | ${app_name}`,
+            contact_page: true
+        });
+    }
+);
 
-router.post('/contact', (req, res) => {
-    messages.add(req.body)
-        .then((response) => {
-            res.send(
-                {
-                    response: "acknowledged",
-                    status: true
-                }
-            );
-        })
-        .catch((error) => {
-            res.send(
-                {
-                    error,
-                    status: false
-                }
-            );
-        })
-});
+router.post('/contact',
+    user.contact(),
+    (req, res) => {
+        res.status(200).send(
+            {
+                response: "acknowledged",
+                status: true
+            }
+        );
+    },
+    (error, req, res) => {
+        res.status(400).send(
+            {
+                error,
+                response: "error",
+                status: false
+            }
+        );
+    }
+);
 
 router.get('/test', (req, res) => {
     let user = req.user;
