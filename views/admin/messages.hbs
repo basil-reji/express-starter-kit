@@ -19,19 +19,19 @@
                         </thead>
                         <tbody>
                             {{#each data}}
-                                <tr id="row-{{this._id}}">
-                                    <th scope="row">{{add @index 1}}</th>
-                                    <td>{{formatDate this.createdAt}}</td>
-                                    <td>{{this.name}}</td>
-                                    <td>{{this.email}}</td>
-                                    <td>{{this.subject}}</td>
-                                    <td>{{this.message}}</td>
-                                    <td>
-                                        <button class="btn-ico red" onclick="deleteMessage(`{{this._id}}`)">
-                                            <i class="fa-regular fa-trash-can"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tr id="row-{{this._id}}">
+                                <th scope="row">{{add @index 1}}</th>
+                                <td>{{formatDate this.createdAt}}</td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.email}}</td>
+                                <td>{{this.subject}}</td>
+                                <td>{{this.message}}</td>
+                                <td>
+                                    <button class="btn-ico red" onclick="deleteMessage(`{{this._id}}`)">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
+                                </td>
+                            </tr>
                             {{/each}}
                         </tbody>
                     </table>

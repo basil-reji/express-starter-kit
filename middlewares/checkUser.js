@@ -5,23 +5,30 @@ const checkUser = (req, res, next) => {
     const token = req.cookies['accessToken'];
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
-            User.findById(decodedToken.id)
-                .select({
-                    password: false,
-                    flags: false,
-                })
-                .lean()
-                .then((user) => {
-                    if (user) {
-                        res.locals.user = user;
-                        next();
-                    } else {
-                        next();
-                    }
-                }).catch((error) => {
-                    res.status(400)
-                    next()
-                })
+            if (err) {
+                res.status(400)
+                next(err)
+            } else if (decodedToken && decodedToken.id) {
+                User.findById(decodedToken.id)
+                    .select({
+                        password: false,
+                        flags: false,
+                    })
+                    .lean()
+                    .then((user) => {
+                        if (user) {
+                            res.locals.user = user;
+                            next();
+                        } else {
+                            next();
+                        }
+                    }).catch(error => {
+                        res.status(400)
+                        next()
+                    })
+            } else {
+                next();
+            }
         })
     } else {
         next();
