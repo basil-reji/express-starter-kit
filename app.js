@@ -37,8 +37,8 @@ const setNonce = require("@middlewares/setNonce")
 app.use(setNonce);
 
 //configuring the helmet
-const configHelmet = require("@middlewares/helmet");
-app.use(configHelmet);
+// const configHelmet = require("@middlewares/helmet");
+// app.use(configHelmet);
 
 // database configuration
 const db = require('@config/database');

@@ -31,7 +31,7 @@ router.get('/',
 
 router.get('/messages',
     validateUserPermission('messages', 'read'),
-    admin.message.findAll(),
+    admin.message.findAll,
     (req, res) => {
         res.render('admin/messages', {
             title: app_name,
@@ -49,7 +49,7 @@ router.get('/messages',
 
 router.post('/messages/delete',
     validateUserPermission('messages', 'delete'),
-    admin.message.remove(),
+    admin.message.remove,
     (req, res) => {
         res.status(200)
             .send(
@@ -58,8 +58,7 @@ router.post('/messages/delete',
                     message: "acknowledged"
                 }
             );
-    },
-    (error, req, res) => {
+    }, (error, req, res) => {
         res.status(400)
             .send(
                 {
@@ -72,6 +71,7 @@ router.post('/messages/delete',
 
 router.get('/admins',
     validateUserPermission('admins', 'write'),
+    admin.admins.listAll,
     (req, res) => {
         res.render('admin/admins', {
             title: app_name,
@@ -82,15 +82,14 @@ router.get('/admins',
                     active: true,
                 }
             ],
-            admins_page: true,
-            admins
+            admins_page: true
         });
     }
 );
 
-router.get('/add-admin',
+router.get('/admins/add',
     validateUserPermission('admins', 'write'),
-    loadMessage(),
+    loadMessage,
     (req, res) => {
         res.render('admin/admins/add_admin', {
             title: app_name,
@@ -110,15 +109,14 @@ router.get('/add-admin',
     }
 );
 
-router.post('/add-admin',
+router.post('/admins/add',
     validateUserPermission('admins', 'write'),
-    admin.admins.add(),
+    admin.admins.add,
     (req, res) => {
         res.status(202).redirect('/admin/admins');
-    },
-    (error, req, res) => {
-        req.flash('message', Object.values(error)[0]);
-        res.status(400).redirect('/admin/add-admin');
+    }, (error, req, res) => {
+        req.flash('message', error.message);
+        res.status(400).redirect('/admin/admins/add');
     }
 );
 
@@ -149,26 +147,35 @@ router.get('/admins/:id',
 
 router.post('/admins/update/:id',
     validateUserPermission('admins', 'edit'),
+    admin.admins.update,
     (req, res) => {
-        admins.updateAdmin(req.params.id, req.body)
-            .then((response) => {
-                res.redirect('/admin/admins/')
-            })
+        res.redirect('/admin/admins/')
+    }, (error, req, res) => {
+        req.flash('message', error.message);
+        res.redirect(`/admin/admins/${req.params.id}`);
     }
 );
 
 router.post('/admins/remove/',
     validateUserPermission('admins', 'delete'),
+    admin.admins.remove,
     (req, res) => {
-        admins.remove(req.body.id).then((response) => {
-            res.status(200)
-                .send(
-                    {
-                        response: "ok",
-                        status: true
-                    }
-                );
-        })
+        res.status(200)
+            .send(
+                {
+                    response: "ok",
+                    status: true
+                }
+            );
+    }, (error, req, res) => {
+        res.status(400)
+            .send(
+                {
+                    error: error,
+                    response: "Error",
+                    status: false
+                }
+            );
     }
 );
 
@@ -189,20 +196,24 @@ router.get('/account',
 );
 
 router.post('/account/update/profile',
+    admin.updateAccount,
     (req, res) => {
+        res.send({
+            acknowledged: true,
+            message: 'acknowledged'
+        })
         admins.updateAccount(res.locals.user._id, req.body)
             .then((response) => {
-                res.send({
-                    acknowledged: true,
-                    message: 'acknowledged'
-                })
+
             }).catch((error) => {
-                res.status(400)
-                    .send({
-                        acknowledged: false,
-                        message: 'error',
-                        error: error
-                    })
+
+            })
+    }, (error, req, res) => {
+        res.status(400)
+            .send({
+                acknowledged: false,
+                message: 'error',
+                error: error
             })
     }
 );

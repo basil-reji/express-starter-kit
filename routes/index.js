@@ -27,7 +27,7 @@ router.get('/contact',
 );
 
 router.post('/contact',
-    user.contact(),
+    user.contact,
     (req, res) => {
         res.status(200).send(
             {
@@ -48,16 +48,12 @@ router.post('/contact',
 );
 
 router.get('/test', (req, res) => {
-    let user = req.user;
     res.render('test', {
-        title: `Test Page | ${app_name}`,
-        user
+        title: `Test Page | ${app_name}`
     });
 });
 
 router.post('/test', (req, res) => {
-    let user = req.user;
-    // console.log(req.body)
     res.send(
         {
             response: "acknowledged",

@@ -29,7 +29,7 @@ router.use((req, res, next) => {
 
 /* GET home page. */
 router.get('/login',
-    loadMessage(),
+    loadMessage,
     (req, res) => {
         res.render('auth/login', {
             title: `Login | ${app_name}`,
@@ -41,7 +41,7 @@ router.get('/login',
 );
 
 router.get('/signup',
-    loadMessage(),
+    loadMessage,
     (req, res) => {
         res.render('auth/signup', {
             title: `Signup | ${app_name}`,
@@ -53,7 +53,7 @@ router.get('/signup',
 );
 
 router.post('/signup',
-    user.signup(),
+    user.signup,
     (req, res) => {
         res.redirect('/login');
     },
@@ -64,7 +64,7 @@ router.post('/signup',
 );
 
 router.post('/login',
-    user.login(),
+    user.login,
     (req, res) => {
         res.redirect('/');
     },
@@ -75,14 +75,14 @@ router.post('/login',
 );
 
 router.get('/logout',
-    user.logout(),
+    user.logout,
     (req, res) => {
         res.redirect('/');
     }
 );
 
 router.get('/admin/logout',
-    user.logout(),
+    user.logout,
     (req, res) => {
         res.redirect('/');
     }
