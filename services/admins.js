@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const User = require('../database/models/user');
-const UserPermissions = require('../database/permissions.json');
-const { getErrors, getErrorMessages } = require('../helper/errorHandler');
+const User = require('@models/user');
+const UserPermissions = require('@database/permissions.json');
 
 const getAll = () => {
     return new Promise((resolve, reject) => {
@@ -62,13 +61,17 @@ const add = (info) => {
                             .then((response) => {
                                 resolve(response);
                             }).catch((err) => {
-                                reject(getErrors(err));
+                                reject(err);
                             });
                     } else {
-                        reject({ password: 'passwords must be same' });
+                        let error = new Error('passwords must be same');
+                        error.status = 400;
+                        reject(error);
                     }
                 } else {
-                    reject({ email: 'Some Error' })
+                    let error = new Error('Some Error');
+                    error.status = 400;
+                    reject(error);
                 }
             }).catch((error) => {
                 reject(error)

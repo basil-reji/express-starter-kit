@@ -6,7 +6,7 @@
                     <h3>Add Admin</h3>
                 </div>
                 {{#if message}}<p class="error">{{message}}</p>{{/if}}
-                <form action="/admin/add-admin" method="post" role="form" class="log-form">
+                <form action="/admin/admins/add" method="post" role="form" class="log-form">
                     <div class="form-group">
                         <input type="text" class="form-control" name="fname" id="fname" placeholder="First Name"
                             required>

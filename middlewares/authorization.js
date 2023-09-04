@@ -14,7 +14,6 @@ const validateUser = (roles) => {
         } else {
             res.redirect('/login')
         }
-
     }
 }
 

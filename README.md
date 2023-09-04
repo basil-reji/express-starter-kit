@@ -13,6 +13,29 @@ The **Express Starter Kit** is a versatile starter kit built over `express-gener
 - Basic UI and well-organized template for quick project starts.
 - Development and production scripts for convenience.
 
+## Table of Contents
+
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration Parameters](#configuration-parameters)
+- [Basic Usage](#basic-usage)
+- [Generating the Access Token Secret](#generating-the-access-token-secret)
+- [Admin Setup](#admin-setup)
+  - [Running the Setup App](#running-the-setup-app)
+  - [Adding the Admin](#adding-the-admin)
+  - [Accessing the Admin Panel](#accessing-the-admin-panel)
+- [Usage and Development](#usage-and-development)
+  - [Project Structure](#project-structure)
+  - [Adding Features and Functionality](#adding-features-and-functionality)
+- [Security Features](#security-features)
+  - [JWT-Based Authentication](#jwt-based-authentication)
+  - [Rate Limiter](#rate-limiter)
+  - [Helmet](#helmet)
+- [Extending the Project](#extending-the-project)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Getting Started
 
 ### Prerequisites
@@ -45,8 +68,6 @@ Create a `.env` file at the root of your project and provide the following confi
 PORT=3000
 APP_NAME="Express App"
 NODE_ENV=development
-SESSION_NAME=name
-SESSION_SECRET=password
 ACCESS_TOKEN_SECRET=YOUR_ACCESS_TOKEN_SECRET
 DB_URI=mongodb://127.0.0.1:27017/express_app
 ```
@@ -56,8 +77,6 @@ DB_URI=mongodb://127.0.0.1:27017/express_app
 - **PORT**: The port number on which the application will run.
 - **APP_NAME**: The name of your Express application.
 - **NODE_ENV**: The environment in which the application is running (e.g., development, production, staging).
-- **SESSION_NAME**: The name of the session.
-- **SESSION_SECRET**: A secret key used to encrypt the session data. Choose a strong, unique passphrase.
 - **ACCESS_TOKEN_SECRET**: A secret key used to sign JWTs for authentication. Choose a strong, unique passphrase.
 - **DB_URI**: The MongoDB URI where your MongoDB instance is running.
 
@@ -86,11 +105,11 @@ To generate the `ACCESS_TOKEN_SECRET`, you can use the Node.js `crypto` module t
 2. Add the following code to the `generateToken.js` file:
 
 ```javascript
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 const generateAccessTokenSecret = () => {
   const tokenLength = 64; // Change the length as per your requirement
-  return crypto.randomBytes(tokenLength).toString('hex');
+  return crypto.randomBytes(tokenLength).toString("hex");
 };
 
 console.log(generateAccessTokenSecret());
@@ -148,31 +167,29 @@ After setting up the project, you can use the Express Starter Kit as a base to b
 
 The **Express Starter Kit** follows a well-organized project structure that promotes modularity and maintainability. Here's an overview of the directories and their respective purposes:
 
-1. `bin`: Contains executable scripts for running the application and other utility scripts.
+- **bin**: Contains executable scripts for running the application and utility scripts.
+  - `www`: The script responsible for starting the application server.
+  - `setup`: The script for running the setup app to add the admin initially (as explained in the documentation).
 
-   - `www`: The script responsible for starting the application server.
+- **config**: Includes configuration files and settings for various parts of the application.
 
-   - `setup`: The script for running the setup app to add the admin initially (as explained in the documentation).
+- **controllers**: Contains the controllers responsible for handling the business logic of the application.
 
-2. `config`: Includes configuration files and settings for various parts of the application.
+- **database**: Contains database-related files, such as database setup and models.
 
-3. `controllers`: Contains the controllers responsible for handling the business logic of the application.
+- **helper**: Includes utility functions and helper modules used throughout the application.
 
-4. `database`: Contains database-related files, such as database setup and models.
+- **middleware**: Contains custom middleware functions to handle requests and perform various tasks, such as authentication and rate limiting.
 
-5. `helper`: Includes utility functions and helper modules used throughout the application.
+- **public**: Includes static files that will be served to the client-side, such as CSS, images, and client-side JavaScript.
 
-6. `middleware`: Contains custom middleware functions to handle requests and perform various tasks, such as authentication and rate limiting.
+- **routes**: Contains the route handlers for different parts of the application. Each route file defines the endpoints and their corresponding controller functions.
 
-7. `public`: Includes static files that will be served to the client-side, such as CSS, images, and client-side JavaScript.
+- **scss**: Includes SCSS (Sass) files for styling the application. These files can be compiled into CSS.
 
-8. `routes`: Contains the route handlers for different parts of the application. Each route file defines the endpoints and their corresponding controller functions.
+- **views**: Contains the Handlebars templates for dynamic HTML rendering. This directory is responsible for the application's frontend.
 
-9. `scss`: Includes SCSS (Sass) files for styling the application. These files can be compiled into CSS.
-
-10. `views`: Contains the Handlebars templates for dynamic HTML rendering. This directory is responsible for the application's frontend.
-
-11. `app.js`: The main entry point of the application where the Express app is initialized. This file brings all the parts together, such as middleware setup, route inclusion, and server setup.
+- **services**: Contains modules for managing specific parts of the application, such as admins and other services.
 
 By organizing the project into these directories, the **Express Starter Kit** makes it easier for developers to understand the application's structure and navigate through different components of the project. Additionally, this structure allows developers to extend and maintain the application more effectively.
 
@@ -193,10 +210,12 @@ The Express Starter Kit incorporates the following security features to help dev
 ### JWT-Based Authentication
 
 **Advantages of JWT-Based Authentication:**
+
 - Stateless: JWTs are self-contained and do not require storing session information on the server. This makes the authentication process stateless, allowing for easier scalability and reducing server-side storage requirements.
 - Enhanced Security: JWTs are digitally signed, ensuring that
 
- the data within the token is not tampered with. This provides a layer of security against token forgery and unauthorized access.
+the data within the token is not tampered with. This provides a layer of security against token forgery and unauthorized access.
+
 - Decentralized Authorization: Since JWTs carry user information within the token itself, the server doesn't need to query the database for each request. This results in faster and more efficient authorization decisions.
 - Cross-Domain Authentication: JWTs can be used across different domains or subdomains, facilitating single sign-on (SSO) capabilities, which is especially useful in microservices architectures.
 - Flexibility: JWTs can carry custom claims, allowing developers to include additional information about the user or access permissions.
@@ -204,6 +223,7 @@ The Express Starter Kit incorporates the following security features to help dev
 ### Rate Limiter
 
 **Advantages of Rate Limiter:**
+
 - Protection Against DDoS Attacks: Rate limiting helps prevent Distributed Denial of Service (DDoS) attacks by restricting the number of requests that can be made to the server within a specific time frame. This prevents overwhelming the server with an excessive number of requests.
 - Preventing Brute Force Attacks: Rate limiting can be used to block repeated login attempts, protecting user accounts from brute force attacks.
 - Efficient Resource Utilization: By limiting the number of requests per user, rate limiting ensures fair usage of server resources and prevents individual users from monopolizing server capacity.
@@ -212,6 +232,7 @@ The Express Starter Kit incorporates the following security features to help dev
 ### Helmet
 
 **Advantages of Helmet:**
+
 - Mitigating Common Web Vulnerabilities: Helmet is a collection of middleware that sets HTTP headers to protect the application from various common web vulnerabilities, such as Cross-Site Scripting (XSS), Cross-Site Request Forgery (CSRF), and Clickjacking.
 - Security by Default: Helmet sets secure HTTP headers automatically, reducing the chances of accidental misconfigurations or security oversights by developers.
 - Cross-Domain Security: The helmet sets the `X-Frame-Options` header, which prevents clickjacking attacks by restricting how the application can be embedded in an iframe on other domains.
