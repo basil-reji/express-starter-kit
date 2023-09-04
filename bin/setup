@@ -53,7 +53,7 @@ app.get('/', (req, res) => {
             <section>
                 <h1>Add admin</h1>
                 <p>${message}</p>
-                <form action="/add-admin" method="post" role="form">
+                <form action="/admins/add" method="post" role="form">
                     <div>
                         <input type="text" name="fname" id="fname" placeholder="First Name" required>
                     </div>
@@ -80,7 +80,7 @@ app.get('/', (req, res) => {
     `)
 });
 
-app.post('/add-admin', (req, res) => { 
+app.post('/admins/add', (req, res) => { 
     if(req.body.password==req.body.cpassword){
         let user = new User;
         user.firstName = req.body.fname;

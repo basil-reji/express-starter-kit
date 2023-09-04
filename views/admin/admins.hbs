@@ -18,16 +18,16 @@
                             </thead>
                             <tbody>
                                 {{#each admins}}
-                                <tr id="row-{{this._id}}">
+                                <tr id="row-{{_id}}">
                                     <th scope="row">{{add @index 1}}</th>
-                                    <td>{{this.firstName}} {{this.surName}}</td>
-                                    <td>{{this.email}}</td>
-                                    <td>{{this.role}}</td>
+                                    <td>{{firstName}} {{surName}}</td>
+                                    <td>{{email}}</td>
+                                    <td>{{role}}</td>
                                     <td>
-                                        <button class="btn-ico red" onclick="removeAdmin(`{{this._id}}`)">
+                                        <button class="btn-ico red" onclick="removeAdmin(`{{_id}}`)">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
-                                        <a href="/admin/admins/{{this._id}}" class="btn-ico blue">
+                                        <a href="/admin/admins/{{_id}}" class="btn-ico blue">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                     </td>
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="col-12 col-md-8 col-lg-7 d-flex justify-content-center align-items-center">
-                <a href="/admin/add-admin" class="btn">Add Admin</a>
+                <a href="/admin/admins/add" class="btn">Add Admin</a>
             </div>
         </div>
     </div>
