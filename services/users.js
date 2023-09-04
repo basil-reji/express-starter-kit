@@ -1,5 +1,4 @@
 const User = require('@models/user');
-const { getErrors, getErrorMessages } = require('@utils/errorHandler');
 
 const signup = (info) => {
     return new Promise(async (resolve, reject) => {

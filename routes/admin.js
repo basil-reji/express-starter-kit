@@ -3,9 +3,6 @@ var router = express.Router();
 const { validateUser } = require('../middlewares/authorization');
 const { findUserPermissions, validateUserPermission } = require('../middlewares/authorization');
 
-const { loadMessage } = require('@controllers/general');
-const admins = require('@services/admins');
-const messages = require('@services/messages');
 const admin = require('@controllers/admin');
 
 const app_name = process.env.APP_NAME
@@ -89,7 +86,6 @@ router.get('/admins',
 
 router.get('/admins/add',
     validateUserPermission('admins', 'write'),
-    loadMessage,
     (req, res) => {
         res.render('admin/admins/add_admin', {
             title: app_name,
@@ -114,15 +110,54 @@ router.post('/admins/add',
     admin.admins.add,
     (req, res) => {
         res.status(202).redirect('/admin/admins');
-    }, (error, req, res) => {
-        req.flash('message', error.message);
-        res.status(400).redirect('/admin/admins/add');
+    }, (error, req, res, next) => {
+        res.render('admin/admins/add_admin', {
+            title: app_name,
+            page_title: 'Admins',
+            breadcrumbs: [
+                {
+                    page_name: 'Admins',
+                    page_link: '/admins'
+                },
+                {
+                    page_name: 'Add Admin',
+                    active: true,
+                }
+            ],
+            admins_page: true,
+            message: error.message
+        });
     }
 );
 
 router.get('/admins/:id',
     validateUserPermission('admins', 'edit'),
+    admin.admins.get,
     (req, res) => {
+        res.render('admin/admins/edit_admin', {
+            title: app_name,
+            page_title: 'Admins',
+            breadcrumbs: [
+                {
+                    page_name: 'Admins',
+                    page_link: '/admins'
+                },
+                {
+                    page_name: 'Edit Admin',
+                    active: true,
+                }
+            ],
+            admins_page: true
+        });
+    }
+);
+
+router.post('/admins/update/:id',
+    validateUserPermission('admins', 'edit'),
+    admin.admins.update,
+    (req, res) => {
+        res.redirect('/admin/admins/')
+    }, (error, req, res) => {
         admins.get(req.params.id)
             .then((admin) => {
                 res.render('admin/admins/edit_admin', {
@@ -139,20 +174,10 @@ router.get('/admins/:id',
                         }
                     ],
                     admins_page: true,
+                    message: error.message,
                     admin
                 });
             })
-    }
-);
-
-router.post('/admins/update/:id',
-    validateUserPermission('admins', 'edit'),
-    admin.admins.update,
-    (req, res) => {
-        res.redirect('/admin/admins/')
-    }, (error, req, res) => {
-        req.flash('message', error.message);
-        res.redirect(`/admin/admins/${req.params.id}`);
     }
 );
 

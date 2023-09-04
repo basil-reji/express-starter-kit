@@ -19,6 +19,16 @@ const add = (req, res, next) => {
         })
 }
 
+const get = (req, res, next) => {
+    admins.get(req.params.id)
+        .then((response) => {
+            res.locals.admin = response;
+            next()
+        }).catch((error) => {
+            next(error)
+        })
+}
+
 const update = (req, res, next) => {
     admins.updateAdmin(req.params.id, req.body)
         .then((response) => {
@@ -39,6 +49,7 @@ const remove = (req, res, next) => {
 
 module.exports = {
     add,
+    get,
     listAll,
     update,
     remove

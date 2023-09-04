@@ -7,8 +7,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const engine = require("express-handlebars");
-const session = require("express-session");
-const flash = require("express-flash");
 const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
 const checkUser = require('@middlewares/checkUser');
@@ -67,18 +65,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// express-session setup
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: parseInt(process.env.SESSION_MAX_AGE) },
-    store: new session.MemoryStore(),
-    resave: true,
-    saveUninitialized: true
-}));
-
-// express-flash setup
-app.use(flash());
-
 app.use(checkUser);
 
 app.use('/', authRouter);
@@ -89,7 +75,9 @@ app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    next(createError(404));
+    let error = new Error('Not Found');
+    error.status = 404;
+    next(error);
 });
 
 // error handler
@@ -97,6 +85,11 @@ app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    if (!err.status == 404) {
+        console.log("Error:", err.status || 500)
+        console.log(err)
+    }
 
     let error = {
         code: err.status || 500,

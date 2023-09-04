@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const { loadMessage } = require('@controllers/general');
 const user = require('@controllers/user');
 
 const app_name = process.env.APP_NAME
@@ -27,9 +26,7 @@ router.use((req, res, next) => {
     }
 })
 
-/* GET home page. */
 router.get('/login',
-    loadMessage,
     (req, res) => {
         res.render('auth/login', {
             title: `Login | ${app_name}`,
@@ -40,8 +37,23 @@ router.get('/login',
     }
 );
 
+router.post('/login',
+    user.login,
+    (req, res) => {
+        res.redirect('/');
+    },
+    (error, req, res, next) => {
+        res.render('auth/login', {
+            title: `Login | ${app_name}`,
+            noHeader: true,
+            noFooter: true,
+            message: error.message,
+            app_name,
+        });
+    }
+);
+
 router.get('/signup',
-    loadMessage,
     (req, res) => {
         res.render('auth/signup', {
             title: `Signup | ${app_name}`,
@@ -58,19 +70,13 @@ router.post('/signup',
         res.redirect('/login');
     },
     (error, req, res, next) => {
-        req.flash('message', error.message);
-        res.redirect('/signup');
-    }
-);
-
-router.post('/login',
-    user.login,
-    (req, res) => {
-        res.redirect('/');
-    },
-    (error, req, res, next) => {
-        req.flash('message', error.message);
-        res.redirect('/login');
+        res.render('auth/signup', {
+            title: `Signup | ${app_name}`,
+            noHeader: true,
+            noFooter: true,
+            message: error.message,
+            app_name
+        });
     }
 );
 
