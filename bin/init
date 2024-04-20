@@ -1,0 +1,55 @@
+const dotenv = require('dotenv');
+const User = require('../database/models/user');
+const permissions = require('../database/permissions.json');
+
+// Load environment variables
+dotenv.config();
+
+// checking the db connection
+const db = require('../config/database');
+// If there is an error in connecting to the database
+db.on('error', (e) => {
+    console.log("Data Base Error");
+    console.log(e.message)
+    process.exit(1)
+});
+
+const checkForSuperAdmin = async () => {
+    // Check if super admin user already exists
+    const superAdmin = await User.findOne({ role: 'super_admin' });
+
+    // If super admin user already exists, exit the script
+    if (superAdmin) {
+        console.log('Super admin user already exists.');
+        process.exit(0);
+    }
+};
+
+// Once the connection is open
+db.once('open', () => {
+    console.log("Data Base Connected");
+
+    // Check if super admin user already exists
+    checkForSuperAdmin();
+
+    const superAdmin = new User({
+        name:  process.env.SUPER_ADMIN_NAME || 'Super Admin',
+        email: process.env.SUPER_ADMIN_EMAIL || 'admin@example.com',
+        password: process.env.SUPER_ADMIN_PASSWORD || 'password',
+        role: 'super_admin',
+        permissions: permissions.super_admin
+    });
+    
+    superAdmin.save().then(() => {
+        console.log('Super admin user created successfully.');
+        console.log('Email:', superAdmin.email);
+        if(!process.env.SUPER_ADMIN_PASSWORD) {
+            console.log('Password:', process.env.SUPER_ADMIN_PASSWORD || 'password');
+        }
+        console.log('Please change the password immediately after logging in.');
+        process.exit(0);
+    }).catch((err) => {
+        console.error('Error creating super admin user:', err);
+        process.exit(1);
+    });
+});

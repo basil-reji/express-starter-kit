@@ -65,11 +65,21 @@ npm install
 Create a `.env` file at the root of your project and provide the following configuration parameters:
 
 ```dotenv
-PORT=3000
-APP_NAME="Express App"
-NODE_ENV=development
-ACCESS_TOKEN_SECRET=YOUR_ACCESS_TOKEN_SECRET
-DB_URI=mongodb://127.0.0.1:27017/express_app
+# the environment variables for the application
+PORT='8080'
+APP_NAME='Express App'
+
+# Database
+DB_URI='mongodb://localhost:27017/express_app'
+NODE_ENV='development'
+
+# ACCESS TOKEN
+ACCESS_TOKEN_SECRET=access_token
+
+# Admin
+SUPER_ADMIN_NAME='Admin'
+SUPER_ADMIN_EMAIL=admin@example.com
+SUPER_ADMIN_PASSWORD=******
 ```
 
 ### Configuration Parameters
@@ -79,6 +89,9 @@ DB_URI=mongodb://127.0.0.1:27017/express_app
 - **NODE_ENV**: The environment in which the application is running (e.g., development, production, staging).
 - **ACCESS_TOKEN_SECRET**: A secret key used to sign JWTs for authentication. Choose a strong, unique passphrase.
 - **DB_URI**: The MongoDB URI where your MongoDB instance is running.
+- **SUPER_ADMIN_Name**: Name of the super admin for the initial setup.
+- **SUPER_ADMIN_EMAIL**: Email address of the super admin for the initial setup.
+- **SUPER_ADMIN_PASSWORD**: The password used to login to the admin dashboard.
 
 ### Basic Usage
 
